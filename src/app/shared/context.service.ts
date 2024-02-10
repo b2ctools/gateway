@@ -7,8 +7,11 @@ class ContextService {
   private tenantId: ID;
   private userId: ID;
 
+  constructor(){
+    this.setTenantId(DEFAULT_TENANT);
+  }
+
   setTenantId(tenantId: ID) {
-    console.log(' >>>> Setting tenant Id <<< ')
     this.tenantId = tenantId;
   }
   getTenantId() {

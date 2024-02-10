@@ -1,29 +1,19 @@
-import { MiddlewareConsumer, Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { UserModule } from "./user/user.module";
-import { HeaderCheckMiddleware } from "./auth/domain/middleware/header-check.middleware";
-import { AuthModule } from "./auth/auth.module";
-import { StoreModule } from "./store/store.module";
-import { excludeRoutes } from "./shared/routes";
-import { ProductCategoryModule } from "./product-category/product-category.module";
-import { BrandModule } from "./brand/brand.module";
-import { CountryModule } from "./country/country.module";
-import { ConfigModule } from "@nestjs/config";
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { UserModule } from './user/user.module';
+import { HeaderCheckMiddleware } from './auth/domain/middleware/header-check.middleware';
+import { AuthModule } from './auth/auth.module';
+import { StoreModule } from './store/store.module';
+import { excludeRoutes } from './shared/routes';
+import { ProductCategoryModule } from './product-category/product-category.module';
+import { BrandModule } from './brand/brand.module';
+import { CountryModule } from './country/country.module';
+import { SampleModule } from './sample/sample.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-    UserModule,
-    AuthModule,
-    StoreModule,
-    ProductCategoryModule,
-    BrandModule,
-    CountryModule,
-  ],
+  imports: [UserModule, AuthModule, StoreModule, ProductCategoryModule, BrandModule, CountryModule, SampleModule],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -32,6 +22,6 @@ export class AppModule {
     consumer
       .apply(HeaderCheckMiddleware)
       .exclude(...excludeRoutes)
-      .forRoutes("*");
+      .forRoutes('*');
   }
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
 import { ProductCategoryMockedEntity } from './product-category.mocked-entity';
 import { ProductCategory } from '../../domain/product-category.interface';
-import { ID } from '../../../shared/abstract-repository/repository.interface';
+import { SearchSubProductCategoryRequest } from '../../application/sub-product-categories/sub-product-categories.request';
 
 @Injectable()
 export class ProductCategoryMockedRepository extends MockedRepository<
@@ -37,9 +37,10 @@ export class ProductCategoryMockedRepository extends MockedRepository<
     return filtered.length > 0 ? filtered.shift() : null;
   }
 
-  async getProductCategoryByParentId(parent: ID): Promise<ProductCategory[]> {
-    const categories = await this.findAll({});
-    if (categories.length === 0) return null;
+  async getProductCategoryByParentId(request: SearchSubProductCategoryRequest): Promise<ProductCategory[]> {
+    const { parent } = request;
+    const categories = await this.findAll(request);
+    if (categories.length === 0) return [];
     return categories.filter((s) => s.parent === parent) as ProductCategory[];
   }
 }

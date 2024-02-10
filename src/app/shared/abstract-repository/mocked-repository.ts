@@ -109,7 +109,7 @@ export abstract class MockedRepository<
   }
 
   async findAll(request: SearchRequest): Promise<TDomain[]> {
-    console.log(request);
+    
     if (Object.keys(this.elements).length > 0) {
       const { sortBy, sortOrder, take, skip, fromDate, toDate, dateFieldName } =
         request;

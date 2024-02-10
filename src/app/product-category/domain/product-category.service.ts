@@ -6,8 +6,8 @@ import {
   ProductCategoryTree,
 } from './product-category.interface';
 import { ID } from '../../shared/abstract-repository/repository.interface';
-import { DEFAULT_TENANT, ctxSrv } from '../../shared/context.service';
 import { SearchProductCategoryRequest } from '../application/search-product-categories/search-product-category.request';
+import { SearchSubProductCategoryRequest } from '../application/sub-product-categories/sub-product-categories.request';
 
 // import { jsonCategories } from './json-categories';
 // console.log(JSON.stringify(jsonCategories))
@@ -53,20 +53,28 @@ export class ProductCategoryService {
 
     await this.verifyParentCategory(command.parent);
 
-    console.log(`Ading Product Category ${JSON.stringify(command)}`);
+    console.log(`Ading Product Category`, {
+      name: pc.name,
+      description: pc.description,
+      parent: pc.parent,
+    });
     return await this.pcRepo.create(pc);
   }
 
-  async productCategoriesFromParent({
-    parent,
-    tree = false,
-  }: {
-    parent: ID;
-    tree?: boolean;
-  }) {
-    return tree
-      ? await this.getHierarchy(parent)
-      : await this.pcRepo.getProductCategoryByParentId(parent);
+  async productCategoriesFromParent(request: SearchSubProductCategoryRequest) {
+    
+    const categories = await this.pcRepo.getProductCategoryByParentId(request);
+
+    return await Promise.all(
+      categories.map(async (c) => {
+        return {
+          ...c,
+          countSubs: (await this.pcRepo.getProductCategoryByParentId({
+            parent: c.id,
+          })).length,
+        };
+      })
+    );
   }
 
   async removeProductCategory(id: ID) {
@@ -77,8 +85,8 @@ export class ProductCategoryService {
       );
     }
 
-    const subcategories = await this.productCategoriesFromParent({
-      parent: existingPC.id,
+    const subcategories = await this.pcRepo.getProductCategoryByParentId({
+      parent: existingPC.id
     });
     if (subcategories.length > 0) {
       throw new BadRequestException(
@@ -166,10 +174,12 @@ export class ProductCategoryService {
     return this.getHierarchy('0');
   }
 
-  async findByIdOrFail(pcId: ID){
-    const existingPC = await this.pcRepo.findById(pcId)
-    if (!existingPC){
-      throw new BadRequestException(`User with id ${pcId} not found`);
+  async findByIdOrFail(pcId: ID) {
+    const existingPC = await this.pcRepo.findById(pcId);
+    if (!existingPC) {
+      throw new BadRequestException(
+        `Product Category with id ${pcId} not found`
+      );
     }
     return existingPC;
   }
@@ -200,30 +210,5 @@ export class ProductCategoryService {
       })}`
     );
     return await this.pcRepo.persist(existingPC);
-  }
-
-  async onApplicationBootstrap() {
-    ctxSrv.setTenantId(DEFAULT_TENANT);
-    await this.addProductCategory({
-      name: 'name1',
-      parent: '0',
-    });
-
-    const pc2 = await this.addProductCategory({
-      name: 'name2',
-      parent: '0',
-    });
-
-    const pc3 = await this.addProductCategory({
-      name: 'name3',
-      parent: '0',
-    });
-
-    await this.updateProductCategory({
-      id: pc3.id,
-      parent: pc2.id,
-    });
-
-    // await this.findAllProductCategories({ tree: null, sortBy: 'name', sortOrder: 'desc' });
   }
 }

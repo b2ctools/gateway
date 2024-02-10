@@ -106,6 +106,4 @@ export class UserService {
     existingUser.failedLogin = 0;
     return await this.userRepo.persist(existingUser);
   }
-
-
 }

@@ -10,6 +10,6 @@ export class AddStoreUseCase {
   ) {}
 
   async execute(command: AddStoreCommand){
-    return await this.StoreService.AddStore(command);
+    return await this.StoreService.addStore(command);
   }
 }
