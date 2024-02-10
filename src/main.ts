@@ -12,7 +12,7 @@ import { AppModule } from './app/app.module';
 import { config } from './app/config/config.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   
@@ -26,3 +26,4 @@ async function bootstrap() {
 }
 
 bootstrap();
+

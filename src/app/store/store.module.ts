@@ -12,6 +12,6 @@ import { AuthModule } from '../auth/auth.module';
   controllers: [AddStoreController, SearchStoreController],
   providers: [AddStoreUseCase, SearchStoreUseCase, StoreService, getStoreRepo()],
 
-  exports: [],
+  exports: [StoreService],
 })
 export class StoreModule {}

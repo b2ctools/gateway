@@ -3,6 +3,7 @@ import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
+import { ID } from "../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class StoreService {
@@ -20,7 +21,7 @@ export class StoreService {
         }
     }
 
-    async AddStore(command: AddStoreCommand){
+    async addStore(command: AddStoreCommand){
 
         await this.verifyStoreName(command.name);
         const store: Store = {
@@ -29,12 +30,28 @@ export class StoreService {
             ...command,
         }
 
+        console.log('Adding Store ', {
+            name: store.name,
+            description: store.description,
+        });
         return await this.storeRepo.create(store);
     }
+
+    async findByIdOrFail(storeId: ID){
+        const existingPC = await this.storeRepo.findById(storeId)
+        if (!existingPC){
+          throw new BadRequestException(`Store with id ${storeId} not found`);
+        }
+        return existingPC;
+      }
+    
 
     async findAllStores(request: SearchRequest) {
         this.storeRepo.logItems()
         return await this.storeRepo.findAll(request);
     }
 
+    async onApplicationBootstrap(){
+        
+    }
 }

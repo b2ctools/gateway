@@ -12,7 +12,7 @@ export class AddStoreController {
   ) {}
 
   @Post()
-  async AddStore(@Body() request: AddStoreRequest) {
+  async addStore(@Body() request: AddStoreRequest) {
     return await this.useCase.execute(new AddStoreCommand(request));
   }
 }

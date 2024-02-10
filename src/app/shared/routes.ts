@@ -5,6 +5,8 @@ export const storePath = 'store';
 export const productCategoryPath = 'product-category';
 export const brandPath = 'brand';
 export const countryPath = 'country';
+export const samplePath = 'sample';
+
 
 export const excludeRoutes = [
   { path: '/', method: RequestMethod.GET },
@@ -17,10 +19,10 @@ export const excludeRoutes = [
   { path: userPath + '/recover-password', method: RequestMethod.POST },
 
   // TODO: just for testing... remove it later.
-  { path: brandPath, method: RequestMethod.POST },
-  { path: brandPath, method: RequestMethod.GET },
-  { path: brandPath + '/:id', method: RequestMethod.DELETE },
-
+  { path: samplePath, method: RequestMethod.POST },
+  { path: samplePath, method: RequestMethod.GET },
+  { path: samplePath + '/:id', method: RequestMethod.DELETE },
+  { path: samplePath, method: RequestMethod.PATCH },
   
 
 ];

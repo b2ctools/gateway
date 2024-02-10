@@ -1,5 +1,4 @@
 
-import { ID } from '../../../shared/abstract-repository/repository.interface';
 import { Brand } from '../../domain/brand.interface';
 import { AddBrandRequest } from './add-brand.request';
 
@@ -8,7 +7,6 @@ export class AddBrandCommand
 {
   name: string;
   description?: string;
-  parent: ID;
 
   constructor(request: AddBrandRequest) {
     const { name, description } = request;

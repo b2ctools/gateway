@@ -39,6 +39,11 @@ export class BrandService {
       ...command,      
     }
 
+    console.log('Adding Brand ', {
+      name: brand.name,
+      description: brand.description,
+    });
+
     return await this.brandRepo.create(brand);
   }
 
@@ -47,7 +52,6 @@ export class BrandService {
   }
 
   async findAllBrands(request: SearchRequest): Promise<Brand[]> {
-    this.brandRepo.logItems()
     return await this.brandRepo.findAll(request);
   }
 
