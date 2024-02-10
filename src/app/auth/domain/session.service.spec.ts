@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { describe } from 'node:test';
 import { TestingSessionService } from './session.service';
 

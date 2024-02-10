@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { LogoutUseCase } from './logout.usecase';
 import { sessionService } from '../../domain/session.service'
 

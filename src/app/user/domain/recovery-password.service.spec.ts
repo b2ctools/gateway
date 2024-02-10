@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { JwtService } from '@nestjs/jwt';
 import { TokenService } from '../../auth/domain/token.service';
 import { EmailService } from '../../notification/domain/email.service';
