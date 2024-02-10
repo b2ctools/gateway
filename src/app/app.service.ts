@@ -11,23 +11,6 @@ import { ProductCategoryService } from './product-category/domain/product-catego
 @Injectable()
 export class AppService {
 
-  constructor(
-    @Inject(UserService)
-    private readonly userService: UserService,
-
-    @Inject(StoreService)
-    private readonly soreService: StoreService,
-
-    @Inject(BrandService)
-    private readonly brandService: BrandService,
-
-    @Inject(CountryService)
-    private readonly countryService: CountryService,
-
-    @Inject(ProductCategoryService)
-    private readonly productCategoryService: ProductCategoryService
-  ){}
-
   @Roles([UserRole.ADMIN, UserRole.OWNER])
   getData(): { message: string } {
     const message = 'Welcome to Platform CU Backend System!';
@@ -35,11 +18,4 @@ export class AppService {
     return { message };
   }
 
-  onApplicationBootstrap(){
-    getMockedUserList().map((user) => this.userService.registerUser(user));
-    getMockedStoreList().map((store) => this.soreService.addStore(store));
-    getMockedBrandList().map((brand) => this.brandService.addBrand(brand));
-    getMockedCountryList().map((country) => this.countryService.addCountry(country));
-    getMockedProductCategoryList().map((pc) => this.productCategoryService.addProductCategory(pc));
-  }
 }

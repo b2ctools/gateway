@@ -11,11 +11,12 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { BrandModule } from './brand/brand.module';
 import { CountryModule } from './country/country.module';
 import { SampleModule } from './sample/sample.module';
+import { InitService } from './init';
 
 @Module({
   imports: [UserModule, AuthModule, StoreModule, ProductCategoryModule, BrandModule, CountryModule, SampleModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, InitService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

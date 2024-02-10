@@ -1,3 +1,4 @@
+require('dotenv').config()
 import { genId } from '../../shared/utils/gen-id';
 import { UserRole, UserStatus } from '../../user/domain/user.interface';
 import { encodePassword } from './encoder.service';
