@@ -1,3 +1,4 @@
+import { ID } from 'src/app/shared/abstract-repository/repository.interface';
 import { MockedEntity } from '../../../shared/abstract-repository/entities/mocked-entity';
 import { User, UserRole, UserStatus } from '../../domain/user.interface';
 
@@ -10,4 +11,15 @@ export class UserMockedEntity extends MockedEntity implements Omit<User, 'id'> {
     role: UserRole;
     recoveryPasswordCode: string;
     failedLogin: number;
+    nickname: string;
+    phone: string;
+    isEmailVerified: boolean;
+    isPhoneVerified: boolean;
+    avatar: string;
+    birthDay: Date;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    countryId: ID;
 }

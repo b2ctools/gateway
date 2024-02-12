@@ -166,7 +166,6 @@ export abstract class MockedRepository<
     const e = this.domainToEntity(d);
     e._id = id;
     this.elements[id] = e.toCreate();
-
     return this.entityToDomain(e);
   }
 
