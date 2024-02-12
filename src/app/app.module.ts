@@ -12,9 +12,10 @@ import { BrandModule } from './brand/brand.module';
 import { CountryModule } from './country/country.module';
 import { SampleModule } from './sample/sample.module';
 import { InitService } from './init';
+import { AccessModule } from './access/access.module';
 
 @Module({
-  imports: [UserModule, AuthModule, StoreModule, ProductCategoryModule, BrandModule, CountryModule, SampleModule],
+  imports: [UserModule, AuthModule, StoreModule, ProductCategoryModule, BrandModule, CountryModule, SampleModule, AccessModule],
   controllers: [AppController],
   providers: [AppService, InitService],
 })
