@@ -1,13 +1,29 @@
 import casual from 'casual';
 
 import { DEFAULT_TENANT } from "../context.service"
+import { UserRole } from 'src/app/user/domain/user.interface';
 
 export const getMockedUserList = () => {
+
+    const commondData = {
+        nickname: '',
+        phone: '',
+        avatar: '',
+        birthDay: new Date(),
+        address: casual.address1,
+        city: casual.city,
+        state: casual.state_abbr,
+        zip: casual.zip(8),
+        countryId: null,
+        role: UserRole.USER,
+    }
+
     const users = [{
         name: 'Elmer Entenza', //casual.name,
         email: 'elmer@email.com', //casual.email.toLowerCase(),
         password: '12345', //casual.password,
         tenantId: DEFAULT_TENANT,
+        ...commondData,
     }]
     Array(25).fill(null).map(() => {
         users.push({
@@ -15,6 +31,7 @@ export const getMockedUserList = () => {
             email: casual.email.toLowerCase(),
             password: casual.password,
             tenantId: DEFAULT_TENANT,
+            ...commondData,
         })
     })
 

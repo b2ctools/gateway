@@ -1,3 +1,4 @@
+import { ID } from 'src/app/shared/abstract-repository/repository.interface';
 import { IDomain } from '../../shared/abstract-repository/entities/domain';
 
 export enum UserStatus {
@@ -14,12 +15,23 @@ export enum UserRole {
 export interface User extends IDomain {
 
   name: string;
+  nickname: string;
   email: string;
   password: string;
   status: UserStatus;
   role: UserRole;
   recoveryPasswordCode: string;
   failedLogin: number;
+  phone: string;
+  isEmailVerified: boolean;
+  isPhoneVerified: boolean;
+  avatar: string;
+  birthDay: Date;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  countryId: ID;
 }
 
 export interface UserDto extends Omit<User, 'password'>{}
@@ -35,4 +47,12 @@ export const userToDto = (u: User): UserDto => {
 export const sortable = [
   'name',
   'email',
+  'nickname',
+  'status',
+  'role',
+  'phone',
+  'birthDay',
+  'city',
+  'state',
+  'zip',
 ]

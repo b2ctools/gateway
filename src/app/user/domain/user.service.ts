@@ -32,11 +32,13 @@ export class UserService {
     ctxSrv.setTenantId(comand.tenantId)
 
     const user: User = {
+      ...comandInfo,
       id: null,
       tenantId: null,
       recoveryPasswordCode: null,
       failedLogin: 0,
-      ...comandInfo,
+      isEmailVerified: false,
+      isPhoneVerified: false,
       status: UserStatus.ENABLED,
       role: UserRole.USER,
       password: encodePassword(password),
@@ -105,5 +107,44 @@ export class UserService {
     const existingUser = await this.findByIdOrFail(userId)
     existingUser.failedLogin = 0;
     return await this.userRepo.persist(existingUser);
+  }
+
+  async enableUser(userInfo: Partial<Omit<User, ', tenantId' | 'password'>>){
+    const {id, name, nickname, email, phone, role, status, avatar, birthDay, address, city, zip, countryId, isEmailVerified, isPhoneVerified} = userInfo;
+    const user = await this.findByIdOrFail(id);
+
+    const userToUpdate = {
+      ...user,
+      ...(name ? { name } : {}),
+      ...(nickname ? { nickname } : {}),
+      ...(email ? { email } : {}),
+      ...(phone ? { phone } : {}),
+      ...(role ? { role } : {}),
+      ...(status ? { status } : {}),
+      ...(avatar ? { avatar } : {}),
+      ...(birthDay ? { birthDay } : {}), 
+      ...(address ? { address } : {}),
+      ...(city ? { city } : {}),
+      ...(zip ? { zip } : {}),
+      ...(countryId ? { countryId } : {}),
+      ...(isEmailVerified ? { isEmailVerified } : {}),
+      ...(isPhoneVerified ? { isPhoneVerified } : {}),
+    }
+
+    console.log(
+      `Updating User - ${JSON.stringify({ userToUpdate })}`
+    );
+
+    return await this.userRepo.persist(userToUpdate);
+
+  }
+
+  async me() {
+    const userId = ctxSrv.getUserId();
+    try {
+      return await this.findByIdOrFail(userId);
+    } catch (error) {
+      throw new BadRequestException(`Error fetching user with id ${userId}`);
+    }
   }
 }

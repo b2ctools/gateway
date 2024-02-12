@@ -12,13 +12,15 @@ import { SendRecoveryTokenUseCase } from './application/send-recovery-token/send
 import { SendRecoveryTokenController } from './application/send-recovery-token/send-recovery-token.controller';
 import { RecoverPasswordController } from './application/recover-password/recover-password.controller';
 import { RecoverPasswordUseCase } from './application/recover-password/recover-password.usecase';
+import { CountryModule } from '../country/country.module';
+import { MeController } from './application/me/me.controller';
 @Module({
   imports: [
     NotificationModule,
     forwardRef(() => AuthModule),
-
+    CountryModule,
   ],
-  controllers: [RegisterUserController, SearchUsersController, SendRecoveryTokenController, RecoverPasswordController],
+  controllers: [RegisterUserController, SearchUsersController, SendRecoveryTokenController, RecoverPasswordController, MeController],
   providers: [RegisterUserUseCase, SearchUsersUseCase, UserService, getUserRepo(), RecoveryPasswordService, SendRecoveryTokenUseCase, RecoverPasswordUseCase],
   exports: [UserService, RecoveryPasswordService],
 })
