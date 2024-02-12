@@ -14,14 +14,16 @@ import { RecoverPasswordController } from './application/recover-password/recove
 import { RecoverPasswordUseCase } from './application/recover-password/recover-password.usecase';
 import { CountryModule } from '../country/country.module';
 import { MeController } from './application/me/me.controller';
+import { UpdateUserController } from './application/update-user/update-user.controller';
+import { UpdateUserUseCase } from './application/update-user/update-user.usecase';
 @Module({
   imports: [
     NotificationModule,
     forwardRef(() => AuthModule),
     CountryModule,
   ],
-  controllers: [RegisterUserController, SearchUsersController, SendRecoveryTokenController, RecoverPasswordController, MeController],
-  providers: [RegisterUserUseCase, SearchUsersUseCase, UserService, getUserRepo(), RecoveryPasswordService, SendRecoveryTokenUseCase, RecoverPasswordUseCase],
+  controllers: [RegisterUserController, SearchUsersController, SendRecoveryTokenController, RecoverPasswordController, MeController, UpdateUserController],
+  providers: [RegisterUserUseCase, SearchUsersUseCase, UserService, getUserRepo(), RecoveryPasswordService, SendRecoveryTokenUseCase, RecoverPasswordUseCase, UpdateUserUseCase],
   exports: [UserService, RecoveryPasswordService],
 })
 export class UserModule {}

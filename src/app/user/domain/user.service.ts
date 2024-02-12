@@ -92,7 +92,7 @@ export class UserService {
   async findByIdOrFail(userId: ID){
     const existingUser = await this.userRepo.findById(userId)
     if (!existingUser){
-      throw new Error(`Inc Failed Loging Error. User with id ${userId} not found`);
+      throw new BadRequestException(`User with id ${userId} not found`);
     }
     return existingUser;
   }
@@ -109,7 +109,7 @@ export class UserService {
     return await this.userRepo.persist(existingUser);
   }
 
-  async enableUser(userInfo: Partial<Omit<User, ', tenantId' | 'password'>>){
+  async updateUser(userInfo: Partial<Omit<User, ', tenantId' | 'password'>>){
     const {id, name, nickname, email, phone, role, status, avatar, birthDay, address, city, zip, countryId, isEmailVerified, isPhoneVerified} = userInfo;
     const user = await this.findByIdOrFail(id);
 

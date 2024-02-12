@@ -4,19 +4,6 @@ import { User, UserRole, UserStatus } from "../../domain/user.interface";
 import { Optional } from "@nestjs/common";
 
 export class UpdateUserRequest
-  implements
-    Partial<
-      Omit<
-        User,
-        | "tenantId"
-        | "status"
-        | "role"
-        | "isEmailVerified"
-        | "isPhoneVerified"
-        | "failedLogin"
-        | "recoveryPasswordCode"
-      >
-    >
 {
   @IsNotEmpty()
   @IsString()
@@ -47,41 +34,41 @@ export class UpdateUserRequest
   avatar: string;
 
   @IsEnum(UserStatus)
-  @Optional()
+  @IsOptional()
   status: UserStatus;
   
   @IsEnum(UserRole)
-  @Optional()
+  @IsOptional()
   role: UserRole;
   
   @IsNotEmpty()
   @IsDateString()
-  @Optional()
+  @IsOptional()
   birthDay: Date;
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   address: string;
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   city: string;
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   state: string;
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   zip: string;
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   countryId: ID;
 
 }
