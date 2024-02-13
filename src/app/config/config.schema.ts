@@ -29,6 +29,7 @@ export const envVarsSchema = Joi.object({
     BRAND_REPO: Joi.string().valid('mock', 'mongo').required(),
     COUNTRY_REPO: Joi.string().valid('mock', 'mongo').required(),
     SAMPLE_REPO: Joi.string().valid('mock', 'mongo').required(),
+    ACCOUNT_REPO: Joi.string().valid('mock', 'mongo').required(),
 
 
     DISABLED_LOGIN: Joi.string().required(),
@@ -55,6 +56,8 @@ export const envVarValues = {
     BRAND_REPO: process.env.BRAND_REPO,
     COUNTRY_REPO: process.env.COUNTRY_REPO,
     SAMPLE_REPO: process.env.SAMPLE_REPO,
+    ACCOUNT_REPO: process.env.ACCOUNT_REPO,
+    
     
 
 
