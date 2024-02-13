@@ -1,3 +1,4 @@
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { genId } from "src/app/shared/utils/gen-id";
 
 const permissions = ["create", "read", "update", "delete"];
@@ -157,3 +158,21 @@ export const jsonPermissions = [
     ],
   },
 ];
+
+export const isValidPermission = (permission: ID) => {
+
+  const permissionList = () => {
+    const result: ID[] = jsonPermissions.flatMap((resourse) => {
+      return resourse.permissions.map((permission) => permission.id)
+    });
+    return result;
+  }
+
+  return permissionList().includes(permission);
+}
+
+export const getPermissionsList = () => {
+  return jsonPermissions.flatMap((resourse) => {
+    return resourse.permissions.map((permission) => permission.id)
+  });
+}
