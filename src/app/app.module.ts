@@ -14,6 +14,7 @@ import { SampleModule } from "./sample/sample.module";
 import { InitService } from "./init";
 import { AccessModule } from "./access/access.module";
 import { AccountModule } from "./account/account.module";
+import { ClientModule } from "./client/client.module";
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { AccountModule } from "./account/account.module";
     SampleModule,
     AccessModule,
     AccountModule,
+    ClientModule,
   ],
   controllers: [AppController],
   providers: [AppService, InitService],

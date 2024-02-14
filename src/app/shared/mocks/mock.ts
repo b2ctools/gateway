@@ -15,21 +15,37 @@ export const getMockedUserList = () => {
         state: casual.state_abbr,
         zip: casual.zip(8),
         countryId: null,
-        role: UserRole.USER,
     }
 
+    //  elmer
     const users = [{
         name: 'Elmer Entenza', //casual.name,
         email: 'elmer@email.com', //casual.email.toLowerCase(),
         password: '12345', //casual.password,
         tenantId: DEFAULT_TENANT,
+        role: UserRole.USER,
         ...commondData,
     }]
-    Array(25).fill(null).map(() => {
+
+    // random users
+    Array(3).fill(null).map(() => {
         users.push({
             name: casual.name,
             email: casual.email.toLowerCase(),
-            password: casual.password,
+            password: '12345',
+            role: UserRole.USER,
+            tenantId: DEFAULT_TENANT,
+            ...commondData,
+        })
+    })
+
+    // random clients
+    Array(3).fill(null).map(() => {
+        users.push({
+            name: casual.name,
+            email: casual.email.toLowerCase(),
+            password: '12345',
+            role: UserRole.CLIENT,
             tenantId: DEFAULT_TENANT,
             ...commondData,
         })
