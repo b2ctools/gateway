@@ -7,6 +7,8 @@ export const brandPath = 'brand';
 export const countryPath = 'country';
 export const samplePath = 'sample';
 export const accountPath = 'account';
+export const orderPath = 'order';
+export const clientPath = 'client';
 
 
 export const excludeRoutes = [

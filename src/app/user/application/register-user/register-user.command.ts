@@ -1,13 +1,14 @@
 import { ID } from '../../../shared/abstract-repository/repository.interface';
+import { User, UserRole } from '../../domain/user.interface';
 import { RegisterUserRequest } from './register-user.request';
 
-export class RegisterUserCommand {
+export class RegisterUserCommand implements Omit<User, 'id' | 'status' | 'recoveryPasswordCode' | 'failedLogin' | 'isEmailVerified' | 'isPhoneVerified'> {
   name: string;
   password: string;
   email: string;
   tenantId: ID;
   nickname: string;
-  role: string;
+  role: UserRole;
   phone: string;
   avatar: string;
   birthDay: Date;

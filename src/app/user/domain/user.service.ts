@@ -40,7 +40,6 @@ export class UserService {
       isEmailVerified: false,
       isPhoneVerified: false,
       status: UserStatus.ENABLED,
-      role: UserRole.USER,
       password: encodePassword(password),
     };
 
@@ -146,5 +145,18 @@ export class UserService {
     } catch (error) {
       throw new BadRequestException(`Error fetching user with id ${userId}`);
     }
+  }
+
+  async removeUser_id(userId: ID) {
+    const user = await this.findByIdOrFail(userId);
+    await this.userRepo.delete(userId);
+  }
+
+  async removeUser_email(email: string) {
+    const user = await this.findUserByEmail(email);
+    if (user) {
+      return new BadRequestException(`User with email ${email} not found`);
+    }
+    await this.userRepo.delete(user.id);
   }
 }
