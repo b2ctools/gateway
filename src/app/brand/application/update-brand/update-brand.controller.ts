@@ -6,15 +6,15 @@ import { UpdateBrandRequest } from "./update-brand.request";
 
 @Controller(brandPath)
 export class UpdateBrandController {
-    constructor(
-        @Inject(UpdateBrandUseCse)
-        private readonly useCase: UpdateBrandUseCse,
-    ){}
+  constructor(
+    @Inject(UpdateBrandUseCse)
+    private readonly useCase: UpdateBrandUseCse,
+  ) {}
 
-    @Patch()
-    async updateBrand(@Body() request: UpdateBrandRequest){
-        const { id, name, description} = request
-        const pc = await this.useCase.execute({ id, name, description})
-        return brandToDto(pc);
-    }
+  @Patch()
+  async updateBrand(@Body() request: UpdateBrandRequest) {
+    const { id, name, description } = request;
+    const pc = await this.useCase.execute({ id, name, description });
+    return brandToDto(pc);
+  }
 }

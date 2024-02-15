@@ -1,12 +1,12 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { UserService } from '../../user/domain/user.service';
-import { isValidPassword } from './encoder.service';
-import { genId } from '../../shared/utils/gen-id';
-import { Credentials } from '../aplication/login/login.request';
-import { Token, TokenService } from './token.service';
-import { User } from '../../user/domain/user.interface';
-import { ID } from '../../shared/abstract-repository/repository.interface';
-import { sessionService } from './session.service';
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { UserService } from "../../user/domain/user.service";
+import { isValidPassword } from "./encoder.service";
+import { genId } from "../../shared/utils/gen-id";
+import { Credentials } from "../aplication/login/login.request";
+import { Token, TokenService } from "./token.service";
+import { User } from "../../user/domain/user.interface";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+import { sessionService } from "./session.service";
 
 export interface LoginResponse {
   accessToken: Token;
@@ -24,42 +24,44 @@ export class LoginService {
     private readonly userService: UserService,
 
     @Inject(TokenService)
-    private readonly tokenService: TokenService
+    private readonly tokenService: TokenService,
   ) {}
 
-  private async findUser(email: string){
+  private async findUser(email: string) {
     const existingUser = await this.userService.findUserByEmail(email);
     if (!existingUser)
       throw new BadRequestException(
-        `Failed Loing. User with email [${email}] was not found.`
+        `Failed Loing. User with email [${email}] was not found.`,
       );
     return existingUser;
   }
 
-  private async validatePassword(password: string, existingUser: User){
+  private async validatePassword(password: string, existingUser: User) {
     const validPass = await isValidPassword(password, existingUser.password);
-    if (!validPass){
+    if (!validPass) {
       const user = await this.userService.incFailedLogin(existingUser.id);
       sessionService.atempToDisableUserLogin(user);
-      throw new BadRequestException(`Failed Loing. Incorrect password.`);    
+      throw new BadRequestException(`Failed Loing. Incorrect password.`);
     }
-    if (existingUser.failedLogin != 0) await this.userService.resetFailedLogin(existingUser.id);
+    if (existingUser.failedLogin != 0)
+      await this.userService.resetFailedLogin(existingUser.id);
   }
 
   private verifyLogin(userID: ID) {
-    if (!sessionService.canLogin(userID)){
-      throw new BadRequestException('The login action for that user is temporaly disable, try later.')
+    if (!sessionService.canLogin(userID)) {
+      throw new BadRequestException(
+        "The login action for that user is temporaly disable, try later.",
+      );
     }
   }
-  
 
   async login(credentials: Credentials): Promise<LoginResponse> {
     const { email, password } = credentials;
-    
+
     const existingUser = await this.findUser(email);
     this.verifyLogin(existingUser.id);
-    await this.validatePassword(password, existingUser)
-    
+    await this.validatePassword(password, existingUser);
+
     console.log(`Loging wiht email ->  ${email}`);
     const session = genId();
     this.tokenService.setSession(session);
@@ -70,6 +72,4 @@ export class LoginService {
       session,
     };
   }
-
-
 }

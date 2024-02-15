@@ -3,11 +3,11 @@ import {
   Inject,
   Injectable,
   NestMiddleware,
-} from '@nestjs/common';
-import { Request, Response, NextFunction } from 'express';
-import { ctxSrv } from '../../../shared/context.service';
-import { TokenService } from '../token.service';
-import { fetchTokenFromRequest } from './token-from-request';
+} from "@nestjs/common";
+import { Request, Response, NextFunction } from "express";
+import { ctxSrv } from "../../../shared/context.service";
+import { TokenService } from "../token.service";
+import { fetchTokenFromRequest } from "./token-from-request";
 
 /** Middleware to fetch header info from request */
 
@@ -15,7 +15,7 @@ import { fetchTokenFromRequest } from './token-from-request';
 export class HeaderCheckMiddleware implements NestMiddleware {
   constructor(
     @Inject(TokenService)
-    private readonly tokenService: TokenService
+    private readonly tokenService: TokenService,
   ) {}
 
   private fetchUserAndTenantFromToken(token: string) {
@@ -29,7 +29,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const token = fetchTokenFromRequest(req);
     if (!token)
-      throw new ForbiddenException('Auth Error. Token must be specified.');
+      throw new ForbiddenException("Auth Error. Token must be specified.");
     const { tenantId, userId } = this.fetchUserAndTenantFromToken(token);
 
     console.log(`
@@ -40,11 +40,11 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     `);
 
     if (!tenantId) {
-      return res.status(400).send('TenantId header is missing');
+      return res.status(400).send("TenantId header is missing");
     }
 
     if (!userId) {
-      return res.status(400).send('UserId header is missing');
+      return res.status(400).send("UserId header is missing");
     }
 
     ctxSrv.setTenantId(tenantId);

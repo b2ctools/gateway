@@ -4,12 +4,12 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class RemoveCountryUseCase {
-    constructor(
-        @Inject(CountryService)
-        private readonly countryService: CountryService,
-    ){}
+  constructor(
+    @Inject(CountryService)
+    private readonly countryService: CountryService,
+  ) {}
 
-    async execute(countryId: ID){
-        await this.countryService.removeCountry(countryId);
-    }
+  async execute(countryId: ID) {
+    await this.countryService.removeCountry(countryId);
+  }
 }

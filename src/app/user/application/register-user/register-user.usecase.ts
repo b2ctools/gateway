@@ -12,7 +12,7 @@ export class RegisterUserUseCase {
     private readonly userService: UserService,
 
     @Inject(CountryService)
-    private readonly countryService: CountryService
+    private readonly countryService: CountryService,
   ) {}
 
   private async validateCountry(countryId: ID): Promise<void> {

@@ -5,15 +5,14 @@ import { userToDto } from "../../domain/user.interface";
 
 @Controller(userPath)
 export class MeController {
-    constructor(
-        @Inject(UserService)
-        private readonly userService: UserService
-    ) {}
+  constructor(
+    @Inject(UserService)
+    private readonly userService: UserService,
+  ) {}
 
-    @Get('/me')
-    async me() {
-        const user = await this.userService.me()
-        return userToDto(user)
-    }
-
+  @Get("/me")
+  async me() {
+    const user = await this.userService.me();
+    return userToDto(user);
+  }
 }

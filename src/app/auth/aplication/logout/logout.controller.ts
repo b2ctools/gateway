@@ -4,17 +4,17 @@ import { LogoutUseCase } from "./logout.usecase";
 
 @Controller()
 export class LogoutController {
-    constructor(
-        @Inject(LogoutUseCase)
-        private readonly useCase: LogoutUseCase,
-    ){}
+  constructor(
+    @Inject(LogoutUseCase)
+    private readonly useCase: LogoutUseCase,
+  ) {}
 
-    @Post('/logout')
-    logout(@Body() request: LogoutRequest){
-        const { accessToken } = request;
-        this.useCase.execute(accessToken);
-        return {
-            message: 'Logout sucessfully'
-        }
-    }
+  @Post("/logout")
+  logout(@Body() request: LogoutRequest) {
+    const { accessToken } = request;
+    this.useCase.execute(accessToken);
+    return {
+      message: "Logout sucessfully",
+    };
+  }
 }

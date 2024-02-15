@@ -1,9 +1,9 @@
-import { ID } from '../../../shared/abstract-repository/repository.interface';
-import { Sample } from '../../domain/sample.interface';
-import { ILocations, IPrice, IUnit, IWeight } from '../common.request';
-import { AddSampleRequest } from './add-sample.request';
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { Sample } from "../../domain/sample.interface";
+import { ILocations, IPrice, IUnit, IWeight } from "../common.request";
+import { AddSampleRequest } from "./add-sample.request";
 
-export class AddSampleCommand implements Omit<Sample, 'id' | 'tenantId'> {
+export class AddSampleCommand implements Omit<Sample, "id" | "tenantId"> {
   name: string;
   description?: string;
   parent: ID;

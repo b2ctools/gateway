@@ -6,14 +6,14 @@ import { userPath } from "../../../shared/routes";
 
 @Controller(userPath)
 export class RecoverPasswordController {
-    constructor(
-        @Inject(RecoverPasswordUseCase)
-        private readonly useCase: RecoverPasswordUseCase,
-    ){}
+  constructor(
+    @Inject(RecoverPasswordUseCase)
+    private readonly useCase: RecoverPasswordUseCase,
+  ) {}
 
-    @Post('recover-password')
-    async recoverPassword(@Body() request: RecoverPasswordRequest){
-        await this.useCase.execute(new RecoverPasswordCommand(request));
-        return { message: 'Password succesfully reset!' }
-    }
+  @Post("recover-password")
+  async recoverPassword(@Body() request: RecoverPasswordRequest) {
+    await this.useCase.execute(new RecoverPasswordCommand(request));
+    return { message: "Password succesfully reset!" };
+  }
 }

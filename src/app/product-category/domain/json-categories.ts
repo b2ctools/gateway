@@ -1,74 +1,73 @@
-import { JsonProductCategoryItem } from './product-category.service';
+import { JsonProductCategoryItem } from "./product-category.service";
 
 export const jsonCategories: JsonProductCategoryItem[] = [
   {
-    name: 'Carnes',
+    name: "Carnes",
     subcategories: [
       {
-        name: 'Cerdo',
+        name: "Cerdo",
         subcategories: [
           {
-            name: 'Chuleta de Cerdo',
+            name: "Chuleta de Cerdo",
           },
         ],
       },
       {
-        name: 'Res',
+        name: "Res",
         subcategories: [
           {
-            name: 'Filete de Res',
+            name: "Filete de Res",
           },
         ],
       },
     ],
   },
   {
-    name: 'Perfumes',
+    name: "Perfumes",
     subcategories: [
       {
-        name: 'Perfumes Masculinos',
+        name: "Perfumes Masculinos",
         subcategories: [
           {
-            name: 'Perfume EL',
+            name: "Perfume EL",
           },
         ],
       },
       {
-        name: 'Perfumes Femeninos',
+        name: "Perfumes Femeninos",
         subcategories: [
           {
-            name: 'Perfume Alicia',
+            name: "Perfume Alicia",
           },
         ],
       },
     ],
   },
   {
-    name: 'Ropa',
+    name: "Ropa",
     subcategories: [
       {
-        name: 'Ropa de Hombre',
+        name: "Ropa de Hombre",
         subcategories: [
           {
-            name: 'Pantalon',
+            name: "Pantalon",
           },
           {
-            name: 'Calsoncillo',
+            name: "Calsoncillo",
           },
         ],
       },
       {
-        name: 'Ropa de Mujer',
+        name: "Ropa de Mujer",
         subcategories: [
           {
-            name: 'Ajustador',
+            name: "Ajustador",
           },
           {
-            name: 'Blumer',
+            name: "Blumer",
           },
         ],
       },
     ],
   },
 ];
-

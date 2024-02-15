@@ -1,10 +1,9 @@
-
-import { ID } from '../../../shared/abstract-repository/repository.interface';
-import { Account, Scope } from '../../domain/account.interface';
-import { AddAccountRequest } from './add-account.request';
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { Account, Scope } from "../../domain/account.interface";
+import { AddAccountRequest } from "./add-account.request";
 
 export class AddAccountCommand
-  implements Omit<Account, 'id' | 'tenantId' | 'permissions'>
+  implements Omit<Account, "id" | "tenantId" | "permissions">
 {
   userId: ID;
   storeId: ID;
@@ -15,6 +14,5 @@ export class AddAccountCommand
     this.userId = userId;
     this.storeId = storeId;
     this.scope = scope;
-        
   }
 }

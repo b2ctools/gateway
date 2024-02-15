@@ -1,6 +1,6 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { UserService } from '../../domain/user.service';
-import { SearchRequest } from '../../../shared/base.request';
+import { Injectable, Inject } from "@nestjs/common";
+import { UserService } from "../../domain/user.service";
+import { SearchRequest } from "../../../shared/base.request";
 
 @Injectable()
 export class SearchUsersUseCase {

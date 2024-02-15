@@ -4,13 +4,13 @@ import { RefreshTokenRequest } from "./refresh-token.request";
 
 @Controller()
 export class RefreshController {
-    constructor(
-        @Inject(RefreshTokenUseCase)
-        private readonly useCase : RefreshTokenUseCase,
-    ){}
+  constructor(
+    @Inject(RefreshTokenUseCase)
+    private readonly useCase: RefreshTokenUseCase,
+  ) {}
 
-    @Post('/refresh-token')
-    async refreshToken(@Body() request: RefreshTokenRequest) {
-        return await this.useCase.execute(request);
-    }
+  @Post("/refresh-token")
+  async refreshToken(@Body() request: RefreshTokenRequest) {
+    return await this.useCase.execute(request);
+  }
 }

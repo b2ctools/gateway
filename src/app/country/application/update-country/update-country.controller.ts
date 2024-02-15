@@ -7,14 +7,14 @@ import { UpdateCountryCommand } from "./update-country.command";
 
 @Controller(countryPath)
 export class UpdateCountryController {
-    constructor(
-        @Inject(UpdateCountryUseCse)
-        private readonly useCase: UpdateCountryUseCse,
-    ){}
+  constructor(
+    @Inject(UpdateCountryUseCse)
+    private readonly useCase: UpdateCountryUseCse,
+  ) {}
 
-    @Patch()
-    async UpdateCountry(@Body() request: UpdateCountryRequest){
-        const pc = await this.useCase.execute(new UpdateCountryCommand(request))
-        return countryToDto(pc);
-    }
+  @Patch()
+  async UpdateCountry(@Body() request: UpdateCountryRequest) {
+    const pc = await this.useCase.execute(new UpdateCountryCommand(request));
+    return countryToDto(pc);
+  }
 }

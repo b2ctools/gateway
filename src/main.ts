@@ -1,29 +1,29 @@
-require('dotenv').config()
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require("dotenv").config();
 
 /**
  * This is not a production server yet!
  * This is only a minimal backend to get started.
  */
 
-import { Logger, ValidationPipe } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
+import { Logger, ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
 
-import { AppModule } from './app/app.module';
-import { config } from './app/config/config.service';
+import { AppModule } from "./app/app.module";
+import { config } from "./app/config/config.service";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true});
-  const globalPrefix = 'api';
+  const app = await NestFactory.create(AppModule, { cors: true });
+  const globalPrefix = "api";
   app.setGlobalPrefix(globalPrefix);
-  
+
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
-  
-  const port = config.get('appPort');
+
+  const port = config.get("appPort");
   await app.listen(port);
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
   );
 }
 
 bootstrap();
-

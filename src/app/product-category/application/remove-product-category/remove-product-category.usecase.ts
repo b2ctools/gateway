@@ -4,12 +4,12 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class RemoveProductCategoryUseCase {
-    constructor(
-        @Inject(ProductCategoryService)
-        private readonly pcService: ProductCategoryService,
-    ) {}
+  constructor(
+    @Inject(ProductCategoryService)
+    private readonly pcService: ProductCategoryService,
+  ) {}
 
-    async execute(id: ID){
-        await this.pcService.removeProductCategory(id);
-    }
+  async execute(id: ID) {
+    await this.pcService.removeProductCategory(id);
+  }
 }

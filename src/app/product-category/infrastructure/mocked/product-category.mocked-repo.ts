@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { ProductCategoryMockedEntity } from './product-category.mocked-entity';
-import { ProductCategory } from '../../domain/product-category.interface';
-import { SearchSubProductCategoryRequest } from '../../application/sub-product-categories/sub-product-categories.request';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { ProductCategoryMockedEntity } from "./product-category.mocked-entity";
+import { ProductCategory } from "../../domain/product-category.interface";
+import { SearchSubProductCategoryRequest } from "../../application/sub-product-categories/sub-product-categories.request";
 
 @Injectable()
 export class ProductCategoryMockedRepository extends MockedRepository<
@@ -37,7 +37,9 @@ export class ProductCategoryMockedRepository extends MockedRepository<
     return filtered.length > 0 ? filtered.shift() : null;
   }
 
-  async getProductCategoryByParentId(request: SearchSubProductCategoryRequest): Promise<ProductCategory[]> {
+  async getProductCategoryByParentId(
+    request: SearchSubProductCategoryRequest,
+  ): Promise<ProductCategory[]> {
     const { parent } = request;
     const categories = await this.findAll(request);
     if (categories.length === 0) return [];

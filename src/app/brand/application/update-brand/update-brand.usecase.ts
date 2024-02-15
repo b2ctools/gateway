@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { ID } from '../../../shared/abstract-repository/repository.interface';
-import { BrandService } from '../../domain/brand.service';
+import { Inject, Injectable } from "@nestjs/common";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { BrandService } from "../../domain/brand.service";
 
 @Injectable()
 export class UpdateBrandUseCse {
   constructor(
     @Inject(BrandService)
-    private readonly brandService: BrandService
+    private readonly brandService: BrandService,
   ) {}
 
   async execute({

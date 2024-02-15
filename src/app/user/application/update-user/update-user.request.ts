@@ -1,10 +1,14 @@
-import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import {
+  IsDateString,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+} from "class-validator";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { User, UserRole, UserStatus } from "../../domain/user.interface";
-import { Optional } from "@nestjs/common";
+import { UserRole, UserStatus } from "../../domain/user.interface";
 
-export class UpdateUserRequest
-{
+export class UpdateUserRequest {
   @IsNotEmpty()
   @IsString()
   id: ID;
@@ -36,11 +40,11 @@ export class UpdateUserRequest
   @IsEnum(UserStatus)
   @IsOptional()
   status: UserStatus;
-  
+
   @IsEnum(UserRole)
   @IsOptional()
   role: UserRole;
-  
+
   @IsNotEmpty()
   @IsDateString()
   @IsOptional()
@@ -70,5 +74,4 @@ export class UpdateUserRequest
   @IsString()
   @IsOptional()
   countryId: ID;
-
 }

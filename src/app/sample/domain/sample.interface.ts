@@ -1,7 +1,12 @@
-
-import { IDomain } from '../../shared/abstract-repository/entities/domain';
-import { ID } from '../../shared/abstract-repository/repository.interface';
-import { ILocations, IPrice, ISampeImages, IUnit, IWeight } from '../application/common.request';
+import { IDomain } from "../../shared/abstract-repository/entities/domain";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  ILocations,
+  IPrice,
+  ISampeImages,
+  IUnit,
+  IWeight,
+} from "../application/common.request";
 
 export interface Sample extends IDomain {
   name: string;
@@ -23,7 +28,4 @@ export interface SampleDto extends Sample {}
 
 export const sampleToDto = (u: Sample): SampleDto => ({ ...u });
 
-export const sortable = [
-  'name',
-  'description',
-]
+export const sortable = ["name", "description"];

@@ -1,9 +1,9 @@
-import { ID } from '../../../shared/abstract-repository/repository.interface';
-import { ProductCategory } from '../../domain/product-category.interface';
-import { AddProductCategoryRequest } from './add-product-category.request';
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { ProductCategory } from "../../domain/product-category.interface";
+import { AddProductCategoryRequest } from "./add-product-category.request";
 
 export class AddProductCategoryCommand
-  implements Omit<ProductCategory, 'id' | 'tenantId'>
+  implements Omit<ProductCategory, "id" | "tenantId">
 {
   name: string;
   description?: string;

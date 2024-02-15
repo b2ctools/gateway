@@ -5,13 +5,13 @@ import { UpdateUserRequest } from "./update-user.request";
 
 @Controller(userPath)
 export class UpdateUserController {
-    constructor(
-        @Inject(UpdateUserUseCase)
-        private readonly useCase: UpdateUserUseCase,
-    ) {}
+  constructor(
+    @Inject(UpdateUserUseCase)
+    private readonly useCase: UpdateUserUseCase,
+  ) {}
 
-    @Patch()
-    async update(@Body() request: UpdateUserRequest){
-        return await this.useCase.execute(request);
-    }
+  @Patch()
+  async update(@Body() request: UpdateUserRequest) {
+    return await this.useCase.execute(request);
+  }
 }

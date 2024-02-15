@@ -1,4 +1,4 @@
-export type IOrder = 'asc' | 'desc';
+export type IOrder = "asc" | "desc";
 
 export interface SearchRequest {
   sortBy?: string;
@@ -18,17 +18,17 @@ export interface SearchOutput<T> {
 
 export const sanitazeSearchQueryParams = <T extends SearchRequest>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  request: any
+  request: any,
 ): T => {
-  let { sortOrder = '' } = request;
+  let { sortOrder = "" } = request;
   sortOrder = sortOrder.trim().toLowerCase();
   if (
     sortOrder &&
-    sortOrder != '' &&
-    sortOrder != 'asc' &&
-    sortOrder != 'desc'
+    sortOrder != "" &&
+    sortOrder != "asc" &&
+    sortOrder != "desc"
   ) {
-    sortOrder = 'desc';
+    sortOrder = "desc";
   }
 
   return {
@@ -36,11 +36,11 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
     // sortBy?: string;
     sortOrder,
     take:
-      typeof request.take === 'string'
+      typeof request.take === "string"
         ? parseInt(request.take)
         : (request.take as number),
     skip:
-      typeof request.skip === 'string'
+      typeof request.skip === "string"
         ? parseInt(request.skip)
         : (request.skip as number),
     // fromDate?: Date;

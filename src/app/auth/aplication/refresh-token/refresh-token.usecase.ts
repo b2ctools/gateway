@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { IRefreshToken } from './refresh-token.request';
-import { RefreshTokenService } from '../../domain/refresh-token.service';
+import { Inject, Injectable } from "@nestjs/common";
+import { IRefreshToken } from "./refresh-token.request";
+import { RefreshTokenService } from "../../domain/refresh-token.service";
 
 @Injectable()
 export class RefreshTokenUseCase {
@@ -10,7 +10,7 @@ export class RefreshTokenUseCase {
   ) {}
 
   async execute(request: IRefreshToken) {
-    console.log('Attemp to refresh token')
+    console.log("Attemp to refresh token");
     return await this.refreshTokenService.refreshToken(request);
   }
 }

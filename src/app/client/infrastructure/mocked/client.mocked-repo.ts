@@ -1,9 +1,8 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { ClientMockedEntity } from './client.mocked-entity';
-import { Client } from '../../domain/client.interface';
-import { ID } from 'src/app/shared/abstract-repository/repository.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { ClientMockedEntity } from "./client.mocked-entity";
+import { Client } from "../../domain/client.interface";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class ClientMockedRepository extends MockedRepository<
@@ -25,7 +24,6 @@ export class ClientMockedRepository extends MockedRepository<
       userId: e.userId,
       description: e.description,
       tenantId: e.tenantId,
-      
     };
   }
 
@@ -35,5 +33,4 @@ export class ClientMockedRepository extends MockedRepository<
     const filtered = clients.filter((s) => s.userId === userId);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }
