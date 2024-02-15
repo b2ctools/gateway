@@ -4,12 +4,12 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class RemoveBrandUseCase {
-    constructor(
-        @Inject(BrandService)
-        private readonly brandService: BrandService,
-    ){}
+  constructor(
+    @Inject(BrandService)
+    private readonly brandService: BrandService,
+  ) {}
 
-    async execute(brandId: ID){
-        await this.brandService.removeBrand(brandId);
-    }
+  async execute(brandId: ID) {
+    await this.brandService.removeBrand(brandId);
+  }
 }

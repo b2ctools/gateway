@@ -1,11 +1,11 @@
-import { BadRequestException } from '@nestjs/common';
-import * as _ from 'lodash';
-import { genId } from '../utils/gen-id';
-import { IDomain } from './entities/domain';
-import { MockedEntity } from './entities/mocked-entity';
-import { AppRepository, ID } from './repository.interface';
-import { ctxSrv } from '../context.service';
-import { IOrder, SearchRequest } from '../base.request';
+import { BadRequestException } from "@nestjs/common";
+import * as _ from "lodash";
+import { genId } from "../utils/gen-id";
+import { IDomain } from "./entities/domain";
+import { MockedEntity } from "./entities/mocked-entity";
+import { AppRepository, ID } from "./repository.interface";
+import { ctxSrv } from "../context.service";
+import { IOrder, SearchRequest } from "../base.request";
 
 interface HashMap<T> {
   [key: string]: T;
@@ -20,16 +20,16 @@ interface HashMap<T> {
 
 export abstract class MockedRepository<
   TMockedEntity extends MockedEntity,
-  TDomain extends IDomain
+  TDomain extends IDomain,
 > implements AppRepository<TMockedEntity, TDomain>
 {
   protected elements: HashMap<TMockedEntity> = {};
 
   logItems() {
     const items = Object.values(this.elements);
-    console.log('==============================================');
+    console.log("==============================================");
     console.log(items);
-    console.log('==============================================');
+    console.log("==============================================");
   }
 
   async findById(id: ID): Promise<TDomain> {
@@ -56,15 +56,14 @@ export abstract class MockedRepository<
     items: TMockedEntity[];
   }) {
     if (!items || items.length === 0) return [];
-    if (!sortBy || sortBy === '') return items;
+    if (!sortBy || sortBy === "") return items;
 
     const result = _.orderBy(items, [sortBy], [sortOrder]);
-    
 
-    console.log('====================');
+    console.log("====================");
     console.log(result);
-    console.log('====================');
-    
+    console.log("====================");
+
     return result;
   }
 
@@ -83,8 +82,8 @@ export abstract class MockedRepository<
     const from = !skip ? 0 : skip;
     const to = (!take ? 10 : take) + from;
     const result = items.slice(from, to);
-    
-    return result
+
+    return result;
   }
 
   private fromToDate({
@@ -99,9 +98,9 @@ export abstract class MockedRepository<
     items: TMockedEntity[];
   }) {
     if (fromDate && toDate) {
-      const fieldDate = fieldName || 'createdAt';
+      const fieldDate = fieldName || "createdAt";
       return items.filter(
-        (e) => e[fieldDate] >= fromDate && e[fieldDate] <= toDate
+        (e) => e[fieldDate] >= fromDate && e[fieldDate] <= toDate,
       );
     }
 
@@ -109,7 +108,6 @@ export abstract class MockedRepository<
   }
 
   async findAll(request: SearchRequest): Promise<TDomain[]> {
-    
     if (Object.keys(this.elements).length > 0) {
       const { sortBy, sortOrder, take, skip, fromDate, toDate, dateFieldName } =
         request;
@@ -117,10 +115,10 @@ export abstract class MockedRepository<
       // fetching data only related to the authenticated user tenant
       const tenantId = ctxSrv.getTenantId();
       if (!tenantId)
-        throw new Error('Error on findAll. TenantId must be defined');
+        throw new Error("Error on findAll. TenantId must be defined");
 
       let results = Object.values(this.elements).filter(
-        (item) => item.tenantId === tenantId
+        (item) => item.tenantId === tenantId,
       );
 
       // sorting data
@@ -175,7 +173,7 @@ export abstract class MockedRepository<
     const existing = await this.getEntityId(id);
     if (!existing) {
       throw new BadRequestException(
-        `Error trying to update a not found entity - ${JSON.stringify(d)}`
+        `Error trying to update a not found entity - ${JSON.stringify(d)}`,
       );
     }
 
@@ -201,11 +199,11 @@ export abstract class MockedRepository<
 
   domainToEntity(d: TDomain): TMockedEntity {
     console.log(d);
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 
   entityToDomain(e: TMockedEntity): TDomain {
     console.log(e);
-    throw new Error('Method not implemented.');
+    throw new Error("Method not implemented.");
   }
 }

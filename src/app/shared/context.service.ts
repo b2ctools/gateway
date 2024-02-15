@@ -7,7 +7,7 @@ class ContextService {
   private tenantId: ID;
   private userId: ID;
 
-  constructor(){
+  constructor() {
     this.setTenantId(DEFAULT_TENANT);
   }
 

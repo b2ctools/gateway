@@ -1,60 +1,74 @@
-
-import { IsArray, IsEnum, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString, ValidateNested } from "class-validator";
-import { Sample } from "../../domain/sample.interface"
+import {
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from "class-validator";
+import { Sample } from "../../domain/sample.interface";
 import { Type } from "class-transformer";
-import { ILocations, IUnit, PriceRequest, WeightRequest, allowedUnits } from "../common.request";
+import {
+  ILocations,
+  IUnit,
+  PriceRequest,
+  WeightRequest,
+  allowedUnits,
+} from "../common.request";
 
-export class AddSampleRequest implements Omit<Sample, 'id' | 'tenantId' | 'hidden'>{
+export class AddSampleRequest
+  implements Omit<Sample, "id" | "tenantId" | "hidden">
+{
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    name: string;
-    
-    @IsString()
-    @IsOptional()
-    description?: string;
-    
-    // @ArrayNotEmpty()
-    @IsArray()
-    @IsString({ each: true })
-    @IsOptional()
-    images: string[];
-    
-    @IsObject()
-    @ValidateNested()
-    @Type(() => PriceRequest)
-    price: PriceRequest;
+  @IsString()
+  @IsOptional()
+  description?: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    stock: number;
+  // @ArrayNotEmpty()
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  images: string[];
 
-    @IsEnum(allowedUnits)
-    unit: IUnit;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => PriceRequest)
+  price: PriceRequest;
 
-    @IsObject()
-    @ValidateNested()
-    @Type(() => WeightRequest)
-    weight: WeightRequest;
-    
-    @IsNotEmpty()
-    @IsString()
-    categoryId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  stock: number;
 
-    @IsNotEmpty()
-    @IsString()
-    storeId: number;
+  @IsEnum(allowedUnits)
+  unit: IUnit;
 
-    @IsNotEmpty()
-    @IsString()
-    brandId: number;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => WeightRequest)
+  weight: WeightRequest;
 
-    @IsNotEmpty()
-    @IsString()
-    countryId: number;
+  @IsNotEmpty()
+  @IsString()
+  categoryId: number;
 
-    @IsArray()
-    @IsString({ each: true })
-    locations: ILocations;
-    
+  @IsNotEmpty()
+  @IsString()
+  storeId: number;
+
+  @IsNotEmpty()
+  @IsString()
+  brandId: number;
+
+  @IsNotEmpty()
+  @IsString()
+  countryId: number;
+
+  @IsArray()
+  @IsString({ each: true })
+  locations: ILocations;
 }

@@ -1,6 +1,6 @@
-import { BadRequestException } from '@nestjs/common';
-import { ctxSrv } from '../../context.service';
-import { ID } from '../repository.interface';
+import { BadRequestException } from "@nestjs/common";
+import { ctxSrv } from "../../context.service";
+import { ID } from "../repository.interface";
 
 /** Generic Entity */
 
@@ -17,9 +17,11 @@ export abstract class IEntity {
   tenantId: ID;
 
   toCreate() {
-
     const tenantId = ctxSrv.getTenantId();
-    if (!tenantId) throw new BadRequestException('TenantId most be specified in order to create an entity');
+    if (!tenantId)
+      throw new BadRequestException(
+        "TenantId most be specified in order to create an entity",
+      );
 
     this.createdAt = new Date();
     this.createdBy = ctxSrv.getUserId();

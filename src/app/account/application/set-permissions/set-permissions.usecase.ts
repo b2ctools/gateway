@@ -8,14 +8,15 @@ import { isValidPermission } from "src/app/access/domain/permissions";
 export class SetPermissionsUseCase {
   constructor(
     @Inject(AccountService)
-    private readonly accountService: AccountService
+    private readonly accountService: AccountService,
   ) {}
 
   private validatePermissions(permissions: ID[]) {
-    
     permissions.forEach((permission: ID) => {
       if (!isValidPermission(permission)) {
-        throw new BadRequestException(`Permission with id [${permission}] is no valid.`);
+        throw new BadRequestException(
+          `Permission with id [${permission}] is no valid.`,
+        );
       }
     });
   }
@@ -23,7 +24,7 @@ export class SetPermissionsUseCase {
   async execute(request: SetPermissionsRequest) {
     const { id, permissions } = request;
     this.validatePermissions(permissions);
-    
+
     return await this.accountService.setPermissions(id, permissions);
   }
 }

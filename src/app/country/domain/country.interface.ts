@@ -1,7 +1,6 @@
+import { IDomain } from "../../shared/abstract-repository/entities/domain";
 
-import { IDomain } from '../../shared/abstract-repository/entities/domain';
-
-export type Continent = 'Europe' | 'America' | 'Asia' | 'Africa';
+export type Continent = "Europe" | "America" | "Asia" | "Africa";
 
 export interface Country extends IDomain {
   code: string;
@@ -13,8 +12,4 @@ export interface CountryDto extends Country {}
 
 export const countryToDto = (u: Country): CountryDto => ({ ...u });
 
-export const sortable = [
-  'code',
-  'name',
-  'continent',
-]
+export const sortable = ["code", "name", "continent"];

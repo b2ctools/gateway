@@ -1,16 +1,16 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 
-import { AddCountryCommand } from '../application/add-country/add-country.command';
-import { Continent, Country } from './country.interface';
-import { ID } from '../../shared/abstract-repository/repository.interface';
-import { CountryRepository } from '../infrastructure/country-repositor.type';
-import { SearchRequest } from '../../shared/base.request';
+import { AddCountryCommand } from "../application/add-country/add-country.command";
+import { Continent, Country } from "./country.interface";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+import { CountryRepository } from "../infrastructure/country-repositor.type";
+import { SearchRequest } from "../../shared/base.request";
 
 @Injectable()
 export class CountryService {
   constructor(
-    @Inject('CountryRepository')
-    private readonly countryRepo: CountryRepository
+    @Inject("CountryRepository")
+    private readonly countryRepo: CountryRepository,
   ) {}
 
   private async verifyCountryName(name: string): Promise<void> {
@@ -29,24 +29,23 @@ export class CountryService {
     }
   }
 
-  async findByIdOrFail(countryId: ID){
-    const existingCountry = await this.countryRepo.findById(countryId)
-    if (!existingCountry){
+  async findByIdOrFail(countryId: ID) {
+    const existingCountry = await this.countryRepo.findById(countryId);
+    if (!existingCountry) {
       throw new BadRequestException(`Country with id ${countryId} not found`);
     }
     return existingCountry;
   }
 
   async addCountry(command: AddCountryCommand): Promise<Country> {
-    
     await this.verifyCountryName(command.name);
     await this.verifyCountryCode(command.code);
-    
+
     const country: Country = {
       id: null,
       tenantId: null,
-      ...command,      
-    }
+      ...command,
+    };
 
     return await this.countryRepo.create(country);
   }
@@ -56,7 +55,7 @@ export class CountryService {
   }
 
   async findAllCountries(request: SearchRequest): Promise<Country[]> {
-    this.countryRepo.logItems()
+    this.countryRepo.logItems();
     return await this.countryRepo.findAll(request);
   }
 
@@ -69,13 +68,15 @@ export class CountryService {
     id: ID;
     code?: string;
     name?: string;
-    continent?: Continent
+    continent?: Continent;
   }): Promise<Country> {
     const existingCountry = await this.findByIdOrFail(id);
 
     existingCountry.code = code ? code : existingCountry.code;
     existingCountry.name = name ? name : existingCountry.name;
-    existingCountry.continent = continent ? continent : existingCountry.continent;
+    existingCountry.continent = continent
+      ? continent
+      : existingCountry.continent;
 
     console.log(
       `Updating Country - ${JSON.stringify({
@@ -83,7 +84,7 @@ export class CountryService {
         code,
         name,
         continent,
-      })}`
+      })}`,
     );
     return await this.countryRepo.persist(existingCountry);
   }

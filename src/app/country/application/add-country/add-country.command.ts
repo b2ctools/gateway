@@ -1,10 +1,7 @@
+import { Continent, Country } from "../../domain/country.interface";
+import { AddCountryRequest } from "./add-country.request";
 
-import { Continent, Country } from '../../domain/country.interface';
-import { AddCountryRequest } from './add-country.request';
-
-export class AddCountryCommand
-  implements Omit<Country, 'id' | 'tenantId'>
-{
+export class AddCountryCommand implements Omit<Country, "id" | "tenantId"> {
   code: string;
   name: string;
   continent?: Continent;

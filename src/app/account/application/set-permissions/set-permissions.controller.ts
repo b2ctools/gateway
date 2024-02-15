@@ -5,13 +5,13 @@ import { SetPermissionsRequest } from "./set-permissions.request";
 
 @Controller(accountPath)
 export class SetPermissionsController {
-    constructor(
-        @Inject(SetPermissionsUseCase)
-        private readonly useCase: SetPermissionsUseCase
-    ) {}
+  constructor(
+    @Inject(SetPermissionsUseCase)
+    private readonly useCase: SetPermissionsUseCase,
+  ) {}
 
-    @Post('set-permissions')
-    async setPermissions(@Body() request: SetPermissionsRequest) {
-        return await this.useCase.execute(request);
-    }
+  @Post("set-permissions")
+  async setPermissions(@Body() request: SetPermissionsRequest) {
+    return await this.useCase.execute(request);
+  }
 }

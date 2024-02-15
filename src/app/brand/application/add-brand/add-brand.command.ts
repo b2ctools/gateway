@@ -1,10 +1,7 @@
+import { Brand } from "../../domain/brand.interface";
+import { AddBrandRequest } from "./add-brand.request";
 
-import { Brand } from '../../domain/brand.interface';
-import { AddBrandRequest } from './add-brand.request';
-
-export class AddBrandCommand
-  implements Omit<Brand, 'id' | 'tenantId'>
-{
+export class AddBrandCommand implements Omit<Brand, "id" | "tenantId"> {
   name: string;
   description?: string;
 

@@ -5,12 +5,10 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsPhoneNumber,
   IsString,
 } from "class-validator";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { User, UserRole } from "../../domain/user.interface";
-import { Optional } from "@nestjs/common";
 export class RegisterUserRequest
   implements
     Omit<

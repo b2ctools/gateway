@@ -1,8 +1,7 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { BrandMockedEntity } from './brand.mocked-entity';
-import { Brand } from '../../domain/brand.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { BrandMockedEntity } from "./brand.mocked-entity";
+import { Brand } from "../../domain/brand.interface";
 
 @Injectable()
 export class BrandMockedRepository extends MockedRepository<
@@ -23,7 +22,6 @@ export class BrandMockedRepository extends MockedRepository<
       name: e.name,
       description: e.description,
       tenantId: e.tenantId,
-      
     };
   }
 
@@ -33,5 +31,4 @@ export class BrandMockedRepository extends MockedRepository<
     const filtered = categories.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }

@@ -1,19 +1,16 @@
-
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Continent, Country } from "../../domain/country.interface"
+import { Continent, Country } from "../../domain/country.interface";
 
-export class AddCountryRequest implements Omit<Country, 'id' | 'tenantId'>{
-    
-    @IsNotEmpty()
-    @IsString()
-    code: string;
+export class AddCountryRequest implements Omit<Country, "id" | "tenantId"> {
+  @IsNotEmpty()
+  @IsString()
+  code: string;
 
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-    @IsString()
-    @IsOptional()
-    continent?: Continent;
-
+  @IsString()
+  @IsOptional()
+  continent?: Continent;
 }

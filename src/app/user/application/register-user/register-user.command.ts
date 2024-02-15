@@ -1,8 +1,19 @@
-import { ID } from '../../../shared/abstract-repository/repository.interface';
-import { User, UserRole } from '../../domain/user.interface';
-import { RegisterUserRequest } from './register-user.request';
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { User, UserRole } from "../../domain/user.interface";
+import { RegisterUserRequest } from "./register-user.request";
 
-export class RegisterUserCommand implements Omit<User, 'id' | 'status' | 'recoveryPasswordCode' | 'failedLogin' | 'isEmailConfirmed' | 'isPhoneConfirmed'> {
+export class RegisterUserCommand
+  implements
+    Omit<
+      User,
+      | "id"
+      | "status"
+      | "recoveryPasswordCode"
+      | "failedLogin"
+      | "isEmailConfirmed"
+      | "isPhoneConfirmed"
+    >
+{
   firstName: string;
   lastName: string;
   password: string;
@@ -20,7 +31,23 @@ export class RegisterUserCommand implements Omit<User, 'id' | 'status' | 'recove
   countryId: ID;
 
   constructor(request: RegisterUserRequest) {
-    const { firstName, email, password, tenantId, nickname, role, phone, avatar, birthDay, address, city, state, zip, countryId, lastName } = request;
+    const {
+      firstName,
+      email,
+      password,
+      tenantId,
+      nickname,
+      role,
+      phone,
+      avatar,
+      birthDay,
+      address,
+      city,
+      state,
+      zip,
+      countryId,
+      lastName,
+    } = request;
     this.firstName = firstName;
     this.password = password;
     this.email = email;

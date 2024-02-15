@@ -6,15 +6,15 @@ import { productCategoryPath } from "../../../shared/routes";
 
 @Controller(productCategoryPath)
 export class MoveProductCateogoryController {
-    constructor(
-        @Inject(MoveProductCategoryUseCase)
-        private readonly useCase: MoveProductCategoryUseCase,
-    ){}
+  constructor(
+    @Inject(MoveProductCategoryUseCase)
+    private readonly useCase: MoveProductCategoryUseCase,
+  ) {}
 
-    @Post('/move')
-    async moveProductCategory(@Body() request: UpdateProductCategoryRequest){
-        const { id, parent } = request;
-        const pc = await this.useCase.execute({ id, parent })
-        return productCategoryToDto(pc)
-    }
+  @Post("/move")
+  async moveProductCategory(@Body() request: UpdateProductCategoryRequest) {
+    const { id, parent } = request;
+    const pc = await this.useCase.execute({ id, parent });
+    return productCategoryToDto(pc);
+  }
 }

@@ -1,12 +1,11 @@
-
-import { Inject, Injectable } from '@nestjs/common';
-import { SampleService } from '../../domain/sample.service';
-import { AddSampleCommand } from './add-sample.command';
-import { ProductCategoryService } from '../../../product-category/domain/product-category.service';
-import { StoreService } from '../../../store/domain/store.service';
-import { BrandService } from '../../../brand/domain/brand.service';
-import { CountryService } from '../../../country/domain/country.service';
-import { ID } from '../../../shared/abstract-repository/repository.interface';
+import { Inject, Injectable } from "@nestjs/common";
+import { SampleService } from "../../domain/sample.service";
+import { AddSampleCommand } from "./add-sample.command";
+import { ProductCategoryService } from "../../../product-category/domain/product-category.service";
+import { StoreService } from "../../../store/domain/store.service";
+import { BrandService } from "../../../brand/domain/brand.service";
+import { CountryService } from "../../../country/domain/country.service";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class AddSampleUseCase {
@@ -27,8 +26,7 @@ export class AddSampleUseCase {
     private readonly countryService: CountryService,
   ) {}
 
-
-  private async validteProductCategoryId(productCategoryId: ID){
+  private async validteProductCategoryId(productCategoryId: ID) {
     await this.productCategoryService.findByIdOrFail(productCategoryId);
   }
 
@@ -44,16 +42,14 @@ export class AddSampleUseCase {
     await this.countryService.findByIdOrFail(countryId);
   }
 
-  async addSample(command: AddSampleCommand){
+  async addSample(command: AddSampleCommand) {
     const { categoryId, storeId, brandId, countryId } = command;
     // validations
-    await this.validteProductCategoryId(categoryId)
+    await this.validteProductCategoryId(categoryId);
     await this.validateStoreId(storeId);
     await this.validateBrandId(brandId);
-    await this.validateCountry(countryId)
-
+    await this.validateCountry(countryId);
 
     return await this.pcService.addSample(command);
   }
-
 }

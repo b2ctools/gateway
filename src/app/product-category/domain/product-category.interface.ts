@@ -1,5 +1,5 @@
-import { IDomain } from '../../shared/abstract-repository/entities/domain';
-import { ID } from '../../shared/abstract-repository/repository.interface';
+import { IDomain } from "../../shared/abstract-repository/entities/domain";
+import { ID } from "../../shared/abstract-repository/repository.interface";
 
 export interface ProductCategory extends IDomain {
   name: string;
@@ -8,17 +8,16 @@ export interface ProductCategory extends IDomain {
 }
 
 export interface ProductCategoryTree extends ProductCategory {
-  subcategories?: ProductCategoryTree[]
+  subcategories?: ProductCategoryTree[];
 }
 
 export type ProductCategoryDTO = ProductCategory | ProductCategoryTree;
 
-export const productCategoryToDto = (pc: ProductCategory | ProductCategoryTree): ProductCategoryDTO => {
+export const productCategoryToDto = (
+  pc: ProductCategory | ProductCategoryTree,
+): ProductCategoryDTO => {
   delete pc.tenantId;
-  return { ...pc }
+  return { ...pc };
 };
 
-export const sortable = [
-  'name',
-  'description' 
-]
+export const sortable = ["name", "description"];

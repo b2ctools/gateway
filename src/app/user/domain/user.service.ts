@@ -1,17 +1,17 @@
-import { Injectable, Inject, BadRequestException } from '@nestjs/common';
-import { RegisterUserCommand } from '../application/register-user/register-user.command';
-import { User, UserRole, UserStatus } from './user.interface';
-import { UserRepository } from '../infrastructure/user-repository.type';
-import { encodePassword } from '../../auth/domain/encoder.service';
-import { ctxSrv } from '../../shared/context.service';
-import { ID } from '../../shared/abstract-repository/repository.interface';
-import { SearchRequest } from '../../shared/base.request';
+import { Injectable, Inject, BadRequestException } from "@nestjs/common";
+import { RegisterUserCommand } from "../application/register-user/register-user.command";
+import { User, UserStatus } from "./user.interface";
+import { UserRepository } from "../infrastructure/user-repository.type";
+import { encodePassword } from "../../auth/domain/encoder.service";
+import { ctxSrv } from "../../shared/context.service";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+import { SearchRequest } from "../../shared/base.request";
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('UserRepository')
-    private readonly userRepo: UserRepository
+    @Inject("UserRepository")
+    private readonly userRepo: UserRepository,
   ) {}
 
   private async verifyEmail(email: string): Promise<void> {
@@ -23,13 +23,13 @@ export class UserService {
 
   async registerUser(comand: RegisterUserCommand): Promise<User> {
     const { password, ...comandInfo } = comand;
-    console.log('Registering User ', comandInfo);
+    console.log("Registering User ", comandInfo);
 
     //verifying email
     await this.verifyEmail(comand.email);
 
     //setting tenantId on context service
-    ctxSrv.setTenantId(comand.tenantId)
+    ctxSrv.setTenantId(comand.tenantId);
 
     const user: User = {
       ...comandInfo,
@@ -58,13 +58,13 @@ export class UserService {
   async setPasswordRecoveryCode(email: string, code: string) {
     if (!email) {
       throw new BadRequestException(
-        'Error setting password recovery code, email must be provided'
+        "Error setting password recovery code, email must be provided",
       );
     }
 
     if (!code) {
       throw new BadRequestException(
-        'Error setting password recovery code, the code must be provided'
+        "Error setting password recovery code, the code must be provided",
       );
     }
 
@@ -83,33 +83,49 @@ export class UserService {
     const user = await this.findUserByEmail(email);
     if (!user)
       throw new BadRequestException(
-        `Error fetching user with email [${email}], user was not found`
+        `Error fetching user with email [${email}], user was not found`,
       );
     return user;
   }
 
-  async findByIdOrFail(userId: ID){
-    const existingUser = await this.userRepo.findById(userId)
-    if (!existingUser){
+  async findByIdOrFail(userId: ID) {
+    const existingUser = await this.userRepo.findById(userId);
+    if (!existingUser) {
       throw new BadRequestException(`User with id ${userId} not found`);
     }
     return existingUser;
   }
 
-  async incFailedLogin(userId: ID){
-    const existingUser = await this.findByIdOrFail(userId)
+  async incFailedLogin(userId: ID) {
+    const existingUser = await this.findByIdOrFail(userId);
     existingUser.failedLogin = existingUser.failedLogin + 1;
     return await this.userRepo.persist(existingUser);
   }
 
-  async resetFailedLogin(userId: ID){
-    const existingUser = await this.findByIdOrFail(userId)
+  async resetFailedLogin(userId: ID) {
+    const existingUser = await this.findByIdOrFail(userId);
     existingUser.failedLogin = 0;
     return await this.userRepo.persist(existingUser);
   }
 
-  async updateUser(userInfo: Partial<Omit<User, ', tenantId' | 'password'>>){
-    const {id, firstName, nickname, email, phone, role, status, avatar, birthDay, address, city, zip, countryId, isEmailConfirmed, isPhoneConfirmed} = userInfo;
+  async updateUser(userInfo: Partial<Omit<User, ", tenantId" | "password">>) {
+    const {
+      id,
+      firstName,
+      nickname,
+      email,
+      phone,
+      role,
+      status,
+      avatar,
+      birthDay,
+      address,
+      city,
+      zip,
+      countryId,
+      isEmailConfirmed,
+      isPhoneConfirmed,
+    } = userInfo;
     const user = await this.findByIdOrFail(id);
 
     const userToUpdate = {
@@ -121,21 +137,18 @@ export class UserService {
       ...(role ? { role } : {}),
       ...(status ? { status } : {}),
       ...(avatar ? { avatar } : {}),
-      ...(birthDay ? { birthDay } : {}), 
+      ...(birthDay ? { birthDay } : {}),
       ...(address ? { address } : {}),
       ...(city ? { city } : {}),
       ...(zip ? { zip } : {}),
       ...(countryId ? { countryId } : {}),
       ...(isEmailConfirmed ? { isEmailConfirmed } : {}),
       ...(isPhoneConfirmed ? { isPhoneConfirmed } : {}),
-    }
+    };
 
-    console.log(
-      `Updating User - ${JSON.stringify({ userToUpdate })}`
-    );
+    console.log(`Updating User - ${JSON.stringify({ userToUpdate })}`);
 
     return await this.userRepo.persist(userToUpdate);
-
   }
 
   async me() {
@@ -148,7 +161,7 @@ export class UserService {
   }
 
   async removeUser_id(userId: ID) {
-    const user = await this.findByIdOrFail(userId);
+    await this.findByIdOrFail(userId);
     await this.userRepo.delete(userId);
   }
 

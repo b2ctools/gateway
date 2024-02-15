@@ -1,19 +1,18 @@
-import { ID } from 'src/app/shared/abstract-repository/repository.interface';
-import { IDomain } from '../../shared/abstract-repository/entities/domain';
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { IDomain } from "../../shared/abstract-repository/entities/domain";
 
 export enum UserStatus {
-  ENABLED = 'ENABLED',
-  DISABLED = 'DISABLED'
+  ENABLED = "ENABLED",
+  DISABLED = "DISABLED",
 }
 
 export enum UserRole {
-  OWNER = 'OWNER',
-  ADMIN = 'ADMIN',
-  USER = 'USER',
-  CLIENT = 'CLIENT',
+  OWNER = "OWNER",
+  ADMIN = "ADMIN",
+  USER = "USER",
+  CLIENT = "CLIENT",
 }
 export interface User extends IDomain {
-
   firstName: string;
   lastName: string;
   nickname: string;
@@ -35,25 +34,26 @@ export interface User extends IDomain {
   countryId: ID;
 }
 
-export interface UserDto extends Omit<User, 'password' | 'recoveryPasswordCode' | 'failedLogin'>{}
+export interface UserDto
+  extends Omit<User, "password" | "recoveryPasswordCode" | "failedLogin"> {}
 
 export const userToDto = (u: User): UserDto => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {password, recoveryPasswordCode, failedLogin, ...info } = u;
+  const { password, recoveryPasswordCode, failedLogin, ...info } = u;
   return {
-    ...info
-  }
-}
+    ...info,
+  };
+};
 
 export const sortable = [
-  'firstName',
-  'email',
-  'nickname',
-  'status',
-  'role',
-  'phone',
-  'birthDay',
-  'city',
-  'state',
-  'zip',
-]
+  "firstName",
+  "email",
+  "nickname",
+  "status",
+  "role",
+  "phone",
+  "birthDay",
+  "city",
+  "state",
+  "zip",
+];

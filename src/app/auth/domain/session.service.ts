@@ -1,7 +1,6 @@
-
-import { config } from '../../config/config.service';
-import { ID } from '../../shared/abstract-repository/repository.interface';
-import { User } from '../../user/domain/user.interface';
+import { config } from "../../config/config.service";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+import { User } from "../../user/domain/user.interface";
 interface HashMap<T> {
   [key: string]: T;
 }
@@ -31,12 +30,12 @@ class SessionService {
   registerSession(userId: ID, session: string): void {
     if (!userId)
       throw new Error(
-        'UserId parameter most be specified to register a new session.'
+        "UserId parameter most be specified to register a new session.",
       );
 
     if (!session)
       throw new Error(
-        'Session parameter most be specified to register a new session.'
+        "Session parameter most be specified to register a new session.",
       );
 
     if (this.isblocked(userId))
@@ -57,7 +56,7 @@ class SessionService {
 
   removeSessionsFromUser(user_id: ID) {
     if (!user_id) return;
-    console.log(`Removing sessions from user ${user_id}`)
+    console.log(`Removing sessions from user ${user_id}`);
     const sessionsToRemove = Object.entries(this.sessions)
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([session, userId]) => user_id === userId)
@@ -73,7 +72,7 @@ class SessionService {
 
     if (userId) {
       console.log(`Blocking user ${userId}`);
-      this.blackList[userId] = 'blocked';
+      this.blackList[userId] = "blocked";
     }
   }
 
@@ -82,25 +81,28 @@ class SessionService {
     delete this.blackList[userId];
   }
 
-  atempToDisableUserLogin(user: User){
-    const restoreLoginAfter = parseInt(config.get('disabledLoginExpireTimestamp') as string)
-    const disableLogin = () => (config.get('disabledLogin') === 'yes')
-    const failedAttempsAllowed = parseInt(config.get('disabledLoginAttempsAllowed') as string)
-    
-    if (disableLogin() && user.failedLogin >= failedAttempsAllowed){
-      this.disabledLogins[user.id] = 'disabled login'
+  atempToDisableUserLogin(user: User) {
+    const restoreLoginAfter = parseInt(
+      config.get("disabledLoginExpireTimestamp") as string,
+    );
+    const disableLogin = () => config.get("disabledLogin") === "yes";
+    const failedAttempsAllowed = parseInt(
+      config.get("disabledLoginAttempsAllowed") as string,
+    );
+
+    if (disableLogin() && user.failedLogin >= failedAttempsAllowed) {
+      this.disabledLogins[user.id] = "disabled login";
       setTimeout(() => {
         delete this.disabledLogins[user.id];
-      }, restoreLoginAfter)
+      }, restoreLoginAfter);
     }
   }
 
   canLogin(userId: ID) {
     return !this.disabledLogins[userId];
   }
-
 }
 
-export const sessionService = new SessionService()
+export const sessionService = new SessionService();
 
 export class TestingSessionService extends SessionService {}

@@ -1,8 +1,7 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { CountryMockedEntity } from './country.mocked-entity';
-import { Country } from '../../domain/country.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { CountryMockedEntity } from "./country.mocked-entity";
+import { Country } from "../../domain/country.interface";
 
 @Injectable()
 export class CountryMockedRepository extends MockedRepository<
@@ -41,5 +40,4 @@ export class CountryMockedRepository extends MockedRepository<
     const filtered = countries.filter((s) => s.code === code);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }

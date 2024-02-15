@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { User } from '../../domain/user.interface';
-import { UserMockedEntity } from './user.mocked-entity';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { User } from "../../domain/user.interface";
+import { UserMockedEntity } from "./user.mocked-entity";
 
 @Injectable()
 export class UserMockedRepository extends MockedRepository<
@@ -63,7 +63,7 @@ export class UserMockedRepository extends MockedRepository<
   async getUserByEmail(email: string) {
     const users = await this.findAll({});
     if (users.length === 0) return null;
-    const filtered = users.filter(u => u.email === email);
+    const filtered = users.filter((u) => u.email === email);
     return filtered.length > 0 ? filtered.shift() : null;
   }
 }

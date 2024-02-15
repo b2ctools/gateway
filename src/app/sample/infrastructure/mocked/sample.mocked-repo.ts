@@ -1,8 +1,7 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { SampleMockedEntity } from './sample.mocked-entity';
-import { Sample } from '../../domain/sample.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { SampleMockedEntity } from "./sample.mocked-entity";
+import { Sample } from "../../domain/sample.interface";
 
 @Injectable()
 export class SampleMockedRepository extends MockedRepository<
@@ -55,5 +54,4 @@ export class SampleMockedRepository extends MockedRepository<
     const filtered = samples.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }
