@@ -12,7 +12,7 @@ export class UpdateUserRequest
   @IsNotEmpty()
   @IsString()
   @IsOptional()
-  name: string;
+  firstName: string;
 
   @IsNotEmpty()
   @IsString()

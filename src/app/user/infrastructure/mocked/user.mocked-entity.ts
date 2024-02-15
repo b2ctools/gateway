@@ -3,7 +3,8 @@ import { MockedEntity } from '../../../shared/abstract-repository/entities/mocke
 import { User, UserRole, UserStatus } from '../../domain/user.interface';
 
 export class UserMockedEntity extends MockedEntity implements Omit<User, 'id'> {
-    name: string;
+    firstName: string;
+    lastName: string;
     user: string;
     password: string;
     email: string;
@@ -13,8 +14,8 @@ export class UserMockedEntity extends MockedEntity implements Omit<User, 'id'> {
     failedLogin: number;
     nickname: string;
     phone: string;
-    isEmailVerified: boolean;
-    isPhoneVerified: boolean;
+    isEmailConfirmed: boolean;
+    isPhoneConfirmed: boolean;
     avatar: string;
     birthDay: Date;
     address: string;

@@ -14,7 +14,8 @@ export enum UserRole {
 }
 export interface User extends IDomain {
 
-  name: string;
+  firstName: string;
+  lastName: string;
   nickname: string;
   email: string;
   password: string;
@@ -23,8 +24,8 @@ export interface User extends IDomain {
   recoveryPasswordCode: string;
   failedLogin: number;
   phone: string;
-  isEmailVerified: boolean;
-  isPhoneVerified: boolean;
+  isEmailConfirmed: boolean;
+  isPhoneConfirmed: boolean;
   avatar: string;
   birthDay: Date;
   address: string;
@@ -34,18 +35,18 @@ export interface User extends IDomain {
   countryId: ID;
 }
 
-export interface UserDto extends Omit<User, 'password'>{}
+export interface UserDto extends Omit<User, 'password' | 'recoveryPasswordCode' | 'failedLogin'>{}
 
 export const userToDto = (u: User): UserDto => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const {password, ...info } = u;
+  const {password, recoveryPasswordCode, failedLogin, ...info } = u;
   return {
     ...info
   }
 }
 
 export const sortable = [
-  'name',
+  'firstName',
   'email',
   'nickname',
   'status',

@@ -19,7 +19,8 @@ export const getMockedUserList = () => {
 
     //  elmer
     const users = [{
-        name: 'Elmer Entenza', //casual.name,
+        firstName: 'Elmer Entenza', //casual.name,
+        lastName: 'Entenza', //casual.last_name,
         email: 'elmer@email.com', //casual.email.toLowerCase(),
         password: '12345', //casual.password,
         tenantId: DEFAULT_TENANT,
@@ -30,7 +31,8 @@ export const getMockedUserList = () => {
     // random users
     Array(3).fill(null).map(() => {
         users.push({
-            name: casual.name,
+            firstName: casual.first_name,
+            lastName: casual.last_name,
             email: casual.email.toLowerCase(),
             password: '12345',
             role: UserRole.USER,
@@ -42,7 +44,8 @@ export const getMockedUserList = () => {
     // random clients
     Array(3).fill(null).map(() => {
         users.push({
-            name: casual.name,
+            firstName: casual.name,
+            lastName: casual.last_name,
             email: casual.email.toLowerCase(),
             password: '12345',
             role: UserRole.CLIENT,

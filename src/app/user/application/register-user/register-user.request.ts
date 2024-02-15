@@ -19,13 +19,17 @@ export class RegisterUserRequest
       | "status"
       | "recoveryPasswordCode"
       | "failedLogin"
-      | "isEmailVerified"
-      | "isPhoneVerified"
+      | "isEmailConfirmed"
+      | "isPhoneConfirmed"
     >
 {
   @IsNotEmpty()
   @IsString()
-  name: string;
+  firstName: string;
+
+  @IsNotEmpty()
+  @IsString()
+  lastName: string;
 
   @IsNotEmpty()
   @IsString()
