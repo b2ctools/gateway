@@ -10,8 +10,8 @@ export class UpdateUserUseCase {
   ) {}
 
   private sanitazeRequest(request: UpdateUserRequest) {
-    const { id, name, nickname, email, phone, avatar, status, role, birthDay, address, city, state, zip, countryId } = request;
-    return { id, name, nickname, email, phone, avatar, status, role, birthDay, address, city, state, zip, countryId }
+    const { id, firstName, nickname, email, phone, avatar, status, role, birthDay, address, city, state, zip, countryId } = request;
+    return { id, firstName, nickname, email, phone, avatar, status, role, birthDay, address, city, state, zip, countryId }
   }
 
   async execute(request: UpdateUserRequest) {

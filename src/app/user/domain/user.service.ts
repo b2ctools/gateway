@@ -37,8 +37,8 @@ export class UserService {
       tenantId: null,
       recoveryPasswordCode: null,
       failedLogin: 0,
-      isEmailVerified: false,
-      isPhoneVerified: false,
+      isEmailConfirmed: false,
+      isPhoneConfirmed: false,
       status: UserStatus.ENABLED,
       password: encodePassword(password),
     };
@@ -109,12 +109,12 @@ export class UserService {
   }
 
   async updateUser(userInfo: Partial<Omit<User, ', tenantId' | 'password'>>){
-    const {id, name, nickname, email, phone, role, status, avatar, birthDay, address, city, zip, countryId, isEmailVerified, isPhoneVerified} = userInfo;
+    const {id, firstName, nickname, email, phone, role, status, avatar, birthDay, address, city, zip, countryId, isEmailConfirmed, isPhoneConfirmed} = userInfo;
     const user = await this.findByIdOrFail(id);
 
     const userToUpdate = {
       ...user,
-      ...(name ? { name } : {}),
+      ...(firstName ? { firstName } : {}),
       ...(nickname ? { nickname } : {}),
       ...(email ? { email } : {}),
       ...(phone ? { phone } : {}),
@@ -126,8 +126,8 @@ export class UserService {
       ...(city ? { city } : {}),
       ...(zip ? { zip } : {}),
       ...(countryId ? { countryId } : {}),
-      ...(isEmailVerified ? { isEmailVerified } : {}),
-      ...(isPhoneVerified ? { isPhoneVerified } : {}),
+      ...(isEmailConfirmed ? { isEmailConfirmed } : {}),
+      ...(isPhoneConfirmed ? { isPhoneConfirmed } : {}),
     }
 
     console.log(

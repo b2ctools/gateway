@@ -3,7 +3,8 @@ import { MongoEntity } from "../../../shared/abstract-repository/entities/mongo-
 import { User, UserRole, UserStatus } from "../../domain/user.interface";
 
 export class UserMongoEntity extends MongoEntity implements Omit<User, 'id'> {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
     password: string;
     status: UserStatus;
@@ -12,8 +13,8 @@ export class UserMongoEntity extends MongoEntity implements Omit<User, 'id'> {
     failedLogin: number;
     nickname: string;
     phone: string;
-    isEmailVerified: boolean;
-    isPhoneVerified: boolean;
+    isEmailConfirmed: boolean;
+    isPhoneConfirmed: boolean;
     avatar: string;
     birthDay: Date;
     address: string;

@@ -11,7 +11,8 @@ export class UserMockedRepository extends MockedRepository<
   domainToEntity(d: User): UserMockedEntity {
     const entity = new UserMockedEntity();
 
-    entity.name = d.name;
+    entity.firstName = d.firstName;
+    entity.lastName = d.lastName;
     entity.nickname = d.nickname;
     entity.email = d.email;
     entity.password = d.password;
@@ -21,8 +22,8 @@ export class UserMockedRepository extends MockedRepository<
     entity.recoveryPasswordCode = d.recoveryPasswordCode;
     entity.failedLogin = d.failedLogin;
     entity.phone = d.phone;
-    entity.isEmailVerified = d.isEmailVerified;
-    entity.isPhoneVerified = d.isPhoneVerified;
+    entity.isEmailConfirmed = d.isEmailConfirmed;
+    entity.isPhoneConfirmed = d.isPhoneConfirmed;
     entity.avatar = d.avatar;
     entity.birthDay = d.birthDay;
     entity.address = d.address;
@@ -36,7 +37,8 @@ export class UserMockedRepository extends MockedRepository<
   entityToDomain(e: UserMockedEntity): User {
     return {
       id: e._id,
-      name: e.name,
+      firstName: e.firstName,
+      lastName: e.lastName,
       nickname: e.nickname,
       email: e.email,
       password: e.password,
@@ -46,8 +48,8 @@ export class UserMockedRepository extends MockedRepository<
       recoveryPasswordCode: e.recoveryPasswordCode,
       failedLogin: e.failedLogin,
       phone: e.phone,
-      isEmailVerified: e.isEmailVerified,
-      isPhoneVerified: e.isPhoneVerified,
+      isEmailConfirmed: e.isEmailConfirmed,
+      isPhoneConfirmed: e.isPhoneConfirmed,
       avatar: e.avatar,
       birthDay: e.birthDay,
       address: e.address,
