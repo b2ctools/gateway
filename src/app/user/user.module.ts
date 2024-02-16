@@ -16,6 +16,8 @@ import { CountryModule } from "../country/country.module";
 import { MeController } from "./application/me/me.controller";
 import { UpdateUserController } from "./application/update-user/update-user.controller";
 import { UpdateUserUseCase } from "./application/update-user/update-user.usecase";
+import { RemoveUserController } from "./application/remove-user/remove-user.controller";
+import { RemoveSampleUseCase } from "./application/remove-user/remove-user.usecase";
 @Module({
   imports: [NotificationModule, forwardRef(() => AuthModule), CountryModule],
   controllers: [
@@ -25,6 +27,7 @@ import { UpdateUserUseCase } from "./application/update-user/update-user.usecase
     RecoverPasswordController,
     MeController,
     UpdateUserController,
+    RemoveUserController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -35,6 +38,7 @@ import { UpdateUserUseCase } from "./application/update-user/update-user.usecase
     SendRecoveryTokenUseCase,
     RecoverPasswordUseCase,
     UpdateUserUseCase,
+    RemoveSampleUseCase,
   ],
   exports: [UserService, RecoveryPasswordService],
 })

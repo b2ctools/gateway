@@ -6,15 +6,26 @@ import { getStoreRepo } from "./infrastructure/store.repo-provider";
 import { SearchStoreUseCase } from "./application/search-store/search-store.usecase";
 import { SearchStoreController } from "./application/search-store/search-store.controller";
 import { AuthModule } from "../auth/auth.module";
+import { RemoveStoreController } from "./application/remove-store/remove-store.controller";
+import { RemoveStoreUseCase } from "./application/remove-store/remove-store.usecase";
+import { UpdateStoreController } from "./application/update-store/update-store.controller";
+import { UpdateStoreUseCase } from "./application/update-store/update-store.usecase";
 
 @Module({
   imports: [AuthModule],
-  controllers: [AddStoreController, SearchStoreController],
+  controllers: [
+    AddStoreController,
+    SearchStoreController,
+    RemoveStoreController,
+    UpdateStoreController,
+  ],
   providers: [
     AddStoreUseCase,
     SearchStoreUseCase,
     StoreService,
     getStoreRepo(),
+    RemoveStoreUseCase,
+    UpdateStoreUseCase,
   ],
 
   exports: [StoreService],

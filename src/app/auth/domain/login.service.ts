@@ -7,6 +7,7 @@ import { Token, TokenService } from "./token.service";
 import { User } from "../../user/domain/user.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { sessionService } from "./session.service";
+import { sanitizeEmail } from "src/app/shared/utils/string";
 
 export interface LoginResponse {
   accessToken: Token;
@@ -56,7 +57,8 @@ export class LoginService {
   }
 
   async login(credentials: Credentials): Promise<LoginResponse> {
-    const { email, password } = credentials;
+    const { password } = credentials;
+    const email = sanitizeEmail(credentials.email);
 
     const existingUser = await this.findUser(email);
     this.verifyLogin(existingUser.id);

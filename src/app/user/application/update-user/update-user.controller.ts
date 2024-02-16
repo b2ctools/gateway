@@ -2,6 +2,7 @@ import { Body, Controller, Inject, Patch } from "@nestjs/common";
 import { userPath } from "src/app/shared/routes";
 import { UpdateUserUseCase } from "./update-user.usecase";
 import { UpdateUserRequest } from "./update-user.request";
+import { userToDto } from "../../domain/user.interface";
 
 @Controller(userPath)
 export class UpdateUserController {
@@ -12,6 +13,7 @@ export class UpdateUserController {
 
   @Patch()
   async update(@Body() request: UpdateUserRequest) {
-    return await this.useCase.execute(request);
+    const user = await this.useCase.execute(request);
+    return userToDto(user);
   }
 }

@@ -13,8 +13,8 @@ export class UpdateUserUseCase {
     const {
       id,
       firstName,
+      lastName,
       nickname,
-      email,
       phone,
       avatar,
       status,
@@ -29,8 +29,8 @@ export class UpdateUserUseCase {
     return {
       id,
       firstName,
+      lastName,
       nickname,
-      email,
       phone,
       avatar,
       status,

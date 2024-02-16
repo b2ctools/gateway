@@ -1,3 +1,4 @@
+import { sanitizeEmail } from "src/app/shared/utils/string";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { User, UserRole } from "../../domain/user.interface";
 import { RegisterUserRequest } from "./register-user.request";
@@ -50,7 +51,7 @@ export class RegisterUserCommand
     } = request;
     this.firstName = firstName;
     this.password = password;
-    this.email = email;
+    this.email = sanitizeEmail(email);
     this.tenantId = tenantId;
     this.nickname = nickname;
     this.role = role;

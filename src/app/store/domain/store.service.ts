@@ -48,5 +48,21 @@ export class StoreService {
     return await this.storeRepo.findAll(request);
   }
 
-  async onApplicationBootstrap() {}
+  async removeStore(storeId: ID) {
+    await this.findByIdOrFail(storeId);
+    await this.storeRepo.delete(storeId);
+  }
+
+  async updateStore(storeRequest: Omit<Store, "tenantId">) {
+    const { id, name, description } = storeRequest;
+    const store = await this.findByIdOrFail(id);
+
+    const storeToUpdate = {
+      ...store,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+    };
+
+    return await this.storeRepo.persist(storeToUpdate);
+  }
 }
