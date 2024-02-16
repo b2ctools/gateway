@@ -15,7 +15,7 @@ export class AccountMockedRepository extends MockedRepository<
     entity.permissions = d.permissions;
     entity.scope = d.scope;
     entity.userId = d.userId;
-    entity.storeId = d.storeId;
+    entity.userId = d.storeId;
     entity.tenantId = d.tenantId;
     return entity;
   }
@@ -31,10 +31,16 @@ export class AccountMockedRepository extends MockedRepository<
     };
   }
 
-  async getAccountByStore(storeId: ID): Promise<Account> {
+  async getAccountsFromStore(storeId: ID): Promise<Account[]> {
     const accounts = await this.findAll({});
     if (accounts.length === 0) return null;
-    const filtered = accounts.filter((s) => s.storeId === storeId);
+    return accounts.filter((s) => s.storeId === storeId);
+  }
+
+  async getAccountOfUser(userId: ID): Promise<Account> {
+    const accounts = await this.findAll({});
+    if (accounts.length === 0) return null;
+    const filtered = accounts.filter((s) => s.userId === userId);
     return filtered.length > 0 ? filtered.shift() : null;
   }
 }

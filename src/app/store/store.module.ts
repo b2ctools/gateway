@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { AddStoreController } from "./application/add-store/add-store.controller";
 import { AddStoreUseCase } from "./application/add-store/add-store.usecase";
 import { StoreService } from "./domain/store.service";
@@ -10,9 +10,10 @@ import { RemoveStoreController } from "./application/remove-store/remove-store.c
 import { RemoveStoreUseCase } from "./application/remove-store/remove-store.usecase";
 import { UpdateStoreController } from "./application/update-store/update-store.controller";
 import { UpdateStoreUseCase } from "./application/update-store/update-store.usecase";
+import { AccountModule } from "../account/account.module";
 
 @Module({
-  imports: [AuthModule],
+  imports: [AuthModule, forwardRef(() => AccountModule)],
   controllers: [
     AddStoreController,
     SearchStoreController,

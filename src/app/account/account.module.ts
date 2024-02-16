@@ -13,7 +13,7 @@ import { SetPermissionsUseCase } from "./application/set-permissions/set-permiss
 import { UserModule } from "../user/user.module";
 
 @Module({
-  imports: [StoreModule, forwardRef(() => UserModule)],
+  imports: [forwardRef(() => StoreModule), forwardRef(() => UserModule)],
   controllers: [
     AddAccountController,
     SearchAccountController,

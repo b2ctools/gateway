@@ -13,12 +13,12 @@ export class AccountService {
     private readonly accountRepo: AccountRepository,
   ) {}
 
-  private async verifyAccountStore(storeId: ID): Promise<void> {
-    const existing = await this.accountRepo.getAccountByStore(storeId);
+  private async verifyUserAccount(userId: ID): Promise<void> {
+    const existing = await this.accountRepo.getAccountOfUser(userId);
 
     if (existing) {
       throw new BadRequestException(
-        `Account already exists on store ${storeId}`,
+        `Account of user ${userId} already exists`,
       );
     }
   }
@@ -32,7 +32,7 @@ export class AccountService {
   }
 
   async addAccount(command: AddAccountCommand) {
-    await this.verifyAccountStore(command.storeId);
+    await this.verifyUserAccount(command.userId);
 
     const account: Account = {
       id: null,
@@ -55,6 +55,10 @@ export class AccountService {
     const userIdToFillter = userId ? userId : ctxSrv.getUserId();
 
     return accounts.filter((a) => a.userId === userIdToFillter);
+  }
+
+  async getAccountsFromStore(storeId: ID) {
+    return await this.accountRepo.getAccountsFromStore(storeId);
   }
 
   async setPermissions(id: ID, permissions: ID[]) {
