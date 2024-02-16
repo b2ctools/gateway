@@ -4,12 +4,16 @@ import { Store } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 import { ID } from "../../shared/abstract-repository/repository.interface";
+import { AccountService } from "src/app/account/domain/account.service";
 
 @Injectable()
 export class StoreService {
   constructor(
     @Inject("StoreRepository")
     private readonly storeRepo: StoreRepository,
+
+    @Inject(AccountService)
+    private readonly accountService: AccountService,
   ) {}
 
   private async verifyStoreName(name: string): Promise<void> {
@@ -48,5 +52,27 @@ export class StoreService {
     return await this.storeRepo.findAll(request);
   }
 
-  async onApplicationBootstrap() {}
+  async removeStore(storeId: ID) {
+    await this.findByIdOrFail(storeId);
+    const accounts = await this.accountService.getAccountsFromStore(storeId);
+    if (accounts.length > 0) {
+      throw new BadRequestException(
+        `Store with id ${storeId} has accounts associated with it`,
+      );
+    }
+    await this.storeRepo.delete(storeId);
+  }
+
+  async updateStore(storeRequest: Omit<Store, "tenantId">) {
+    const { id, name, description } = storeRequest;
+    const store = await this.findByIdOrFail(id);
+
+    const storeToUpdate = {
+      ...store,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+    };
+
+    return await this.storeRepo.persist(storeToUpdate);
+  }
 }

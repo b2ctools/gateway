@@ -21,12 +21,12 @@ export class UpdateUserRequest {
   @IsNotEmpty()
   @IsString()
   @IsOptional()
-  nickname: string;
+  lastName: string;
 
   @IsNotEmpty()
   @IsString()
   @IsOptional()
-  email: string;
+  nickname: string;
 
   @IsString()
   @IsOptional()

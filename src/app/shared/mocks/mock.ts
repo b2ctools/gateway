@@ -19,18 +19,36 @@ export const getMockedUserList = () => {
   //  elmer
   const users = [
     {
-      firstName: "Elmer Entenza", //casual.name,
+      firstName: "Elmer", //casual.name,
       lastName: "Entenza", //casual.last_name,
-      email: "elmer@email.com", //casual.email.toLowerCase(),
+      email: `elmer@email.com`, //casual.email.toLowerCase(),
       password: "12345", //casual.password,
       tenantId: DEFAULT_TENANT,
       role: UserRole.USER,
       ...commondData,
     },
+    {
+      firstName: "Yoennis", //casual.name,
+      lastName: "Rodriguez", //casual.last_name,
+      email: "yoennis@email.com", //casual.email.toLowerCase(),
+      password: "12345", //casual.password,
+      tenantId: DEFAULT_TENANT,
+      role: UserRole.ADMIN,
+      ...commondData,
+    },
+    {
+      firstName: "Leonargo", //casual.name,
+      lastName: "McTesterson", //casual.last_name,
+      email: "leo@email.com", //casual.email.toLowerCase(),
+      password: "12345", //casual.password,
+      tenantId: DEFAULT_TENANT,
+      role: UserRole.OWNER,
+      ...commondData,
+    },
   ];
 
   // random users
-  Array(3)
+  Array(2)
     .fill(null)
     .map(() => {
       users.push({
@@ -45,7 +63,7 @@ export const getMockedUserList = () => {
     });
 
   // random clients
-  Array(3)
+  Array(2)
     .fill(null)
     .map(() => {
       users.push({
@@ -63,7 +81,7 @@ export const getMockedUserList = () => {
 };
 
 export const getMockedStoreList = () => {
-  return Array(25)
+  return Array(3)
     .fill(null)
     .map(() => ({
       name: "Store " + casual.title,
@@ -73,7 +91,7 @@ export const getMockedStoreList = () => {
 };
 
 export const getMockedBrandList = () => {
-  return Array(25)
+  return Array(5)
     .fill(null)
     .map(() => ({
       name: "Brand " + casual.title,
@@ -83,7 +101,7 @@ export const getMockedBrandList = () => {
 };
 
 export const getMockedCountryList = () => {
-  return Array(25)
+  return Array(5)
     .fill(null)
     .map(() => ({
       name: casual.country,

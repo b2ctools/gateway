@@ -112,6 +112,7 @@ export class UserService {
     const {
       id,
       firstName,
+      lastName,
       nickname,
       email,
       phone,
@@ -131,6 +132,7 @@ export class UserService {
     const userToUpdate = {
       ...user,
       ...(firstName ? { firstName } : {}),
+      ...(lastName ? { lastName } : {}),
       ...(nickname ? { nickname } : {}),
       ...(email ? { email } : {}),
       ...(phone ? { phone } : {}),
