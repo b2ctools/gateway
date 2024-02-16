@@ -7,7 +7,7 @@ import { Token, TokenService } from "./token.service";
 import { User } from "../../user/domain/user.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { sessionService } from "./session.service";
-import { sanitizeEmail } from "src/app/shared/utils/string";
+import { sanitizeEmail } from "../../shared/utils/string";
 
 export interface LoginResponse {
   accessToken: Token;
