@@ -51,9 +51,9 @@ export class AccountService {
   async findAllAccounts(request: SearchAccountRequest) {
     const { userId } = request;
     const accounts = await this.accountRepo.findAll(request);
-
+    
     const userIdToFillter = userId ? userId : ctxSrv.getUserId();
-
+    
     return accounts.filter((a) => a.userId === userIdToFillter);
   }
 

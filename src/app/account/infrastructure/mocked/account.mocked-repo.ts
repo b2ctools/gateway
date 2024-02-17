@@ -15,7 +15,7 @@ export class AccountMockedRepository extends MockedRepository<
     entity.permissions = d.permissions;
     entity.scope = d.scope;
     entity.userId = d.userId;
-    entity.userId = d.storeId;
+    entity.storeId = d.storeId;
     entity.tenantId = d.tenantId;
     return entity;
   }

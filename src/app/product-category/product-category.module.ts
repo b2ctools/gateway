@@ -13,6 +13,8 @@ import { MoveProductCateogoryController } from "./application/move-product-categ
 import { MoveProductCategoryUseCase } from "./application/move-product-category/move-product-category.usecase";
 import { SubProductCategoriesController } from "./application/sub-product-categories/sub-product-categories.controller";
 import { SubProductCategoriesUseCase } from "./application/sub-product-categories/sub-product-categories.usecase";
+import { FindOneProductCategoryController } from "./application/find-one-product-category/find-one-product-category.controller";
+import { FindOneProductCategoryUsecase } from "./application/find-one-product-category/find-one-product-category.usecase";
 
 @Module({
   imports: [],
@@ -23,6 +25,7 @@ import { SubProductCategoriesUseCase } from "./application/sub-product-categorie
     UpdateProductCategoryController,
     MoveProductCateogoryController,
     SubProductCategoriesController,
+    FindOneProductCategoryController,
   ],
   providers: [
     AddProductCategoryUseCase,
@@ -33,6 +36,7 @@ import { SubProductCategoriesUseCase } from "./application/sub-product-categorie
     ProductCategoryService,
     SubProductCategoriesUseCase,
     getProductCategoryRepo(),
+    FindOneProductCategoryUsecase,
   ],
   exports: [ProductCategoryService],
 })

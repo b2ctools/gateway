@@ -34,7 +34,7 @@ export class InitService {
     private readonly productCategoryService: ProductCategoryService,
 
     @Inject(AccountService)
-    private readonly accountService: AccountService,
+    private readonly accountService: AccountService
   ) {}
 
   private async seedAccountsForElmer() {
@@ -61,24 +61,24 @@ export class InitService {
 
   async onApplicationBootstrap() {
     await Promise.all(
-      getMockedUserList().map((user) => this.userService.registerUser(user)),
+      getMockedUserList().map((user) => this.userService.registerUser(user))
     );
     await Promise.all(
-      getMockedStoreList().map((store) => this.soreService.addStore(store)),
+      getMockedStoreList().map((store) => this.soreService.addStore(store))
     );
     await Promise.all(
-      getMockedBrandList().map((brand) => this.brandService.addBrand(brand)),
+      getMockedBrandList().map((brand) => this.brandService.addBrand(brand))
     );
     await Promise.all(
       getMockedCountryList().map((country) =>
-        this.countryService.addCountry(country),
-      ),
+        this.countryService.addCountry(country)
+      )
     );
 
     await Promise.all(
       getMockedProductCategoryList().map((pc) =>
-        this.productCategoryService.addProductCategory(pc),
-      ),
+        this.productCategoryService.addProductCategory(pc)
+      )
     );
 
     await this.seedAccountsForElmer();
