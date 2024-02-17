@@ -10,6 +10,7 @@ import { TokenService } from "../token.service";
 import { fetchTokenFromRequest } from "./token-from-request";
 import { UserService } from "src/app/user/domain/user.service";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { User, UserRole } from "src/app/user/domain/user.interface";
 
 /** Middleware to fetch header info from request */
 
@@ -33,13 +34,28 @@ export class HeaderCheckMiddleware implements NestMiddleware {
 
   private async verifyUser(userId: ID) {
 
+    let user: User = null;
     if (userId) {
       try {
-        await this.userService.findByIdOrFail(userId);
+        user = await this.userService.findByIdOrFail(userId);
       } catch (error) {
         throw new ForbiddenException("UserId from token not found.. please login again");
       }
     }
+
+    ctxSrv.setUserId(userId);
+    ctxSrv.setUserRole(user.role);
+    return user;
+  }
+
+  /** this is a function to set the Tenant to 0 (not defined - multitenant)
+   * when the role is ADMIN
+   */
+  private setTenantIdBasedOnUserRole(tenantIdFetchFromToken: ID, userRole: UserRole): ID{
+    
+    const tenantId = userRole === UserRole.ADMIN ? null : tenantIdFetchFromToken;
+    ctxSrv.setTenantId(tenantId);
+    return tenantId;
   }
 
   async use(req: Request, res: Response, next: NextFunction) {
@@ -48,8 +64,9 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       throw new ForbiddenException("Auth Error. Token must be specified.");
     }
       
-    const { tenantId, userId } = this.fetchUserAndTenantFromToken(token);
-    await this.verifyUser(userId);
+    const { tenantId: tenantIdFetchFromToken, userId } = this.fetchUserAndTenantFromToken(token);
+    const { role } = await this.verifyUser(userId);
+    const tenantId = this.setTenantIdBasedOnUserRole(tenantIdFetchFromToken, role)
 
     console.log(`
       ===============================================================
@@ -57,17 +74,6 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       ${JSON.stringify({ tenantId, userId })}
       ===============================================================
     `);
-
-    if (!tenantId) {
-      return res.status(400).send("TenantId header is missing");
-    }
-
-    if (!userId) {
-      return res.status(400).send("UserId header is missing");
-    }
-
-    ctxSrv.setTenantId(tenantId);
-    ctxSrv.setUserId(userId);
 
     next();
   }

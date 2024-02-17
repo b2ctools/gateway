@@ -6,6 +6,8 @@ import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
 import { IOrder, SearchRequest } from "../base.request";
+import { UserRole } from "src/app/user/domain/user.interface";
+import { parse } from "path";
 
 interface HashMap<T> {
   [key: string]: T;
@@ -100,11 +102,30 @@ export abstract class MockedRepository<
     if (fromDate && toDate) {
       const fieldDate = fieldName || "createdAt";
       return items.filter(
-        (e) => e[fieldDate] >= fromDate && e[fieldDate] <= toDate,
+        (e) => e[fieldDate] >= fromDate && e[fieldDate] <= toDate
       );
     }
 
     return items;
+  }
+
+  /**
+   * rules for tenant on search
+   * - if user is admin and tenantOnSearch is not null, then use tenantOnSearch
+   * - if user is admin and tenantOnSearch is null, then use user tenant
+   * - if user is not admin, then use user tenant
+   * 
+   * @param request 
+   * @returns 
+   */
+  private getTenantOnSearch(request: SearchRequest) {
+    const { tenantOnSearch } = request;
+    let tenantId = null;
+    tenantId = ctxSrv.getTenantId();
+    if (ctxSrv.getUserRole() === UserRole.ADMIN && tenantOnSearch) {
+      tenantId = parseInt(tenantOnSearch as string);
+    }
+    return tenantId;
   }
 
   async findAll(request: SearchRequest): Promise<TDomain[]> {
@@ -112,14 +133,15 @@ export abstract class MockedRepository<
       const { sortBy, sortOrder, take, skip, fromDate, toDate, dateFieldName } =
         request;
 
-      // fetching data only related to the authenticated user tenant
-      const tenantId = ctxSrv.getTenantId();
-      if (!tenantId)
-        throw new Error("Error on findAll. TenantId must be defined");
+      let results = Object.values(this.elements);
 
-      let results = Object.values(this.elements).filter(
-        (item) => item.tenantId === tenantId,
-      );
+      /**
+       *
+       */
+      const tenantId = this.getTenantOnSearch(request);
+      if (tenantId) {
+        results = results.filter((item) => item.tenantId === tenantId);
+      }
 
       // sorting data
       results = sortBy
@@ -173,7 +195,7 @@ export abstract class MockedRepository<
     const existing = await this.getEntityId(id);
     if (!existing) {
       throw new BadRequestException(
-        `Error trying to update a not found entity - ${JSON.stringify(d)}`,
+        `Error trying to update a not found entity - ${JSON.stringify(d)}`
       );
     }
 

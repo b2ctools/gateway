@@ -60,10 +60,12 @@ export class UserMockedRepository extends MockedRepository<
     };
   }
 
-  async getUserByEmail(email: string) {
-    const users = await this.findAll({});
-    if (users.length === 0) return null;
-    const filtered = users.filter((u) => u.email === email);
-    return filtered.length > 0 ? filtered.shift() : null;
+  async getUserByEmail(email: string): Promise<User> {
+    /**
+     * Search among all users without
+     */
+    const users = Object.values(this.elements).filter((u) => u.email === email)
+    return users.length > 0 ? this.entityToDomain(users.shift()) : null;
+    
   }
 }
