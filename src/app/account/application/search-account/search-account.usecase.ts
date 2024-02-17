@@ -3,6 +3,7 @@ import { AccountService } from "../../domain/account.service";
 import { SearchAccountRequest } from "./search-account.request";
 import { UserService } from "src/app/user/domain/user.service";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { StoreService } from "src/app/store/domain/store.service";
 
 @Injectable()
 export class SearchAccountUseCase {
@@ -12,6 +13,9 @@ export class SearchAccountUseCase {
 
     @Inject(UserService)
     private readonly userService: UserService,
+
+    @Inject(StoreService)
+    private readonly storeService: StoreService
   ) {}
 
   private async validateUser(userId: ID) {
@@ -21,7 +25,17 @@ export class SearchAccountUseCase {
     }
   }
 
+  private async validateStore(storeId: ID) {
+    if (storeId) {
+      await this.storeService.findByIdOrFail(storeId);
+      return;
+    }
+  }
+
   async execute(request: SearchAccountRequest) {
+    const { userId, storeId } = request;
+    await this.validateUser(userId);
+    await this.validateStore(storeId);
     return await this.accountService.findAllAccounts(request);
   }
 }

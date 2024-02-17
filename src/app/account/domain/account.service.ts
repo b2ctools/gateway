@@ -4,22 +4,19 @@ import { AddAccountCommand } from "../application/add-account/add-account.comman
 import { Account } from "./account.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
-import { ctxSrv } from "src/app/shared/context.service";
 
 @Injectable()
 export class AccountService {
   constructor(
     @Inject("AccountRepository")
-    private readonly accountRepo: AccountRepository,
+    private readonly accountRepo: AccountRepository
   ) {}
 
   private async verifyUserAccount(userId: ID): Promise<void> {
     const existing = await this.accountRepo.getAccountOfUser(userId);
 
     if (existing) {
-      throw new BadRequestException(
-        `Account of user ${userId} already exists`,
-      );
+      throw new BadRequestException(`Account of user ${userId} already exists`);
     }
   }
 
@@ -49,12 +46,13 @@ export class AccountService {
   }
 
   async findAllAccounts(request: SearchAccountRequest) {
-    const { userId } = request;
-    const accounts = await this.accountRepo.findAll(request);
-    
-    const userIdToFillter = userId ? userId : ctxSrv.getUserId();
-    
-    return accounts.filter((a) => a.userId === userIdToFillter);
+    const { userId, storeId } = request;
+    let accounts = await this.accountRepo.findAll(request);
+
+    accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
+    accounts = storeId ? accounts.filter((a) => a.storeId === storeId) : accounts;
+
+    return accounts
   }
 
   async getAccountsFromStore(storeId: ID) {
