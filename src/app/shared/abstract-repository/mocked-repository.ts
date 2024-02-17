@@ -112,14 +112,17 @@ export abstract class MockedRepository<
       const { sortBy, sortOrder, take, skip, fromDate, toDate, dateFieldName } =
         request;
 
-      // fetching data only related to the authenticated user tenant
+      let results = Object.values(this.elements);
+      
+      // fetch all items if tenantId is not set
       const tenantId = ctxSrv.getTenantId();
-      if (!tenantId)
-        throw new Error("Error on findAll. TenantId must be defined");
+      if (tenantId){
+        results = results.filter(
+          (item) => item.tenantId === tenantId,
+        );
+      }
 
-      let results = Object.values(this.elements).filter(
-        (item) => item.tenantId === tenantId,
-      );
+      
 
       // sorting data
       results = sortBy
