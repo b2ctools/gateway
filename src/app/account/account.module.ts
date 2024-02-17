@@ -11,6 +11,8 @@ import { StoreModule } from "../store/store.module";
 import { SetPermissionsController } from "./application/set-permissions/set-permissions.controller";
 import { SetPermissionsUseCase } from "./application/set-permissions/set-permissions.usecase";
 import { UserModule } from "../user/user.module";
+import { FindOneAccountController } from "./application/find-one-account/find-one-account.controller";
+import { FindOneAccountUsecase } from "./application/find-one-account/find-one-account.usecase";
 
 @Module({
   imports: [forwardRef(() => StoreModule), forwardRef(() => UserModule)],
@@ -19,6 +21,7 @@ import { UserModule } from "../user/user.module";
     SearchAccountController,
     RemoveAccountController,
     SetPermissionsController,
+    FindOneAccountController,
   ],
   providers: [
     AddAccountUseCase,
@@ -27,6 +30,7 @@ import { UserModule } from "../user/user.module";
     AccountService,
     getAccountRepo(),
     SetPermissionsUseCase,
+    FindOneAccountUsecase,
   ],
   exports: [AccountService],
 })
