@@ -1,3 +1,5 @@
+import { ID } from "./abstract-repository/repository.interface";
+
 export type IOrder = "asc" | "desc";
 
 export interface SearchRequest {
@@ -8,6 +10,7 @@ export interface SearchRequest {
   fromDate?: Date;
   toDate?: Date;
   dateFieldName?: string;
+  tenantOnSearch?: ID;
 }
 
 export interface SearchOutput<T> {

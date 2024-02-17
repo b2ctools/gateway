@@ -44,6 +44,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     }
 
     ctxSrv.setUserId(userId);
+    ctxSrv.setUserRole(user.role);
     return user;
   }
 

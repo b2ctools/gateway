@@ -1,3 +1,4 @@
+import { UserRole } from "../user/domain/user.interface";
 import { ID } from "./abstract-repository/repository.interface";
 export const DEFAULT_TENANT = 1;
 /**
@@ -6,6 +7,7 @@ export const DEFAULT_TENANT = 1;
 class ContextService {
   private tenantId: ID;
   private userId: ID;
+  private userRole: UserRole;
 
   constructor() {
     this.setTenantId(DEFAULT_TENANT);
@@ -22,6 +24,12 @@ class ContextService {
   }
   getUserId() {
     return this.userId;
+  }
+  setUserRole(userRole: UserRole) {
+    this.userRole = userRole;
+  }
+  getUserRole() {
+    return this.userRole;
   }
 }
 
