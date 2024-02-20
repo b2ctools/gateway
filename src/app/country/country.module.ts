@@ -9,6 +9,8 @@ import { RemoveCountryController } from "./application/remove-country/remove-cou
 import { RemoveCountryUseCase } from "./application/remove-country/remove-country.usecase";
 import { UpdateCountryController } from "./application/update-country/update-country.controller";
 import { UpdateCountryUseCse } from "./application/update-country/update-country.usecase";
+import { FindOneCountryController } from "./application/find-one-country/find-one-country.controller";
+import { FindOneCountryUseCase } from "./application/find-one-country/find-one-country.usecase";
 
 @Module({
   imports: [],
@@ -17,6 +19,7 @@ import { UpdateCountryUseCse } from "./application/update-country/update-country
     SearchCountryController,
     RemoveCountryController,
     UpdateCountryController,
+    FindOneCountryController,
   ],
   providers: [
     AddCountryUseCase,
@@ -25,6 +28,7 @@ import { UpdateCountryUseCse } from "./application/update-country/update-country
     UpdateCountryUseCse,
     CountryService,
     getCountryRepo(),
+    FindOneCountryUseCase,
   ],
   exports: [CountryService],
 })

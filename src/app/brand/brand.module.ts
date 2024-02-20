@@ -9,6 +9,8 @@ import { RemoveBrandController } from "./application/remove-brand/remove-brand.c
 import { RemoveBrandUseCase } from "./application/remove-brand/remove-brand.usecase";
 import { UpdateBrandController } from "./application/update-brand/update-brand.controller";
 import { UpdateBrandUseCse } from "./application/update-brand/update-brand.usecase";
+import { FindOneBrandController } from "./application/find-one-brand/find-one-brand.controller";
+import { FindOneBrandUseCase } from "./application/find-one-brand/find-one-brand.usecase";
 
 @Module({
   imports: [],
@@ -17,6 +19,7 @@ import { UpdateBrandUseCse } from "./application/update-brand/update-brand.useca
     SearchStoreController,
     RemoveBrandController,
     UpdateBrandController,
+    FindOneBrandController,
   ],
   providers: [
     AddBrandUseCase,
@@ -25,6 +28,7 @@ import { UpdateBrandUseCse } from "./application/update-brand/update-brand.useca
     UpdateBrandUseCse,
     BrandService,
     getBrandRepo(),
+    FindOneBrandUseCase,
   ],
   exports: [BrandService],
 })
