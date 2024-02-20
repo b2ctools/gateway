@@ -16,10 +16,12 @@ describe("AppController (e2e)", () => {
     await app.init();
   });
 
-  it("/ (GET)", () => {
-    return request(app.getHttpServer())
+  it("/ (GET)", async () => {
+    const { body } = await request(app.getHttpServer())
       .get("/")
       .expect(200)
-      // .expect("Hello World!");
+      .expect({ message: "Welcome to Platform CU Backend System!" });
+
+    console.log('response.body', body);
   });
 });
