@@ -5,9 +5,9 @@ import { IDomain } from "./entities/domain";
 import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
-import { IOrder, SearchRequest } from "../base.request";
+import { IOrder, SearchRequest, applyFilterFieldFromRequest } from "../base.request";
 import { User, UserRole } from "../../user/domain/user.interface";
-import { applyFilteringFromRequest } from "../utils/string";
+
 
 interface HashMap<T> {
   [key: string]: T;
@@ -102,7 +102,11 @@ export abstract class MockedRepository<
     if (fromDate && toDate) {
       const fieldDate = fieldName || "createdAt";
       return items.filter(
-        (e) => e[fieldDate] >= fromDate && e[fieldDate] <= toDate
+        (e) => {
+          const from = new Date(fromDate);
+          const to = new Date(toDate);
+          return e[fieldDate] >= from && e[fieldDate] <= to;
+        }
       );
     }
 
@@ -111,19 +115,18 @@ export abstract class MockedRepository<
 
   /**
    * rules for tenant on search
-   * - if user is admin and tenantOnSearch is not null, then use tenantOnSearch
-   * - if user is admin and tenantOnSearch is null, then use user tenant
+   * - if user is admin and tenantOnSearchRequest is not null, then use tenantOnSearchRequest
+   * - if user is admin and tenantOnSearchRequest is null, then use user tenant
    * - if user is not admin, then use user tenant
    * 
    * @param request 
    * @returns 
    */
   private getTenantOnSearch(request: SearchRequest) {
-    const { tenantOnSearch } = request;
-    let tenantId = null;
-    tenantId = ctxSrv.getTenantId();
-    if (ctxSrv.getUserRole() === UserRole.ADMIN && tenantOnSearch) {
-      tenantId = parseInt(tenantOnSearch as string);
+    const { tenantId: tenantOnSearchRequest } = request;
+    let tenantId = ctxSrv.getTenantId();
+    if (ctxSrv.getUserRole() === UserRole.ADMIN && tenantOnSearchRequest) {
+      tenantId = parseInt(tenantOnSearchRequest as string);
     }
     return tenantId;
   }
@@ -143,10 +146,9 @@ export abstract class MockedRepository<
         results = results.filter((item) => item.tenantId === tenantId);
       }
 
-      // applying filter
+      // applying filter field-string-value
       const { filter } = request;
-      results = applyFilteringFromRequest(results, filter);
-
+      results = applyFilterFieldFromRequest(results, filter);
 
       // sorting data
       results = sortBy

@@ -48,6 +48,7 @@ export class ProductCategoryService {
     const pc: ProductCategory = {
       id: null,
       tenantId: null,
+      status: "active",
       ...command,
     };
 
