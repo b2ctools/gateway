@@ -7,6 +7,7 @@ import { AppRepository, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
 import { IOrder, SearchRequest } from "../base.request";
 import { User, UserRole } from "src/app/user/domain/user.interface";
+import { applyFilteringFromRequest } from "../utils/string";
 
 interface HashMap<T> {
   [key: string]: T;
@@ -141,6 +142,11 @@ export abstract class MockedRepository<
       if (tenantId) {
         results = results.filter((item) => item.tenantId === tenantId);
       }
+
+      // applying filter
+      const { filter } = request;
+      results = applyFilteringFromRequest(results, filter);
+
 
       // sorting data
       results = sortBy
