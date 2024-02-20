@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { CountryService } from "../../domain/country.service";
-import { SearchRequest } from "../../../shared/base.request";
+import { SearchRequest, sanitazeSearchQueryParams } from "../../../shared/base.request";
+import { sortable } from "../../domain/country.interface";
 
 @Injectable()
 export class SearchCountryUseCase {
@@ -10,6 +11,6 @@ export class SearchCountryUseCase {
   ) {}
 
   async execute(request: SearchRequest) {
-    return await this.countryService.findAllCountries(request);
+    return await this.countryService.findAllCountries(sanitazeSearchQueryParams<SearchRequest>(request, sortable));
   }
 }

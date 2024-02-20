@@ -4,6 +4,7 @@ import {
   SearchRequest,
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
+import { sortable } from "../../domain/store.interface";
 
 @Injectable()
 export class SearchStoreUseCase {
@@ -14,7 +15,7 @@ export class SearchStoreUseCase {
 
   async execute(request: SearchRequest) {
     return await this.StoreService.findAllStores(
-      sanitazeSearchQueryParams<SearchRequest>(request),
+      sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
   }
 }

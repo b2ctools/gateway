@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ProductCategoryService } from "../../domain/product-category.service";
 import { SearchSubProductCategoryRequest } from "./sub-product-categories.request";
 import { sanitazeSearchQueryParams } from "../../../shared/base.request";
+import { sortable } from "../../domain/product-category.interface";
 
 @Injectable()
 export class SubProductCategoriesUseCase {
@@ -11,7 +12,7 @@ export class SubProductCategoriesUseCase {
   ) {}
   async execute(request: SearchSubProductCategoryRequest) {
     return await this.pcService.productCategoriesFromParent(
-      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(request),
+      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(request, sortable),
     );
   }
 }
