@@ -11,6 +11,8 @@ import { RemoveStoreUseCase } from "./application/remove-store/remove-store.usec
 import { UpdateStoreController } from "./application/update-store/update-store.controller";
 import { UpdateStoreUseCase } from "./application/update-store/update-store.usecase";
 import { AccountModule } from "../account/account.module";
+import { FindOneStoreController } from "./application/find-one-store/find-one-store.controller";
+import { FindOneStoreUseCase } from "./application/find-one-store/find-one-store.usecase";
 
 @Module({
   imports: [AuthModule, forwardRef(() => AccountModule)],
@@ -19,6 +21,7 @@ import { AccountModule } from "../account/account.module";
     SearchStoreController,
     RemoveStoreController,
     UpdateStoreController,
+    FindOneStoreController,
   ],
   providers: [
     AddStoreUseCase,
@@ -27,6 +30,7 @@ import { AccountModule } from "../account/account.module";
     getStoreRepo(),
     RemoveStoreUseCase,
     UpdateStoreUseCase,
+    FindOneStoreUseCase,
   ],
 
   exports: [StoreService],
