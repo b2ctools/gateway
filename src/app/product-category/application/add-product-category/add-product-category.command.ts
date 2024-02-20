@@ -3,7 +3,7 @@ import { ProductCategory } from "../../domain/product-category.interface";
 import { AddProductCategoryRequest } from "./add-product-category.request";
 
 export class AddProductCategoryCommand
-  implements Omit<ProductCategory, "id" | "tenantId">
+  implements Omit<ProductCategory, "id" | "tenantId" | "status">
 {
   name: string;
   description?: string;

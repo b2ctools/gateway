@@ -4,4 +4,7 @@ import { ID } from "../repository.interface";
 export interface IDomain {
   id: ID;
   tenantId: ID;
+
+  createdAt?: Date;
+  updatedAt?: Date;
 }

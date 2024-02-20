@@ -12,7 +12,7 @@ import { ProductCategory } from "../../domain/product-category.interface";
 import { Optional } from "@nestjs/common";
 
 export class AddProductCategoryRequest
-  implements Omit<ProductCategory, "id" | "tenantId">
+  implements Omit<ProductCategory, "id" | "tenantId" | "status">
 {
   @IsNotEmpty()
   @IsString()

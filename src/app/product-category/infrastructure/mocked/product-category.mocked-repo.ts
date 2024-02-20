@@ -16,6 +16,10 @@ export class ProductCategoryMockedRepository extends MockedRepository<
     entity.description = d.description;
     entity.tenantId = d.tenantId;
     entity.parent = d.parent;
+    entity.status = d.status;
+
+    entity.createdAt = d.createdAt;
+    entity.updatedAt = d.updatedAt;
 
     return entity;
   }
@@ -27,6 +31,11 @@ export class ProductCategoryMockedRepository extends MockedRepository<
       description: e.description,
       tenantId: e.tenantId,
       parent: e.parent,
+      status: e.status,
+
+
+      createdAt: e.createdAt,
+      updatedAt: e.updatedAt,
     };
   }
 
