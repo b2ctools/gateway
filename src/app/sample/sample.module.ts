@@ -13,6 +13,8 @@ import { ProductCategoryModule } from "../product-category/product-category.modu
 import { StoreModule } from "../store/store.module";
 import { BrandModule } from "../brand/brand.module";
 import { CountryModule } from "../country/country.module";
+import { FindOneSampleController } from "./application/find-one-sample/find-one-sample.controller";
+import { FindOneSampleUseCase } from "./application/find-one-sample/find-one-sample.usecase";
 
 @Module({
   imports: [ProductCategoryModule, StoreModule, BrandModule, CountryModule],
@@ -21,6 +23,7 @@ import { CountryModule } from "../country/country.module";
     SearchSampleController,
     RemoveSampleController,
     UpdateSampleController,
+    FindOneSampleController,
   ],
   providers: [
     AddSampleUseCase,
@@ -29,6 +32,7 @@ import { CountryModule } from "../country/country.module";
     UpdateSampleUseCse,
     SampleService,
     getSampleRepo(),
+    FindOneSampleUseCase,
   ],
   exports: [SampleService],
 })
