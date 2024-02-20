@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { MongoRepository } from "../../../shared/abstract-repository/mongo-repository";
 import { ClientMongoEntity } from "./client.mongo-entity";
 import { Client } from "../../domain/client.interface";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class ClientMongoRepository extends MongoRepository<

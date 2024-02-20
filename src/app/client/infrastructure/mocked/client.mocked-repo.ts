@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
 import { ClientMockedEntity } from "./client.mocked-entity";
 import { Client } from "../../domain/client.interface";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class ClientMockedRepository extends MockedRepository<

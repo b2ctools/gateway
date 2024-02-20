@@ -1,7 +1,7 @@
 import casual from "casual";
 
 import { DEFAULT_TENANT } from "../context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { UserRole } from "../../user/domain/user.interface";
 
 export const getMockedUserList = () => {
   const commondData = {

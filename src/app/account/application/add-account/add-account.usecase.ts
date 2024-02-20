@@ -1,10 +1,10 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { AccountService } from "../../domain/account.service";
 import { AddAccountCommand } from "./add-account.command";
-import { StoreService } from "src/app/store/domain/store.service";
-import { UserService } from "src/app/user/domain/user.service";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { StoreService } from "../../../store/domain/store.service";
+import { UserService } from "../../../user/domain/user.service";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { UserRole } from "../../../user/domain/user.interface";
 
 @Injectable()
 export class AddAccountUseCase {

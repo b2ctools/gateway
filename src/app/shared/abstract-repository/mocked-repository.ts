@@ -6,7 +6,7 @@ import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
 import { IOrder, SearchRequest } from "../base.request";
-import { User, UserRole } from "src/app/user/domain/user.interface";
+import { User, UserRole } from "../../user/domain/user.interface";
 import { applyFilteringFromRequest } from "../utils/string";
 
 interface HashMap<T> {

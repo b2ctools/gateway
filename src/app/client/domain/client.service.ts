@@ -5,8 +5,8 @@ import { Client } from "./client.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 import { UpdateClientRequest } from "../application/update-client/update-client.request";
-import { UserService } from "src/app/user/domain/user.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { UserService } from "../../user/domain/user.service";
+import { UserRole } from "../../user/domain/user.interface";
 
 @Injectable()
 export class ClientService {

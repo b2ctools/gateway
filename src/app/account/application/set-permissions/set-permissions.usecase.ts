@@ -1,8 +1,8 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { AccountService } from "../../domain/account.service";
 import { SetPermissionsRequest } from "./set-permissions.request";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { isValidPermission } from "src/app/access/domain/permissions";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { isValidPermission } from "../../../access/domain/permissions";
 
 @Injectable()
 export class SetPermissionsUseCase {

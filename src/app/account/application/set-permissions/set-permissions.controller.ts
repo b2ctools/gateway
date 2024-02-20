@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Post } from "@nestjs/common";
-import { accountPath } from "src/app/shared/routes";
+import { accountPath } from "../../../shared/routes";
 import { SetPermissionsUseCase } from "./set-permissions.usecase";
 import { SetPermissionsRequest } from "./set-permissions.request";
 

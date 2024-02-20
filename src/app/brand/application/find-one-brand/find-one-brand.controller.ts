@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { brandPath } from "src/app/shared/routes";
+import { brandPath } from "../../../shared/routes";
 import { FindOneBrandUseCase } from "./find-one-brand.usecase";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Controller(brandPath)
 export class FindOneBrandController {

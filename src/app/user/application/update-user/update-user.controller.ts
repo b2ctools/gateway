@@ -1,5 +1,5 @@
 import { Body, Controller, Inject, Patch } from "@nestjs/common";
-import { userPath } from "src/app/shared/routes";
+import { userPath } from "../../../shared/routes";
 import { UpdateUserUseCase } from "./update-user.usecase";
 import { UpdateUserRequest } from "./update-user.request";
 import { userToDto } from "../../domain/user.interface";

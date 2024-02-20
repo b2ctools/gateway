@@ -1,5 +1,6 @@
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { genId } from "src/app/shared/utils/gen-id";
+import { genId } from "../../shared/utils/gen-id";
+import { ID } from "../../shared/abstract-repository/repository.interface";
+
 
 const permissions = ["create", "read", "update", "delete"];
 

@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { samplePath } from "src/app/shared/routes";
+import { samplePath } from "../../../shared/routes";
 import { FindOneSampleUseCase } from "./find-one-sample.usecase";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Controller(samplePath)
 export class FindOneSampleController {

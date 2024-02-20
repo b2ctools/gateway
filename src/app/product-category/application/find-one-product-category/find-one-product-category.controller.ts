@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { productCategoryPath } from "src/app/shared/routes";
+import { productCategoryPath } from "../../../shared/routes";
 import { FindOneProductCategoryUsecase } from "./find-one-product-category.usecase";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { productCategoryToDto } from "../../domain/product-category.interface";
 
 @Controller(productCategoryPath)

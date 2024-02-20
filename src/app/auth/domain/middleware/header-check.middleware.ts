@@ -8,9 +8,9 @@ import { Request, Response, NextFunction } from "express";
 import { ctxSrv } from "../../../shared/context.service";
 import { TokenService } from "../token.service";
 import { fetchTokenFromRequest } from "./token-from-request";
-import { UserService } from "src/app/user/domain/user.service";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { User, UserRole } from "src/app/user/domain/user.interface";
+import { UserService } from "../../../user/domain/user.service";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { User, UserRole } from "../../../user/domain/user.interface";
 
 /** Middleware to fetch header info from request */
 
