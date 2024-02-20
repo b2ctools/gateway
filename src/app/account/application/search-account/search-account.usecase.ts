@@ -1,11 +1,11 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { AccountService } from "../../domain/account.service";
 import { SearchAccountRequest } from "./search-account.request";
-import { UserService } from "src/app/user/domain/user.service";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { StoreService } from "src/app/store/domain/store.service";
+import { UserService } from "../../../user/domain/user.service";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { StoreService } from "../../../store/domain/store.service";
 import { sortable } from "../../domain/account.interface";
-import { sanitazeSearchQueryParams } from "src/app/shared/base.request";
+import { sanitazeSearchQueryParams } from "../../../shared/base.request";
 
 @Injectable()
 export class SearchAccountUseCase {

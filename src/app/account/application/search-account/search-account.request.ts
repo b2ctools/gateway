@@ -1,5 +1,5 @@
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { SearchRequest } from "src/app/shared/base.request";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { SearchRequest } from "../../../shared/base.request";
 
 export interface SearchAccountRequest extends SearchRequest {
   userId: ID;

@@ -5,7 +5,7 @@ import {
   IsOptional,
   IsString,
 } from "class-validator";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { UserRole, UserStatus } from "../../domain/user.interface";
 
 export class UpdateUserRequest {

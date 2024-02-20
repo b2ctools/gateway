@@ -1,4 +1,4 @@
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 
 export enum Scope {

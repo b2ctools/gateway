@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { storePath } from "src/app/shared/routes";
+import { storePath } from "../../../shared/routes";
 import { FindOneStoreUseCase } from "./find-one-store.usecase";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Controller(storePath)
 export class FindOneStoreController {

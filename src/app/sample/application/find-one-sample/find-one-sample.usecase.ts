@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { SampleService } from "../../domain/sample.service";
 
 @Injectable()

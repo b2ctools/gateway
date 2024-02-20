@@ -1,4 +1,4 @@
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
 import { Account, Scope } from "../../domain/account.interface";
 

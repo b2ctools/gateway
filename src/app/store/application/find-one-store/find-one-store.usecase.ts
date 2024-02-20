@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { StoreService } from "../../domain/store.service";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class FindOneStoreUseCase {

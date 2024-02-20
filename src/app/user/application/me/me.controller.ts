@@ -1,5 +1,5 @@
 import { Controller, Get, Inject } from "@nestjs/common";
-import { userPath } from "src/app/shared/routes";
+import { userPath } from "../../../shared/routes";
 import { UserService } from "../../domain/user.service";
 import { userToDto } from "../../domain/user.interface";
 

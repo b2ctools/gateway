@@ -2,8 +2,8 @@ import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "../../domain/user.service";
 import { RegisterUserCommand } from "./register-user.command";
 import { User } from "../../domain/user.interface";
-import { CountryService } from "src/app/country/domain/country.service";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { CountryService } from "../../../country/domain/country.service";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class RegisterUserUseCase {

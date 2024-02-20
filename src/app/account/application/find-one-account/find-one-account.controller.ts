@@ -1,8 +1,8 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { accountPath } from "src/app/shared/routes";
+import { accountPath } from "../../../shared/routes";
 import { FindOneAccountUsecase } from "./find-one-account.usecase";
 import { accountToDto } from "../../domain/account.interface";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Controller(accountPath)
 export class FindOneAccountController {

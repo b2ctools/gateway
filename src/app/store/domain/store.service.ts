@@ -4,7 +4,7 @@ import { Store } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { AccountService } from "src/app/account/domain/account.service";
+import { AccountService } from "../../account/domain/account.service";
 
 @Injectable()
 export class StoreService {

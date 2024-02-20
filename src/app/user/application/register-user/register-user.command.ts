@@ -1,4 +1,4 @@
-import { sanitizeEmail } from "src/app/shared/utils/string";
+import { sanitizeEmail } from "../../../shared/utils/string";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { User, UserRole } from "../../domain/user.interface";
 import { RegisterUserRequest } from "./register-user.request";
