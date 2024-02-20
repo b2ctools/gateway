@@ -6,8 +6,7 @@ import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
 import { IOrder, SearchRequest } from "../base.request";
-import { UserRole } from "src/app/user/domain/user.interface";
-import { parse } from "path";
+import { User, UserRole } from "src/app/user/domain/user.interface";
 
 interface HashMap<T> {
   [key: string]: T;
@@ -181,8 +180,7 @@ export abstract class MockedRepository<
   }
 
   async create(d: TDomain): Promise<TDomain> {
-    const id = genId();
-
+    const id = genId((d as unknown as User).email);
     const e = this.domainToEntity(d);
     e._id = id;
     this.elements[id] = e.toCreate();
