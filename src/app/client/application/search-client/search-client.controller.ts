@@ -19,11 +19,12 @@ export class SearchClientController {
   async findAllClients(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<ClientDto>> {
-    const items = (await this.useCase.execute(request)).map((s) =>
+    const { count, data } = await this.useCase.execute(request)
+    const items = data.map((s) =>
       clientToDto(s),
     );
     return {
-      count: items.length,
+      count,
       data: items,
       sortable,
     };

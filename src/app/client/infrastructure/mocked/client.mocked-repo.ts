@@ -28,7 +28,7 @@ export class ClientMockedRepository extends MockedRepository<
   }
 
   async getClientByUserId(userId: ID): Promise<Client> {
-    const clients = await this.findAll({});
+    const { data: clients } = await this.findAll({});
     if (clients.length === 0) return null;
     const filtered = clients.filter((s) => s.userId === userId);
     return filtered.length > 0 ? filtered.shift() : null;

@@ -4,7 +4,7 @@ import { User, UserStatus } from "./user.interface";
 import { UserRepository } from "../infrastructure/user-repository.type";
 import { encodePassword } from "../../auth/domain/encoder.service";
 import { ctxSrv } from "../../shared/context.service";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 
 @Injectable()
@@ -50,7 +50,7 @@ export class UserService {
     return (await this.userRepo.getUserByEmail(email)) as User;
   }
 
-  async findAllUsers(request: SearchRequest) {
+  async findAllUsers(request: SearchRequest): Promise<FindAllOutput<User>> {
     this.userRepo.logItems();
     return await this.userRepo.findAll(request);
   }

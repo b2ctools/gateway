@@ -15,11 +15,12 @@ export class SearchStoreController {
   async findAllBrands(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<BrandDto>> {
-    const brands = (await this.useCase.execute(request)).map((b) =>
+    const { count, data } = await this.useCase.execute(request);
+    const brands = data.map((b) =>
       brandToDto(b),
     );
     return {
-      count: brands.length,
+      count,
       data: brands,
       sortable,
     };

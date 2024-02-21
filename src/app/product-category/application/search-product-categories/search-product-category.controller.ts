@@ -21,7 +21,7 @@ export class SearchProductCategoryController {
   async searchProductCategories(
     @Query() request: SearchProductCategoryRequest,
   ): Promise<SearchProductCategoryOutput> {
-    const pcs = await this.useCase.execute(request);
+    const { data: pcs } = await this.useCase.execute(request);
     const data = pcs.map((pc) => productCategoryToDto(pc));
     return {
       data,

@@ -16,11 +16,12 @@ export class SearchUsersController {
   async SearchUsers(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<UserDto>> {
-    const users = (await this.useCase.execute(request)).map((u) =>
+    const { count, data } = await this.useCase.execute(request);
+    const users = data.map((u) =>
       userToDto(u),
     );
     return {
-      count: users.length,
+      count,
       data: users,
       sortable,
     };
