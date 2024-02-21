@@ -21,11 +21,11 @@ export class SearchProductCategoryController {
   async searchProductCategories(
     @Query() request: SearchProductCategoryRequest,
   ): Promise<SearchProductCategoryOutput> {
-    const { data: pcs } = await this.useCase.execute(request);
+    const { count, data: pcs } = await this.useCase.execute(request);
     const data = pcs.map((pc) => productCategoryToDto(pc));
     return {
       data,
-      count: data.length,
+      count,
       sortable,
     };
   }
