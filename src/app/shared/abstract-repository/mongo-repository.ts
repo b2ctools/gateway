@@ -1,7 +1,7 @@
 import { SearchRequest } from "../base.request";
 import { IDomain } from "./entities/domain";
 import { MongoEntity } from "./entities/mongo-entity";
-import { AppRepository, ID } from "./repository.interface";
+import { AppRepository, FindAllOutput, ID } from "./repository.interface";
 
 /**
  * This is a class to implement the handling
@@ -30,7 +30,7 @@ export abstract class MongoRepository<
     console.log(id);
     throw new Error("Method not implemented.");
   }
-  findAll(request: SearchRequest): Promise<TDomain[]> {
+  findAll(request: SearchRequest): Promise<FindAllOutput<TDomain>> {
     console.log(request);
     throw new Error("Method not implemented.");
   }

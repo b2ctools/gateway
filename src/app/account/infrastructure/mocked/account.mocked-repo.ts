@@ -32,13 +32,13 @@ export class AccountMockedRepository extends MockedRepository<
   }
 
   async getAccountsFromStore(storeId: ID): Promise<Account[]> {
-    const accounts = await this.findAll({});
+    const { data: accounts } = await this.findAll({});
     if (accounts.length === 0) return null;
     return accounts.filter((s) => s.storeId === storeId);
   }
 
   async getAccountOfUser(userId: ID): Promise<Account> {
-    const accounts = await this.findAll({});
+    const { data: accounts } = await this.findAll({});
     if (accounts.length === 0) return null;
     const filtered = accounts.filter((s) => s.userId === userId);
     return filtered.length > 0 ? filtered.shift() : null;

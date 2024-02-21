@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { AccountRepository } from "../infrastructure/account-repository.type";
 import { AddAccountCommand } from "../application/add-account/add-account.command";
 import { Account } from "./account.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
 
 @Injectable()
@@ -45,14 +45,19 @@ export class AccountService {
     await this.accountRepo.delete(id);
   }
 
-  async findAllAccounts(request: SearchAccountRequest) {
+  async findAllAccounts(request: SearchAccountRequest): Promise<FindAllOutput<Account>> {
     const { userId, storeId } = request;
-    let accounts = await this.accountRepo.findAll(request);
+    const result = await this.accountRepo.findAll(request);
+    const { count } = result;
+    let { data: accounts } = result;
 
     accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
     accounts = storeId ? accounts.filter((a) => a.storeId === storeId) : accounts;
 
-    return accounts
+    return {
+      count,
+      data: accounts,
+    }
   }
 
   async getAccountsFromStore(storeId: ID) {

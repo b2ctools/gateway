@@ -3,7 +3,7 @@ import * as _ from "lodash";
 import { genId } from "../utils/gen-id";
 import { IDomain } from "./entities/domain";
 import { MockedEntity } from "./entities/mocked-entity";
-import { AppRepository, ID } from "./repository.interface";
+import { AppRepository, FindAllOutput, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
 import { IOrder, SearchRequest, applyFilterFieldFromRequest } from "../base.request";
 import { User, UserRole } from "../../user/domain/user.interface";
@@ -131,7 +131,7 @@ export abstract class MockedRepository<
     return tenantId;
   }
 
-  async findAll(request: SearchRequest): Promise<TDomain[]> {
+  async findAll(request: SearchRequest): Promise<FindAllOutput<TDomain>> {
     if (Object.keys(this.elements).length > 0) {
       const { sortBy, sortOrder, take, skip, fromDate, toDate, dateFieldName } =
         request;
@@ -145,6 +145,8 @@ export abstract class MockedRepository<
       if (tenantId) {
         results = results.filter((item) => item.tenantId === tenantId);
       }
+
+
 
       // applying filter field-string-value
       const { filter } = request;
@@ -167,6 +169,9 @@ export abstract class MockedRepository<
         items: results,
       });
 
+      // total of result without pagination
+      const count = results.length;
+
       // paginating data
       results =
         take || skip
@@ -177,10 +182,17 @@ export abstract class MockedRepository<
             })
           : results;
 
-      return results.map((item) => this.entityToDomain(item));
+      const data = results.map((item) => this.entityToDomain(item));
+      return {
+        count,
+        data,
+      };
     }
 
-    return [];
+    return {
+      count: 0,
+      data: [],
+    };
   }
 
   async exist(id: ID): Promise<boolean> {

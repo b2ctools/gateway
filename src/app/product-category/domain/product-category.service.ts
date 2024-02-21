@@ -5,7 +5,7 @@ import {
   ProductCategory,
   ProductCategoryTree,
 } from "./product-category.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchProductCategoryRequest } from "../application/search-product-categories/search-product-category.request";
 import { SearchSubProductCategoryRequest } from "../application/sub-product-categories/sub-product-categories.request";
 
@@ -19,7 +19,7 @@ export interface JsonProductCategoryItem {
 export class ProductCategoryService {
   constructor(
     @Inject("ProductCategoryRepository")
-    private readonly pcRepo: ProductCategoryRepository,
+    private readonly pcRepo: ProductCategoryRepository
   ) {}
 
   private async verifyProductCategoryName(name: string): Promise<void> {
@@ -27,7 +27,7 @@ export class ProductCategoryService {
 
     if (existingPC) {
       throw new BadRequestException(
-        `Product-Category name ${name} is already taken`,
+        `Product-Category name ${name} is already taken`
       );
     }
   }
@@ -37,7 +37,7 @@ export class ProductCategoryService {
       const existingPC = await this.pcRepo.findById(id);
       if (!existingPC) {
         throw new BadRequestException(
-          `Product-Category PARENT with id ${id} specified do not exists.`,
+          `Product-Category PARENT with id ${id} specified do not exists.`
         );
       }
     }
@@ -75,7 +75,7 @@ export class ProductCategoryService {
             })
           ).length,
         };
-      }),
+      })
     );
   }
 
@@ -83,7 +83,7 @@ export class ProductCategoryService {
     const existingPC = await this.pcRepo.findById(id);
     if (!existingPC) {
       throw new BadRequestException(
-        `Product Category with id ${id} do not exist.`,
+        `Product Category with id ${id} do not exist.`
       );
     }
 
@@ -92,7 +92,7 @@ export class ProductCategoryService {
     });
     if (subcategories.length > 0) {
       throw new BadRequestException(
-        `Product Category with id ${id} can not be removed. It has subcategories.`,
+        `Product Category with id ${id} can not be removed. It has subcategories.`
       );
     }
 
@@ -102,16 +102,16 @@ export class ProductCategoryService {
   private async getHierarchy(parent: ID) {
     if (!parent) {
       throw new BadRequestException(
-        `Error getting hierarchy, parent must be defined.`,
+        `Error getting hierarchy, parent must be defined.`
       );
     }
 
     const getCategoryHierarchy = (
       categories: ProductCategoryTree[],
-      parentId: ID,
+      parentId: ID
     ): ProductCategoryTree[] => {
       const filteredCategories = categories.filter(
-        (category) => category.parent === parentId,
+        (category) => category.parent === parentId
       );
       if (filteredCategories.length === 0) {
         return [];
@@ -128,16 +128,21 @@ export class ProductCategoryService {
       return result;
     };
 
-    const categories: ProductCategory[] = await this.pcRepo.findAll({});
+    // const categories: ProductCategory[] = await this.pcRepo.findAll({});
+    const { data: categories } = await this.pcRepo.findAll({});
 
     return getCategoryHierarchy(categories, parent);
   }
 
-  async findAllProductCategories(request: SearchProductCategoryRequest) {
+  async findAllProductCategories(request: SearchProductCategoryRequest): Promise<FindAllOutput<ProductCategory | ProductCategoryTree>> {
     const tree = !!request.tree;
     // this.pcRepo.logItems();
-    const categories = await this.pcRepo.findAll(request);
-    return tree ? await this.getHierarchy("0") : categories;
+    const { count, data: categories } = await this.pcRepo.findAll(request);
+    const data = tree ? await this.getHierarchy("0") : categories;
+    return {
+      count,
+      data,
+    };
   }
 
   async insertCategoriesFromJson(json: string) {
@@ -145,14 +150,14 @@ export class ProductCategoryService {
 
     const saveCategories = async (
       categories: JsonProductCategoryItem[],
-      parent: ID = "0",
+      parent: ID = "0"
     ) => {
       for await (const category of categories) {
         const savedCategory = await this.addProductCategory(
           new AddProductCategoryCommand({
             ...category,
             parent,
-          }),
+          })
         );
         if (category.subcategories && category.subcategories.length > 0) {
           await saveCategories(category.subcategories, savedCategory.id);
@@ -167,7 +172,7 @@ export class ProductCategoryService {
       categoriesToSave = JSON.parse(json);
     } catch (error) {
       throw new BadRequestException(
-        "Error inserting Product Category from json file. " + error,
+        "Error inserting Product Category from json file. " + error
       );
     }
 
@@ -180,7 +185,7 @@ export class ProductCategoryService {
     const existingPC = await this.pcRepo.findById(pcId);
     if (!existingPC) {
       throw new BadRequestException(
-        `Product Category with id ${pcId} not found`,
+        `Product Category with id ${pcId} not found`
       );
     }
     return existingPC;
@@ -209,9 +214,8 @@ export class ProductCategoryService {
         name,
         description,
         parent,
-      })}`,
+      })}`
     );
     return await this.pcRepo.persist(existingPC);
   }
-
 }

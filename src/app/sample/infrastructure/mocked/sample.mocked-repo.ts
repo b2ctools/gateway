@@ -49,7 +49,7 @@ export class SampleMockedRepository extends MockedRepository<
   }
 
   async getSampleByName(name: string): Promise<Sample> {
-    const samples = await this.findAll({});
+    const { data: samples } = await this.findAll({});
     if (samples.length === 0) return null;
     const filtered = samples.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;

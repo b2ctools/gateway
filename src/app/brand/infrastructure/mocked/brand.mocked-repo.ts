@@ -26,7 +26,7 @@ export class BrandMockedRepository extends MockedRepository<
   }
 
   async getBrandByName(name: string): Promise<Brand> {
-    const categories = await this.findAll({});
+    const { data: categories } = await this.findAll({});
     if (categories.length === 0) return null;
     const filtered = categories.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;

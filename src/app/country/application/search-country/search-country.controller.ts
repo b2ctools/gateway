@@ -19,11 +19,12 @@ export class SearchCountryController {
   async findAllCountries(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<CountryDto>> {
-    const countries = (await this.useCase.execute(request)).map((b) =>
+    const { count, data } = await this.useCase.execute(request);
+    const countries = data.map((b) =>
       countryToDto(b),
     );
     return {
-      count: countries.length,
+      count,
       data: countries,
       sortable,
     };

@@ -40,7 +40,7 @@ export class ProductCategoryMockedRepository extends MockedRepository<
   }
 
   async getProductCategoryByName(name: string): Promise<ProductCategory> {
-    const categories = await this.findAll({});
+    const { data: categories } = await this.findAll({});
     if (categories.length === 0) return null;
     const filtered = categories.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
@@ -50,7 +50,7 @@ export class ProductCategoryMockedRepository extends MockedRepository<
     request: SearchSubProductCategoryRequest,
   ): Promise<ProductCategory[]> {
     const { parent } = request;
-    const categories = await this.findAll(request);
+    const { data: categories } = await this.findAll(request);
     if (categories.length === 0) return [];
     return categories.filter((s) => s.parent === parent) as ProductCategory[];
   }

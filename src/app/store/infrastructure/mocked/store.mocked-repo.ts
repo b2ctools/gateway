@@ -28,7 +28,7 @@ export class StoreMockedRepository extends MockedRepository<
   }
 
   async getStoreByName(name: string) {
-    const stores = await this.findAll({});
+    const { data: stores } = await this.findAll({});
     if (stores.length === 0) return null;
     const filtered = stores.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;

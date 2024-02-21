@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 
 import { AddBrandCommand } from "../application/add-brand/add-brand.command";
 import { Brand } from "./brand.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { BrandRepository } from "../infrastructure/brand-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 
@@ -50,7 +50,7 @@ export class BrandService {
     await this.brandRepo.delete(id);
   }
 
-  async findAllBrands(request: SearchRequest): Promise<Brand[]> {
+  async findAllBrands(request: SearchRequest): Promise<FindAllOutput<Brand>> {
     return await this.brandRepo.findAll(request);
   }
 

@@ -28,14 +28,14 @@ export class CountryMockedRepository extends MockedRepository<
   }
 
   async getCountryByName(name: string): Promise<Country> {
-    const countries = await this.findAll({});
+    const { data: countries } = await this.findAll({});
     if (countries.length === 0) return null;
     const filtered = countries.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
   }
 
   async getCountryByCode(code: string): Promise<Country> {
-    const countries = await this.findAll({});
+    const { data: countries } = await this.findAll({});
     if (countries.length === 0) return null;
     const filtered = countries.filter((s) => s.code === code);
     return filtered.length > 0 ? filtered.shift() : null;

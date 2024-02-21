@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, UseGuards } from "@nestjs/common";
+import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { SearchStoreUseCase } from "./search-store.usecase";
 import { StoreDto, sortable, storeToDto } from "../../domain/store.interface";
 import { storePath } from "../../../shared/routes";
@@ -19,11 +19,12 @@ export class SearchStoreController {
   async findAllStores(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<StoreDto>> {
-    const stores = (await this.useCase.execute(request)).map((s) =>
+    const { count, data } = await this.useCase.execute(request);
+    const stores = data.map((s) =>
       storeToDto(s),
     );
     return {
-      count: stores.length,
+      count,
       data: stores,
       sortable,
     };
