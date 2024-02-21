@@ -135,13 +135,25 @@ export class ProductCategoryService {
   }
 
   async findAllProductCategories(request: SearchProductCategoryRequest): Promise<FindAllOutput<ProductCategory | ProductCategoryTree>> {
-    const tree = !!request.tree;
+    
     // this.pcRepo.logItems();
-    const { count, data: categories } = await this.pcRepo.findAll(request);
-    const data = tree ? await this.getHierarchy("0") : categories;
+    const { count, data: _categories } = await this.pcRepo.findAll(request);
+    let categories = _categories as ProductCategory[];
+
+
+    const sub = !!request.sub;
+    categories = sub ? await Promise.all(categories.map(async (c) => {
+      const childs = await this.pcRepo.getProductCategoryByParentId({ parent: c.id })
+      return {
+        ...c,
+        sub: childs.length,
+      };
+    }
+    )): categories;
+
     return {
       count,
-      data,
+      data: categories,
     };
   }
 
