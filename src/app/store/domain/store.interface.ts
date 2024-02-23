@@ -1,3 +1,4 @@
+import { codeFromId } from "src/app/shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 
 export interface Store extends IDomain {
@@ -5,8 +6,16 @@ export interface Store extends IDomain {
   description?: string;
 }
 
-export interface StoreDto extends Store {}
+export interface StoreDto extends Store {
+  code : string;
+}
 
-export const storeToDto = (u: Store): StoreDto => ({ ...u });
+export const storeToDto = (u: Store): StoreDto => {
+  return {
+    ...u,
+    code: codeFromId(u.id),
+
+  }
+};
 
 export const sortable = ["name", "description"];

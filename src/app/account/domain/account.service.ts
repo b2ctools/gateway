@@ -4,6 +4,8 @@ import { AddAccountCommand } from "../application/add-account/add-account.comman
 import { Account } from "./account.interface";
 import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
+import { ctxSrv } from "src/app/shared/context.service";
+import { UserRole } from "src/app/user/domain/user.interface";
 
 @Injectable()
 export class AccountService {
@@ -46,10 +48,16 @@ export class AccountService {
   }
 
   async findAllAccounts(request: SearchAccountRequest): Promise<FindAllOutput<Account>> {
-    const { userId, storeId } = request;
+
+    ctxSrv.getUserRole() === UserRole.USER
+
+    const { userId: _userId, storeId } = request;
     const result = await this.accountRepo.findAll(request);
     const { count } = result;
     let { data: accounts } = result;
+
+    // this is a restriction ... role user can only see his accounts
+    const userId = ctxSrv.getUserRole() === UserRole.USER ? ctxSrv.getUserId() : _userId;
 
     accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
     accounts = storeId ? accounts.filter((a) => a.storeId === storeId) : accounts;

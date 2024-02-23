@@ -13,9 +13,10 @@ import { SetPermissionsUseCase } from "./application/set-permissions/set-permiss
 import { UserModule } from "../user/user.module";
 import { FindOneAccountController } from "./application/find-one-account/find-one-account.controller";
 import { FindOneAccountUsecase } from "./application/find-one-account/find-one-account.usecase";
+import { AuthModule } from "../auth/auth.module";
 
 @Module({
-  imports: [forwardRef(() => StoreModule), forwardRef(() => UserModule)],
+  imports: [forwardRef(() => StoreModule), forwardRef(() => UserModule), forwardRef(() => AuthModule)],
   controllers: [
     AddAccountController,
     SearchAccountController,
