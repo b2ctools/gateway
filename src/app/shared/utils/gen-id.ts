@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { ID } from "../abstract-repository/repository.interface";
 
 /** tool to generate ramdom ids. */
 export const genId = (email : string = null) => {
@@ -7,3 +8,7 @@ export const genId = (email : string = null) => {
   if (email === 'leo@email.com') return '33333';
   return crypto.randomBytes(16).toString("hex");
 };
+
+export const codeFromId = (id: ID) => {
+  return (id as string).slice(-9);
+}

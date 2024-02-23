@@ -92,7 +92,7 @@ export class ProductCategoryService {
     });
     if (subcategories.length > 0) {
       throw new BadRequestException(
-        `Product Category with id ${id} can not be removed. It has subcategories.`
+        `Product Category ${existingPC.name} can not be removed. It has subcategories.`
       );
     }
 

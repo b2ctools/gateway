@@ -13,8 +13,15 @@ export interface Account extends IDomain {
   scope: Scope;
 }
 
-export interface AccountDto extends Account {}
+export interface AccountDto extends Account {
+  code: string;
+}
 
-export const accountToDto = (u: Account): AccountDto => ({ ...u });
+export const accountToDto = (u: Account): AccountDto => {
+  return {
+    ...u,
+    code: u.id as string,
+  };
+};
 
 export const sortable = ["storeId"];
