@@ -5,13 +5,13 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Controller(storePath)
 export class FindOneStoreController {
-    constructor(
-        @Inject(FindOneStoreUseCase)
-        private readonly useCase: FindOneStoreUseCase
-    ) {}
+  constructor(
+    @Inject(FindOneStoreUseCase)
+    private readonly useCase: FindOneStoreUseCase,
+  ) {}
 
-    @Get(':id')
-    async findOneStore(@Param("id") id: ID) {
-        return await this.useCase.execute(id);
-    }
+  @Get(":id")
+  async findOneStore(@Param("id") id: ID) {
+    return await this.useCase.execute(id);
+  }
 }

@@ -5,6 +5,8 @@ import { StoreService } from "../../../store/domain/store.service";
 import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { UserRole } from "../../../user/domain/user.interface";
+import { AccountDto, accountToDto } from "../../domain/account.interface";
+import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
 export class AddAccountUseCase {
@@ -17,6 +19,9 @@ export class AddAccountUseCase {
 
     @Inject(UserService)
     private readonly userService: UserService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService,
   ) {}
 
   private async verifyUser(userId: ID) {
@@ -28,12 +33,14 @@ export class AddAccountUseCase {
     }
   }
 
-  async execute(command: AddAccountCommand) {
+  async execute(command: AddAccountCommand): Promise<AccountDto> {
     const { storeId, userId } = command;
     // validations
     await this.storeService.findByIdOrFail(storeId);
     await this.verifyUser(userId);
 
-    return await this.pcService.addAccount(command);
+    const pc = await this.pcService.addAccount(command);
+    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return accountToDto(pc, tenantRef);
   }
 }

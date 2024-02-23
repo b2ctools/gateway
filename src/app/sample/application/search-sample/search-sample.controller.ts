@@ -19,10 +19,8 @@ export class SearchSampleController {
   async findAllSamples(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<SampleDto>> {
-    const { count, data } = await this.useCase.execute(request)
-    const items = data.map((s) =>
-      sampleToDto(s),
-    );
+    const { count, data } = await this.useCase.execute(request);
+    const items = data.map((s) => sampleToDto(s));
     return {
       count,
       data: items,

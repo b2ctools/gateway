@@ -20,9 +20,7 @@ export class SearchCountryController {
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<CountryDto>> {
     const { count, data } = await this.useCase.execute(request);
-    const countries = data.map((b) =>
-      countryToDto(b),
-    );
+    const countries = data.map((b) => countryToDto(b));
     return {
       count,
       data: countries,

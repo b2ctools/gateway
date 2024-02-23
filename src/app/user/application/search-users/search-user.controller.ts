@@ -17,9 +17,7 @@ export class SearchUsersController {
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<UserDto>> {
     const { count, data } = await this.useCase.execute(request);
-    const users = data.map((u) =>
-      userToDto(u),
-    );
+    const users = data.map((u) => userToDto(u));
     return {
       count,
       data: users,

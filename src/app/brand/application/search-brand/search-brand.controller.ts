@@ -16,9 +16,7 @@ export class SearchStoreController {
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<BrandDto>> {
     const { count, data } = await this.useCase.execute(request);
-    const brands = data.map((b) =>
-      brandToDto(b),
-    );
+    const brands = data.map((b) => brandToDto(b));
     return {
       count,
       data: brands,

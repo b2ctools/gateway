@@ -6,15 +6,14 @@ import { productCategoryToDto } from "../../domain/product-category.interface";
 
 @Controller(productCategoryPath)
 export class FindOneProductCategoryController {
-    constructor(
-        @Inject(FindOneProductCategoryUsecase)
-        private readonly useCase: FindOneProductCategoryUsecase,
-    ) {}
-    
-    @Get(":id")
-    async findOne(@Param('id') id: ID) {
-        const pc = await this.useCase.execute(id);
-        return productCategoryToDto(pc);
-    }
-}
+  constructor(
+    @Inject(FindOneProductCategoryUsecase)
+    private readonly useCase: FindOneProductCategoryUsecase,
+  ) {}
 
+  @Get(":id")
+  async findOne(@Param("id") id: ID) {
+    const pc = await this.useCase.execute(id);
+    return productCategoryToDto(pc);
+  }
+}

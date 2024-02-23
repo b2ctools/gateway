@@ -7,15 +7,14 @@ export interface Store extends IDomain {
 }
 
 export interface StoreDto extends Store {
-  code : string;
+  code: string;
 }
 
 export const storeToDto = (u: Store): StoreDto => {
   return {
     ...u,
     code: codeFromId(u.id),
-
-  }
+  };
 };
 
 export const sortable = ["name", "description"];

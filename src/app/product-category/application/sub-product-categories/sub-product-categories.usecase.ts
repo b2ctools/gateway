@@ -12,7 +12,10 @@ export class SubProductCategoriesUseCase {
   ) {}
   async execute(request: SearchSubProductCategoryRequest) {
     return await this.pcService.productCategoriesFromParent(
-      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(request, sortable),
+      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(
+        request,
+        sortable,
+      ),
     );
   }
 }

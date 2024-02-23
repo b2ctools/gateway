@@ -11,7 +11,6 @@ export const orderPath = "order";
 export const clientPath = "client";
 export const tenantPath = "tenant";
 
-
 export const excludeRoutes = [
   { path: "/", method: RequestMethod.GET },
   { path: "/login", method: RequestMethod.POST },

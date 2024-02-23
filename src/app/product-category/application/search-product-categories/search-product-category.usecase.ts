@@ -13,7 +13,10 @@ export class SearchProductCategoryUseCase {
 
   async execute(request: SearchProductCategoryRequest) {
     return await this.pcService.findAllProductCategories(
-      sanitazeSearchQueryParams<SearchProductCategoryRequest>(request, sortable),
+      sanitazeSearchQueryParams<SearchProductCategoryRequest>(
+        request,
+        sortable,
+      ),
     );
   }
 }

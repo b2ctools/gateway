@@ -33,7 +33,6 @@ export class ProductCategoryMockedRepository extends MockedRepository<
       parent: e.parent,
       status: e.status,
 
-
       createdAt: e.createdAt,
       updatedAt: e.updatedAt,
     };

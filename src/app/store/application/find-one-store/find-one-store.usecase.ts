@@ -6,7 +6,7 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 export class FindOneStoreUseCase {
   constructor(
     @Inject(StoreService)
-    private readonly storeService: StoreService
+    private readonly storeService: StoreService,
   ) {}
 
   async execute(id: ID) {

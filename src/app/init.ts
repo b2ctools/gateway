@@ -14,6 +14,8 @@ import {
 import { AccountService } from "./account/domain/account.service";
 import { getPermissionsList } from "./access/domain/permissions";
 import { Scope } from "./account/domain/account.interface";
+import { TenantService } from "./tenant/domain/tenant.service";
+import { ctxSrv } from "./shared/context.service";
 
 @Injectable()
 export class InitService {
@@ -34,7 +36,10 @@ export class InitService {
     private readonly productCategoryService: ProductCategoryService,
 
     @Inject(AccountService)
-    private readonly accountService: AccountService
+    private readonly accountService: AccountService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService
   ) {}
 
   private async seedAccountsForElmer() {
@@ -60,6 +65,11 @@ export class InitService {
   }
 
   async onApplicationBootstrap() {
+    const tenant = await this.tenantService.addTenant({
+      name: "Leo",
+    });
+    ctxSrv.setTenantId(tenant.id);
+
     await Promise.all(
       getMockedUserList().map((user) => this.userService.registerUser(user))
     );

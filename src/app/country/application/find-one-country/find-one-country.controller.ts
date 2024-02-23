@@ -7,10 +7,10 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 export class FindOneCountryController {
   constructor(
     @Inject(FindOneCountryUseCase)
-    private readonly useCase: FindOneCountryUseCase
+    private readonly useCase: FindOneCountryUseCase,
   ) {}
 
-  @Get(':id')
+  @Get(":id")
   async findOneCountry(@Param("id") id: ID) {
     return await this.useCase.execute(id);
   }

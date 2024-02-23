@@ -1,6 +1,9 @@
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { CategoryStatus, ProductCategory } from "../../domain/product-category.interface";
+import {
+  CategoryStatus,
+  ProductCategory,
+} from "../../domain/product-category.interface";
 
 export class ProductCategoryMockedEntity
   extends MockedEntity

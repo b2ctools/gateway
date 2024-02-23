@@ -7,7 +7,7 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 export class FindOneBrandUseCase {
   constructor(
     @Inject(BrandService)
-    private readonly brandService: BrandService
+    private readonly brandService: BrandService,
   ) {}
 
   async execute(id: ID): Promise<Brand> {

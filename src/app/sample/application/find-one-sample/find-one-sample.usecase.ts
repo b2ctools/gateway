@@ -6,7 +6,7 @@ import { SampleService } from "../../domain/sample.service";
 export class FindOneSampleUseCase {
   constructor(
     @Inject(SampleService)
-    private readonly sampleService: SampleService
+    private readonly sampleService: SampleService,
   ) {}
   async execute(id: ID) {
     return await this.sampleService.findByIdOrFail(id);

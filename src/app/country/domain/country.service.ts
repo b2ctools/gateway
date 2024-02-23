@@ -2,7 +2,10 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 
 import { AddCountryCommand } from "../application/add-country/add-country.command";
 import { Continent, Country } from "./country.interface";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { CountryRepository } from "../infrastructure/country-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 
@@ -54,7 +57,9 @@ export class CountryService {
     await this.countryRepo.delete(id);
   }
 
-  async findAllCountries(request: SearchRequest): Promise<FindAllOutput<Country>> {
+  async findAllCountries(
+    request: SearchRequest,
+  ): Promise<FindAllOutput<Country>> {
     this.countryRepo.logItems();
     return await this.countryRepo.findAll(request);
   }
