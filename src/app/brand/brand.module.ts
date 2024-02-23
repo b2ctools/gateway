@@ -11,9 +11,10 @@ import { UpdateBrandController } from "./application/update-brand/update-brand.c
 import { UpdateBrandUseCse } from "./application/update-brand/update-brand.usecase";
 import { FindOneBrandController } from "./application/find-one-brand/find-one-brand.controller";
 import { FindOneBrandUseCase } from "./application/find-one-brand/find-one-brand.usecase";
+import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [],
+  imports: [TenantModule],
   controllers: [
     AddBrandController,
     SearchStoreController,
