@@ -1,9 +1,5 @@
 import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { SearchProductCategoryUseCase } from "./search-product-category.usecase";
-import {
-  productCategoryToDto,
-  sortable,
-} from "../../domain/product-category.interface";
 import { productCategoryPath } from "../../../shared/routes";
 import {
   SearchProductCategoryOutput,
@@ -21,12 +17,6 @@ export class SearchProductCategoryController {
   async searchProductCategories(
     @Query() request: SearchProductCategoryRequest,
   ): Promise<SearchProductCategoryOutput> {
-    const { count, data: pcs } = await this.useCase.execute(request);
-    const data = pcs.map((pc) => productCategoryToDto(pc));
-    return {
-      data,
-      count,
-      sortable,
-    };
+    return await this.useCase.execute(request);
   }
 }

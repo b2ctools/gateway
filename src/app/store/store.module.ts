@@ -13,9 +13,10 @@ import { UpdateStoreUseCase } from "./application/update-store/update-store.usec
 import { AccountModule } from "../account/account.module";
 import { FindOneStoreController } from "./application/find-one-store/find-one-store.controller";
 import { FindOneStoreUseCase } from "./application/find-one-store/find-one-store.usecase";
+import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [AuthModule, forwardRef(() => AccountModule)],
+  imports: [AuthModule, forwardRef(() => AccountModule), TenantModule],
   controllers: [
     AddStoreController,
     SearchStoreController,
