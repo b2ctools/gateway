@@ -9,6 +9,8 @@ import { RemoveTenantController } from "./application/remove-tenant/remove-tenan
 import { RemoveTenantUseCase } from "./application/remove-tenant/remove-tenant.usecase";
 import { UpdateTenantController } from "./application/update-tenant/update-tenant.controller";
 import { UpdateTenantUseCse } from "./application/update-tenant/update-tenant.usecase";
+import { FineOneTenantUseCase } from "./application/find-one-tenant/find-one-tenant.usecase";
+import { FindOneTenantController } from "./application/find-one-tenant/find-one-tenant.controller";
 
 @Module({
   imports: [],
@@ -17,6 +19,7 @@ import { UpdateTenantUseCse } from "./application/update-tenant/update-tenant.us
     SearchTenantController,
     RemoveTenantController,
     UpdateTenantController,
+    FindOneTenantController,
   ],
   providers: [
     AddTenantUseCase,
@@ -25,6 +28,7 @@ import { UpdateTenantUseCse } from "./application/update-tenant/update-tenant.us
     UpdateTenantUseCse,
     TenantService,
     getTenantRepo(),
+    FineOneTenantUseCase,
   ],
   exports: [TenantService],
 })

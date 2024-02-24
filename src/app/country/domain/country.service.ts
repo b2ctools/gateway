@@ -76,7 +76,9 @@ export class CountryService {
     continent?: Continent;
   }): Promise<Country> {
     const existingCountry = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, existingCountry.id);
+    }
     existingCountry.code = code ? code : existingCountry.code;
     existingCountry.name = name ? name : existingCountry.name;
     existingCountry.continent = continent
@@ -92,5 +94,14 @@ export class CountryService {
       })}`,
     );
     return await this.countryRepo.persist(existingCountry);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const country = await this.countryRepo.getCountryByName(name);
+    if (country && country.id !== existingId) {
+      throw new BadRequestException(
+        `Country name ${name} is already taken`,
+      );
+    }
   }
 }

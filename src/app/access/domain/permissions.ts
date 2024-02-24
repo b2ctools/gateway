@@ -178,12 +178,13 @@ export const getPermissionsIdList = () => {
 
 export const getPermissionNamesListFromIds = (ids: ID[]): string[] => {
   return jsonPermissions.flatMap((resourse) => {
-    return resourse.permissions.map((permission) => {
-      if (ids.includes(permission.id)) {
-        return permission;
-      }
-    })
-    .filter((permission) => permission)
-    .map((permission) => permission.name.toUpperCase());
+    return resourse.permissions
+      .map((permission) => {
+        if (ids.includes(permission.id)) {
+          return permission;
+        }
+      })
+      .filter((permission) => permission)
+      .map((permission) => permission.name.toUpperCase());
   });
 };

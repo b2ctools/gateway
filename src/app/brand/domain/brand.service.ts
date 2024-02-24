@@ -67,7 +67,9 @@ export class BrandService {
     description?: string;
   }): Promise<Brand> {
     const existingBrand = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, existingBrand.id);
+    }
     existingBrand.name = name ? name : existingBrand.name;
     existingBrand.description = description
       ? description
@@ -81,5 +83,12 @@ export class BrandService {
       })}`,
     );
     return await this.brandRepo.persist(existingBrand);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const brand = await this.brandRepo.getBrandByName(name);
+    if (brand && brand.id !== existingId) {
+      throw new BadRequestException(`Brand name ${name} is already taken`);
+    }
   }
 }

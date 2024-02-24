@@ -20,7 +20,7 @@ export class SearchUsersUseCase {
 
   async execute(request: SearchRequest): Promise<SearchOutput<UserDto>> {
     const { count, data } = await this.userService.findAllUsers(
-      sanitazeSearchQueryParams<SearchRequest>(request, sortable)
+      sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
     const users = data.map((u) => {
       const tenantRef = this.tenantService.getTenantRef(u.tenantId);

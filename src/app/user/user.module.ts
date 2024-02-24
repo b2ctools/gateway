@@ -20,7 +20,12 @@ import { RemoveUserController } from "./application/remove-user/remove-user.cont
 import { RemoveSampleUseCase } from "./application/remove-user/remove-user.usecase";
 import { TenantModule } from "../tenant/tenant.module";
 @Module({
-  imports: [NotificationModule, forwardRef(() => AuthModule), CountryModule, TenantModule],
+  imports: [
+    NotificationModule,
+    forwardRef(() => AuthModule),
+    CountryModule,
+    TenantModule,
+  ],
   controllers: [
     RegisterUserController,
     SearchUsersController,

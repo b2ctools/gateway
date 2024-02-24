@@ -91,7 +91,9 @@ export class StoreService {
   async updateStore(storeRequest: Omit<Store, "tenantId">) {
     const { id, name, description } = storeRequest;
     const store = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, id);
+    }
     const storeToUpdate = {
       ...store,
       ...(name ? { name } : {}),
@@ -101,5 +103,12 @@ export class StoreService {
     const response = await this.storeRepo.persist(storeToUpdate);
     await this.updateBackupStores();
     return response;
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const store = await this.storeRepo.getStoreByName(name);
+    if (store && store.id !== existingId) {
+      throw new BadRequestException(`Store name ${name} is already taken`);
+    }
   }
 }

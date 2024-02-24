@@ -51,7 +51,7 @@ export class UpdateSampleUseCse {
     await this.countryService.findByIdOrFail(countryId);
   }
 
-  async execute(request: UpdateSampleRequest):Promise<SampleDto> {
+  async execute(request: UpdateSampleRequest): Promise<SampleDto> {
     const { categoryId, storeId, brandId, countryId } = request;
     // validations
     await this.validteProductCategoryId(categoryId);

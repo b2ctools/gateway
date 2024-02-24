@@ -14,6 +14,5 @@ export class UpdateSampleController {
   @Patch()
   async updateSample(@Body() request: UpdateSampleRequest): Promise<SampleDto> {
     return await this.useCase.execute(request);
-    
   }
 }
