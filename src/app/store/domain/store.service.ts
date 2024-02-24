@@ -1,6 +1,6 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { AddStoreCommand } from "../application/add-store/add-store.command";
-import { Store } from "./store.interface";
+import { Store, StoreRef } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 import {
@@ -8,9 +8,11 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { AccountService } from "../../account/domain/account.service";
+import { codeFromId } from "src/app/shared/utils/gen-id";
 
 @Injectable()
 export class StoreService {
+  private backupStores: Store[] = [];
   constructor(
     @Inject("StoreRepository")
     private readonly storeRepo: StoreRepository,
@@ -18,6 +20,23 @@ export class StoreService {
     @Inject(AccountService)
     private readonly accountService: AccountService,
   ) {}
+
+  getStoreRef(storeId: ID): StoreRef {
+    if (!storeId) {
+      return null;
+    }
+    const store = this.backupStores.find((t) => t.id === storeId);
+    return {
+      id: store.id,
+      name: store.name,
+      code: codeFromId(store.id),
+    };
+  }
+
+  private async updateBackupStores() {
+    const response = await this.storeRepo.findAll({});
+    this.backupStores = response.data;
+  }
 
   private async verifyStoreName(name: string): Promise<void> {
     const existingStore = await this.storeRepo.getStoreByName(name);
@@ -39,7 +58,9 @@ export class StoreService {
       name: store.name,
       description: store.description,
     });
-    return await this.storeRepo.create(store);
+    const response = await this.storeRepo.create(store);
+    await this.updateBackupStores();
+    return response;
   }
 
   async findByIdOrFail(storeId: ID) {
@@ -64,6 +85,7 @@ export class StoreService {
       );
     }
     await this.storeRepo.delete(storeId);
+    await this.updateBackupStores();
   }
 
   async updateStore(storeRequest: Omit<Store, "tenantId">) {
@@ -76,6 +98,8 @@ export class StoreService {
       ...(description ? { description } : {}),
     };
 
-    return await this.storeRepo.persist(storeToUpdate);
+    const response = await this.storeRepo.persist(storeToUpdate);
+    await this.updateBackupStores();
+    return response;
   }
 }

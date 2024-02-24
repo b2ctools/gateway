@@ -41,6 +41,7 @@ export class AddAccountUseCase {
 
     const pc = await this.pcService.addAccount(command);
     const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return accountToDto(pc, tenantRef);
+    const storeRef = this.storeService.getStoreRef(pc.storeId);
+    return accountToDto(pc, tenantRef, storeRef);
   }
 }

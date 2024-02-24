@@ -3,6 +3,7 @@ import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { TenantRef } from "src/app/tenant/domain/tenant.interface";
 import { ctxSrv } from "src/app/shared/context.service";
 import { UserRole } from "src/app/user/domain/user.interface";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 export interface Store extends IDomain {
   name: string;
@@ -12,6 +13,12 @@ export interface Store extends IDomain {
 export interface StoreDto extends Store {
   code: string;
   tenant?: TenantRef;
+}
+
+export interface StoreRef {
+  id: ID;
+  name: string;
+  code: string;
 }
 
 export const storeToDto = (u: Store, tenantRef: TenantRef = null): StoreDto => {
