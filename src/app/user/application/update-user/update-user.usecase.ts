@@ -1,12 +1,17 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "../../domain/user.service";
 import { UpdateUserRequest } from "./update-user.request";
+import { UserDto, userToDto } from "../../domain/user.interface";
+import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
 export class UpdateUserUseCase {
   constructor(
     @Inject(UserService)
     private readonly userService: UserService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService,
   ) {}
 
   private sanitazeRequest(request: UpdateUserRequest) {
@@ -44,7 +49,9 @@ export class UpdateUserUseCase {
     };
   }
 
-  async execute(request: UpdateUserRequest) {
-    return await this.userService.updateUser(this.sanitazeRequest(request));
+  async execute(request: UpdateUserRequest): Promise<UserDto> {
+    const user = await this.userService.updateUser(this.sanitazeRequest(request));
+    const tenantRef = this.tenantService.getTenantRef(user.tenantId);
+    return userToDto(user, tenantRef);
   }
 }

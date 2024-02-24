@@ -18,8 +18,9 @@ import { UpdateUserController } from "./application/update-user/update-user.cont
 import { UpdateUserUseCase } from "./application/update-user/update-user.usecase";
 import { RemoveUserController } from "./application/remove-user/remove-user.controller";
 import { RemoveSampleUseCase } from "./application/remove-user/remove-user.usecase";
+import { TenantModule } from "../tenant/tenant.module";
 @Module({
-  imports: [NotificationModule, forwardRef(() => AuthModule), CountryModule],
+  imports: [NotificationModule, forwardRef(() => AuthModule), CountryModule, TenantModule],
   controllers: [
     RegisterUserController,
     SearchUsersController,

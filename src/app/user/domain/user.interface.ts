@@ -1,5 +1,7 @@
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
+import { TenantRef } from "src/app/tenant/domain/tenant.interface";
+import { ctxSrv } from "src/app/shared/context.service";
 
 export enum UserStatus {
   ENABLED = "ENABLED",
@@ -35,13 +37,18 @@ export interface User extends IDomain {
 }
 
 export interface UserDto
-  extends Omit<User, "password" | "recoveryPasswordCode" | "failedLogin"> {}
+  extends Omit<User, "password" | "recoveryPasswordCode" | "failedLogin"> {
+  tenant?: TenantRef;
+}
 
-export const userToDto = (u: User): UserDto => {
+export const userToDto = (u: User, tenantRef: TenantRef = null): UserDto => {
+  delete u.tenantId;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, recoveryPasswordCode, failedLogin, ...info } = u;
+  const role = ctxSrv.getUserRole();
   return {
     ...info,
+    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 
