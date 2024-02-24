@@ -5,7 +5,10 @@ import {
   SearchSubProductCategoryRequest,
 } from "./sub-product-categories.request";
 import { sanitazeSearchQueryParams } from "../../../shared/base.request";
-import { productCategoryToDto, sortable } from "../../domain/product-category.interface";
+import {
+  productCategoryToDto,
+  sortable,
+} from "../../domain/product-category.interface";
 import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
@@ -18,13 +21,13 @@ export class SubProductCategoriesUseCase {
     private readonly tenantService: TenantService,
   ) {}
   async execute(
-    request: SearchSubProductCategoryRequest
+    request: SearchSubProductCategoryRequest,
   ): Promise<SearchSubProductCategoriesOutput> {
-    const categories =  await this.pcService.productCategoriesFromParent(
+    const categories = await this.pcService.productCategoriesFromParent(
       sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(
         request,
-        sortable
-      )
+        sortable,
+      ),
     );
 
     const data = categories.map((pc) => {

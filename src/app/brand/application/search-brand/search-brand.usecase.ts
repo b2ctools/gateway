@@ -22,10 +22,10 @@ export class SearchBrandUseCase {
     const { count, data } = await this.brandService.findAllBrands(
       sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
-    
+
     const brands = data.map((b) => {
       const tenantRef = this.tenantService.getTenantRef(b.tenantId);
-      return brandToDto(b, tenantRef)
+      return brandToDto(b, tenantRef);
     });
     return {
       count,

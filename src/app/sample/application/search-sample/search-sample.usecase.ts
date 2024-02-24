@@ -1,10 +1,15 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { SampleService } from "../../domain/sample.service";
 import {
+  SearchOutput,
   SearchRequest,
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
-import { sortable } from "../../domain/sample.interface";
+import {
+  SampleDto,
+  sampleToDto,
+  sortable,
+} from "../../domain/sample.interface";
 
 @Injectable()
 export class SearchSampleUseCase {
@@ -13,9 +18,16 @@ export class SearchSampleUseCase {
     private readonly sampleService: SampleService,
   ) {}
 
-  async execute(request: SearchRequest) {
-    return await this.sampleService.findAllSamples(
+  async execute(request: SearchRequest): Promise<SearchOutput<SampleDto>> {
+    const { count, data } = await this.sampleService.findAllSamples(
       sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
+
+    const items = data.map((s) => sampleToDto(s));
+    return {
+      count,
+      data: items,
+      sortable,
+    };
   }
 }

@@ -33,7 +33,7 @@ export class TenantService {
   }
 
   async getTenantByName(name: string): Promise<Tenant> {
-    return  await this.tenantRepo.getTenantByName(name);
+    return await this.tenantRepo.getTenantByName(name);
   }
 
   private async verifyTenantName(name: string): Promise<void> {

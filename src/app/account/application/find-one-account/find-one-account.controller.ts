@@ -8,7 +8,7 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 export class FindOneAccountController {
   constructor(
     @Inject(FindOneAccountUsecase)
-    private readonly useCase: FindOneAccountUsecase
+    private readonly useCase: FindOneAccountUsecase,
   ) {}
 
   @Get(":id")

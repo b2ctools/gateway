@@ -6,6 +6,8 @@ import { StoreService } from "../../../store/domain/store.service";
 import { BrandService } from "../../../brand/domain/brand.service";
 import { CountryService } from "../../../country/domain/country.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { SampleDto, sampleToDto } from "../../domain/sample.interface";
 
 @Injectable()
 export class AddSampleUseCase {
@@ -24,6 +26,9 @@ export class AddSampleUseCase {
 
     @Inject(CountryService)
     private readonly countryService: CountryService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService,
   ) {}
 
   private async validteProductCategoryId(productCategoryId: ID) {
@@ -42,7 +47,7 @@ export class AddSampleUseCase {
     await this.countryService.findByIdOrFail(countryId);
   }
 
-  async addSample(command: AddSampleCommand) {
+  async addSample(command: AddSampleCommand): Promise<SampleDto> {
     const { categoryId, storeId, brandId, countryId } = command;
     // validations
     await this.validteProductCategoryId(categoryId);
@@ -50,6 +55,8 @@ export class AddSampleUseCase {
     await this.validateBrandId(brandId);
     await this.validateCountry(countryId);
 
-    return await this.pcService.addSample(command);
+    const sample = await this.pcService.addSample(command);
+    const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
+    return sampleToDto(sample, tenantRef);
   }
 }

@@ -15,9 +15,16 @@ import { BrandModule } from "../brand/brand.module";
 import { CountryModule } from "../country/country.module";
 import { FindOneSampleController } from "./application/find-one-sample/find-one-sample.controller";
 import { FindOneSampleUseCase } from "./application/find-one-sample/find-one-sample.usecase";
+import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [ProductCategoryModule, StoreModule, BrandModule, CountryModule],
+  imports: [
+    ProductCategoryModule,
+    StoreModule,
+    BrandModule,
+    CountryModule,
+    TenantModule,
+  ],
   controllers: [
     AddSampleController,
     SearchSampleController,

@@ -6,6 +6,8 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { StoreService } from "../../../store/domain/store.service";
 import { BrandService } from "../../../brand/domain/brand.service";
 import { CountryService } from "../../../country/domain/country.service";
+import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { SampleDto, sampleToDto } from "../../domain/sample.interface";
 
 @Injectable()
 export class UpdateSampleUseCse {
@@ -24,6 +26,9 @@ export class UpdateSampleUseCse {
 
     @Inject(CountryService)
     private readonly countryService: CountryService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService,
   ) {}
 
   private async validteProductCategoryId(productCategoryId: ID) {
@@ -46,7 +51,7 @@ export class UpdateSampleUseCse {
     await this.countryService.findByIdOrFail(countryId);
   }
 
-  async execute(request: UpdateSampleRequest) {
+  async execute(request: UpdateSampleRequest):Promise<SampleDto> {
     const { categoryId, storeId, brandId, countryId } = request;
     // validations
     await this.validteProductCategoryId(categoryId);
@@ -54,6 +59,8 @@ export class UpdateSampleUseCse {
     await this.validateBrandId(brandId);
     await this.validateCountry(countryId);
 
-    return await this.sampleService.updateSample(request);
+    const sample = await this.sampleService.updateSample(request);
+    const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
+    return sampleToDto(sample, tenantRef);
   }
 }

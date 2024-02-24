@@ -18,6 +18,5 @@ export class SubProductCategoriesController {
     @Query() request: SearchSubProductCategoryRequest,
   ): Promise<SearchSubProductCategoriesOutput> {
     return await this.useCase.execute(request);
-    
   }
 }

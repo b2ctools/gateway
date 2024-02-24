@@ -1,6 +1,5 @@
 import casual from "casual";
 
-
 import { UserRole } from "../../user/domain/user.interface";
 import { ctxSrv } from "../context.service";
 

@@ -4,8 +4,15 @@ import { SearchAccountRequest } from "./search-account.request";
 import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { StoreService } from "../../../store/domain/store.service";
-import { AccountDto, accountToDto, sortable } from "../../domain/account.interface";
-import { SearchOutput, sanitazeSearchQueryParams } from "../../../shared/base.request";
+import {
+  AccountDto,
+  accountToDto,
+  sortable,
+} from "../../domain/account.interface";
+import {
+  SearchOutput,
+  sanitazeSearchQueryParams,
+} from "../../../shared/base.request";
 import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
@@ -38,7 +45,9 @@ export class SearchAccountUseCase {
     }
   }
 
-  async execute(request: SearchAccountRequest): Promise<SearchOutput<AccountDto>> {
+  async execute(
+    request: SearchAccountRequest,
+  ): Promise<SearchOutput<AccountDto>> {
     const { userId, storeId } = request;
     await this.validateUser(userId);
     await this.validateStore(storeId);

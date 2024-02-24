@@ -16,6 +16,5 @@ export class SearchStoreController {
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<BrandDto>> {
     return await this.useCase.execute(request);
-    
   }
 }

@@ -18,6 +18,5 @@ export class FindOneBrandUseCase {
     const brand = await this.brandService.findByIdOrFail(id);
     const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
     return brandToDto(brand, tenantRef);
-
   }
 }

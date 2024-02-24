@@ -1,8 +1,14 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ProductCategoryService } from "../../domain/product-category.service";
-import { SearchProductCategoryOutput, SearchProductCategoryRequest } from "./search-product-category.request";
+import {
+  SearchProductCategoryOutput,
+  SearchProductCategoryRequest,
+} from "./search-product-category.request";
 import { sanitazeSearchQueryParams } from "../../../shared/base.request";
-import { productCategoryToDto, sortable } from "../../domain/product-category.interface";
+import {
+  productCategoryToDto,
+  sortable,
+} from "../../domain/product-category.interface";
 import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
@@ -15,7 +21,9 @@ export class SearchProductCategoryUseCase {
     private readonly tenantService: TenantService,
   ) {}
 
-  async execute(request: SearchProductCategoryRequest): Promise<SearchProductCategoryOutput> {
+  async execute(
+    request: SearchProductCategoryRequest,
+  ): Promise<SearchProductCategoryOutput> {
     const { count, data: pcs } = await this.pcService.findAllProductCategories(
       sanitazeSearchQueryParams<SearchProductCategoryRequest>(
         request,

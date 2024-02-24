@@ -25,7 +25,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     private readonly userService: UserService,
 
     @Inject(TenantService)
-    private readonly tenantService: TenantService
+    private readonly tenantService: TenantService,
   ) {}
 
   private fetchUserAndTenantFromToken(token: string) {
@@ -47,14 +47,14 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       } catch (error) {
         console.log("Error looking from User with Id", userId, error);
         throw new ForbiddenException(
-          `Error looking from User with Id ${userId}.. please login again`
+          `Error looking from User with Id ${userId}.. please login again`,
         );
       }
     }
 
     if (!user) {
       throw new ForbiddenException(
-        `User with Id ${userId} not found.. please try again`
+        `User with Id ${userId} not found.. please try again`,
       );
     }
     ctxSrv.setUserId(userId);
@@ -67,15 +67,15 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       throw new ForbiddenException("TenantId not specified.. please try again");
 
     try {
-      const tenant = await this.tenantService.findByIdOrFail(tenantId)
+      const tenant = await this.tenantService.findByIdOrFail(tenantId);
       if (!tenant) {
         throw new ForbiddenException(
-          `Tenant with Id ${tenantId} not found.. please try again`
+          `Tenant with Id ${tenantId} not found.. please try again`,
         );
       }
     } catch (error) {
       throw new ForbiddenException(
-        `Error looking for Tenant with Id ${tenantId}.. please login again`
+        `Error looking for Tenant with Id ${tenantId}.. please login again`,
       );
     }
   }
@@ -85,7 +85,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
    */
   private setTenantIdBasedOnUserRole(
     tenantIdFetchFromToken: ID,
-    userRole: UserRole
+    userRole: UserRole,
   ): ID {
     const tenantId =
       userRole === UserRole.ADMIN ? null : tenantIdFetchFromToken;
@@ -105,7 +105,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     await this.verifyTenant(tenantIdFetchFromToken);
     const tenantId = this.setTenantIdBasedOnUserRole(
       tenantIdFetchFromToken,
-      role
+      role,
     );
 
     console.log(`

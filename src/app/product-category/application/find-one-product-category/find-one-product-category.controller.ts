@@ -14,6 +14,5 @@ export class FindOneProductCategoryController {
   @Get(":id")
   async findOne(@Param("id") id: ID): Promise<ProductCategoryDTO> {
     return await this.useCase.execute(id);
-    
   }
 }
