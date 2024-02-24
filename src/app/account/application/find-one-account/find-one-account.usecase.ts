@@ -3,12 +3,16 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { AccountService } from "../../domain/account.service";
 import { TenantService } from "src/app/tenant/domain/tenant.service";
 import { AccountDto, accountToDto } from "../../domain/account.interface";
+import { StoreService } from "src/app/store/domain/store.service";
 
 @Injectable()
 export class FindOneAccountUsecase {
   constructor(
     @Inject(AccountService)
     private readonly accountService: AccountService,
+
+    @Inject(StoreService)
+    private readonly storeService: StoreService,
 
     @Inject(TenantService)
     private readonly tenantService: TenantService,
@@ -17,6 +21,7 @@ export class FindOneAccountUsecase {
   async execute(id: ID): Promise<AccountDto> {
     const account = await this.accountService.findByIdOrFail(id);
     const tenantRef = this.tenantService.getTenantRef(account.tenantId);
-    return accountToDto(account, tenantRef);
+    const storeRef = this.storeService.getStoreRef(account.storeId);
+    return accountToDto(account, tenantRef, storeRef);
   }
 }
