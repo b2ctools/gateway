@@ -223,7 +223,9 @@ export class ProductCategoryService {
     parent?: ID;
   }): Promise<ProductCategory> {
     const existingPC = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, existingPC.id);
+    }
     existingPC.name = name ? name : existingPC.name;
     existingPC.description = description ? description : existingPC.description;
     existingPC.parent = parent ? parent : existingPC.parent;
@@ -237,5 +239,14 @@ export class ProductCategoryService {
       })}`,
     );
     return await this.pcRepo.persist(existingPC);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const pc = await this.pcRepo.getProductCategoryByName(name);
+    if (pc && pc.id !== existingId) {
+      throw new BadRequestException(
+        `Product Category name ${name} is already taken`,
+      );
+    }
   }
 }

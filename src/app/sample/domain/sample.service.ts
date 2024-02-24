@@ -69,7 +69,9 @@ export class SampleService {
       locations,
     } = request;
     const existingSample = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, id);
+    }
     const sampleToUpdate = {
       ...existingSample,
       ...(name ? { name } : {}),
@@ -88,5 +90,12 @@ export class SampleService {
 
     console.log(`Updating Sample - ${JSON.stringify({ sampleToUpdate })}`);
     return await this.sampleRepo.persist(sampleToUpdate);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const sample = await this.sampleRepo.getSampleByName(name);
+    if (sample && sample.id !== existingId) {
+      throw new BadRequestException(`Sample name ${name} is already taken`);
+    }
   }
 }

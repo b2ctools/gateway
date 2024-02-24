@@ -36,7 +36,7 @@ export const accountToDto = (
   if (role === UserRole.ADMIN) {
     delete a.storeId;
   }
-  
+
   a.permissions = getPermissionNamesListFromIds(a.permissions);
   return {
     ...a,

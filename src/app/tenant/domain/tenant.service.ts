@@ -80,7 +80,9 @@ export class TenantService {
   async updateTenant(request: UpdateTenantRequest): Promise<Tenant> {
     const { id, name, description } = request;
     const existingTenant = await this.findByIdOrFail(id);
-
+    if (name) {
+      await this.canUpdateName(name, existingTenant.id);
+    }
     existingTenant.name = name ? name : existingTenant.name;
     existingTenant.description = description
       ? description
@@ -96,5 +98,12 @@ export class TenantService {
     const response = await this.tenantRepo.persist(existingTenant);
     this.updateBackupTenants();
     return response;
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const tenant = await this.tenantRepo.getTenantByName(name);
+    if (tenant && tenant.id !== existingId) {
+      throw new BadRequestException(`Tenant name ${name} is already taken`);
+    }
   }
 }

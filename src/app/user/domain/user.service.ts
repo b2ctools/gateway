@@ -131,7 +131,9 @@ export class UserService {
       isPhoneConfirmed,
     } = userInfo;
     const user = await this.findByIdOrFail(id);
-
+    if (email) {
+      await this.canUpdateEmail(email, user.id);
+    }
     const userToUpdate = {
       ...user,
       ...(firstName ? { firstName } : {}),
@@ -176,5 +178,12 @@ export class UserService {
       return new BadRequestException(`User with email ${email} not found`);
     }
     await this.userRepo.delete(user.id);
+  }
+
+  private async canUpdateEmail(email: string, existingId: ID) {
+    const user = await this.userRepo.getUserByEmail(email);
+    if (user && user.id !== existingId) {
+      throw new BadRequestException(`User email ${email} is already taken`);
+    }
   }
 }

@@ -50,7 +50,9 @@ export class UpdateUserUseCase {
   }
 
   async execute(request: UpdateUserRequest): Promise<UserDto> {
-    const user = await this.userService.updateUser(this.sanitazeRequest(request));
+    const user = await this.userService.updateUser(
+      this.sanitazeRequest(request),
+    );
     const tenantRef = this.tenantService.getTenantRef(user.tenantId);
     return userToDto(user, tenantRef);
   }

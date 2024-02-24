@@ -14,6 +14,5 @@ export class UpdateUserController {
   @Patch()
   async update(@Body() request: UpdateUserRequest): Promise<UserDto> {
     return await this.useCase.execute(request);
-    
   }
 }
