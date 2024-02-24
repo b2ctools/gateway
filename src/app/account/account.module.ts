@@ -14,9 +14,15 @@ import { UserModule } from "../user/user.module";
 import { FindOneAccountController } from "./application/find-one-account/find-one-account.controller";
 import { FindOneAccountUsecase } from "./application/find-one-account/find-one-account.usecase";
 import { AuthModule } from "../auth/auth.module";
+import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [forwardRef(() => StoreModule), forwardRef(() => UserModule), forwardRef(() => AuthModule)],
+  imports: [
+    forwardRef(() => StoreModule),
+    forwardRef(() => UserModule),
+    forwardRef(() => AuthModule),
+    TenantModule,
+  ],
   controllers: [
     AddAccountController,
     SearchAccountController,

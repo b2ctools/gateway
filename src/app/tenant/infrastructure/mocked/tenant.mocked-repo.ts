@@ -1,8 +1,7 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { TenantMockedEntity } from './tenant.mocked-entity';
-import { Tenant } from '../../domain/tenant.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { TenantMockedEntity } from "./tenant.mocked-entity";
+import { Tenant } from "../../domain/tenant.interface";
 
 @Injectable()
 export class TenantMockedRepository extends MockedRepository<
@@ -24,15 +23,13 @@ export class TenantMockedRepository extends MockedRepository<
       name: e.name,
       description: e.description,
       tenantId: e.tenantId,
-      
     };
   }
 
   async getTenantByName(name: string): Promise<Tenant> {
-    const { data: tenants} = await this.findAll({});
+    const { data: tenants } = await this.findAll({});
     if (tenants.length === 0) return null;
     const filtered = tenants.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }

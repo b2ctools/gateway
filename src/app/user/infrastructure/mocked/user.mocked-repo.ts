@@ -64,8 +64,7 @@ export class UserMockedRepository extends MockedRepository<
     /**
      * Search among all users without
      */
-    const users = Object.values(this.elements).filter((u) => u.email === email)
+    const users = Object.values(this.elements).filter((u) => u.email === email);
     return users.length > 0 ? this.entityToDomain(users.shift()) : null;
-    
   }
 }

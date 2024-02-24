@@ -5,9 +5,12 @@ import { IDomain } from "./entities/domain";
 import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, FindAllOutput, ID } from "./repository.interface";
 import { ctxSrv } from "../context.service";
-import { IOrder, SearchRequest, applyFilterFieldFromRequest } from "../base.request";
+import {
+  IOrder,
+  SearchRequest,
+  applyFilterFieldFromRequest,
+} from "../base.request";
 import { User, UserRole } from "../../user/domain/user.interface";
-
 
 interface HashMap<T> {
   [key: string]: T;
@@ -101,13 +104,11 @@ export abstract class MockedRepository<
   }) {
     if (fromDate && toDate) {
       const fieldDate = fieldName || "createdAt";
-      return items.filter(
-        (e) => {
-          const from = new Date(fromDate);
-          const to = new Date(toDate);
-          return e[fieldDate] >= from && e[fieldDate] <= to;
-        }
-      );
+      return items.filter((e) => {
+        const from = new Date(fromDate);
+        const to = new Date(toDate);
+        return e[fieldDate] >= from && e[fieldDate] <= to;
+      });
     }
 
     return items;
@@ -118,9 +119,9 @@ export abstract class MockedRepository<
    * - if user is admin and tenantOnSearchRequest is not null, then use tenantOnSearchRequest
    * - if user is admin and tenantOnSearchRequest is null, then use user tenant
    * - if user is not admin, then use user tenant
-   * 
-   * @param request 
-   * @returns 
+   *
+   * @param request
+   * @returns
    */
   private getTenantOnSearch(request: SearchRequest) {
     const { tenantId: tenantOnSearchRequest } = request;
@@ -145,8 +146,6 @@ export abstract class MockedRepository<
       if (tenantId) {
         results = results.filter((item) => item.tenantId === tenantId);
       }
-
-
 
       // applying filter field-string-value
       const { filter } = request;
@@ -213,7 +212,7 @@ export abstract class MockedRepository<
     const existing = await this.getEntityId(id);
     if (!existing) {
       throw new BadRequestException(
-        `Error trying to update a not found entity - ${JSON.stringify(d)}`
+        `Error trying to update a not found entity - ${JSON.stringify(d)}`,
       );
     }
 

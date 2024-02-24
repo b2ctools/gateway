@@ -1,13 +1,12 @@
-
-import { Inject, Injectable } from '@nestjs/common';
-import { TenantService } from '../../domain/tenant.service';
-import { UpdateTenantRequest } from './update-tenant.request';
+import { Inject, Injectable } from "@nestjs/common";
+import { TenantService } from "../../domain/tenant.service";
+import { UpdateTenantRequest } from "./update-tenant.request";
 
 @Injectable()
 export class UpdateTenantUseCse {
   constructor(
     @Inject(TenantService)
-    private readonly tenantService: TenantService
+    private readonly tenantService: TenantService,
   ) {}
 
   async execute(request: UpdateTenantRequest) {

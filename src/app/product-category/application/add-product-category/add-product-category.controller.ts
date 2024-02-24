@@ -17,10 +17,9 @@ export class AddProductCategoryController {
 
   @Post()
   async addProductCategory(@Body() request: AddProductCategoryRequest) {
-    const pc = await this.useCase.addProductCategory(
+    return await this.useCase.addProductCategory(
       new AddProductCategoryCommand(request),
     );
-    return productCategoryToDto(pc);
   }
 
   @Post("/json")

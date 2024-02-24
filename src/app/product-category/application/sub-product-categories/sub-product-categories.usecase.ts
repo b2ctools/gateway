@@ -1,18 +1,43 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ProductCategoryService } from "../../domain/product-category.service";
-import { SearchSubProductCategoryRequest } from "./sub-product-categories.request";
+import {
+  SearchSubProductCategoriesOutput,
+  SearchSubProductCategoryRequest,
+} from "./sub-product-categories.request";
 import { sanitazeSearchQueryParams } from "../../../shared/base.request";
-import { sortable } from "../../domain/product-category.interface";
+import {
+  productCategoryToDto,
+  sortable,
+} from "../../domain/product-category.interface";
+import { TenantService } from "src/app/tenant/domain/tenant.service";
 
 @Injectable()
 export class SubProductCategoriesUseCase {
   constructor(
     @Inject(ProductCategoryService)
     private readonly pcService: ProductCategoryService,
+
+    @Inject(TenantService)
+    private readonly tenantService: TenantService,
   ) {}
-  async execute(request: SearchSubProductCategoryRequest) {
-    return await this.pcService.productCategoriesFromParent(
-      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(request, sortable),
+  async execute(
+    request: SearchSubProductCategoryRequest,
+  ): Promise<SearchSubProductCategoriesOutput> {
+    const categories = await this.pcService.productCategoriesFromParent(
+      sanitazeSearchQueryParams<SearchSubProductCategoryRequest>(
+        request,
+        sortable,
+      ),
     );
+
+    const data = categories.map((pc) => {
+      const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+      return productCategoryToDto(pc, tenantRef);
+    });
+    return {
+      data,
+      count: data.length,
+      sortable,
+    };
   }
 }

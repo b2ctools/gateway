@@ -2,7 +2,10 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 
 import { AddBrandCommand } from "../application/add-brand/add-brand.command";
 import { Brand } from "./brand.interface";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { BrandRepository } from "../infrastructure/brand-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
 

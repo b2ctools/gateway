@@ -2,7 +2,7 @@ import { Body, Controller, Inject, Post } from "@nestjs/common";
 
 import { AddBrandUseCase } from "./add-brand.usecase";
 import { AddBrandCommand } from "./add-brand.command";
-import { brandToDto } from "../../domain/brand.interface";
+import { BrandDto } from "../../domain/brand.interface";
 import { brandPath } from "../../../shared/routes";
 import { AddBrandRequest } from "./add-brand.request";
 
@@ -14,8 +14,7 @@ export class AddBrandController {
   ) {}
 
   @Post()
-  async addBrand(@Body() request: AddBrandRequest) {
-    const brand = await this.useCase.addBrand(new AddBrandCommand(request));
-    return brandToDto(brand);
+  async addBrand(@Body() request: AddBrandRequest): Promise<BrandDto> {
+    return await this.useCase.execute(new AddBrandCommand(request));
   }
 }

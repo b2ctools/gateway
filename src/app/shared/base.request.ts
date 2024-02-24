@@ -2,7 +2,7 @@ import { ID } from "./abstract-repository/repository.interface";
 
 export type IOrder = "asc" | "desc";
 
-type TFieldName = 'createdAt' | 'updatedAt';
+type TFieldName = "createdAt" | "updatedAt";
 
 export interface SearchRequest {
   sortBy?: string;
@@ -38,7 +38,10 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
     sortOrder = "desc";
   }
 
-  const filter = (sortable && sortable.length > 0) ? getFilterFieldFromRequest(sortable, request) : {};
+  const filter =
+    sortable && sortable.length > 0
+      ? getFilterFieldFromRequest(sortable, request)
+      : {};
 
   return {
     ...request,
@@ -61,7 +64,6 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
 
 interface anyRequest {
   [key: string]: string;
-
 }
 
 export interface FilterToApply {
@@ -69,16 +71,26 @@ export interface FilterToApply {
   value: string;
 }
 
-export const getFilterFieldFromRequest = (sortable: string[], request : anyRequest) => {
-  const fieldOnRequest = sortable.find((field) => field in request)
-  return fieldOnRequest ? {
-    field: fieldOnRequest,
-    value: request[fieldOnRequest]
-  } : null;
-}
+export const getFilterFieldFromRequest = (
+  sortable: string[],
+  request: anyRequest,
+) => {
+  const fieldOnRequest = sortable.find((field) => field in request);
+  return fieldOnRequest
+    ? {
+        field: fieldOnRequest,
+        value: request[fieldOnRequest],
+      }
+    : null;
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const applyFilterFieldFromRequest = (list: any[], filter: FilterToApply ) => {
+export const applyFilterFieldFromRequest = (
+  list: any[],
+  filter: FilterToApply,
+) => {
   if (!filter || !filter.field || !filter.value) return list;
-  return list.filter((item) => item[filter.field].toLowerCase().includes(filter.value.toLowerCase()));
-}
+  return list.filter((item) =>
+    item[filter.field].toLowerCase().includes(filter.value.toLowerCase()),
+  );
+};

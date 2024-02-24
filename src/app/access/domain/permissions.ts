@@ -1,7 +1,6 @@
 import { genId } from "../../shared/utils/gen-id";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 
-
 const permissions = ["create", "read", "update", "delete"];
 
 const getPermissions = (resourse: string) => {

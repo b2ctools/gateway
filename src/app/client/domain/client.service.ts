@@ -2,7 +2,10 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { ClientRepository } from "../infrastructure/client-repository.type";
 import { AddClientCommand } from "../application/add-client/add-client.command";
 import { Client } from "./client.interface";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 import { UpdateClientRequest } from "../application/update-client/update-client.request";
 import { UserService } from "../../user/domain/user.service";

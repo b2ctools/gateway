@@ -22,6 +22,6 @@ describe("AppController (e2e)", () => {
       .expect(200)
       .expect({ message: "Welcome to Platform CU Backend System!" });
 
-    console.log('response.body', body);
+    console.log("response.body", body);
   });
 });

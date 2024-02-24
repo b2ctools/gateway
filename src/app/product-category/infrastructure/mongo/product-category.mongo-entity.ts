@@ -1,6 +1,9 @@
 import { MongoEntity } from "../../../shared/abstract-repository/entities/mongo-entity";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { CategoryStatus, ProductCategory } from "../../domain/product-category.interface";
+import {
+  CategoryStatus,
+  ProductCategory,
+} from "../../domain/product-category.interface";
 
 export class ProductCategoryMongoEntity
   extends MongoEntity

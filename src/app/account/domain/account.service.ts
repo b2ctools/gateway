@@ -2,7 +2,10 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { AccountRepository } from "../infrastructure/account-repository.type";
 import { AddAccountCommand } from "../application/add-account/add-account.command";
 import { Account } from "./account.interface";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
 import { ctxSrv } from "src/app/shared/context.service";
 import { UserRole } from "src/app/user/domain/user.interface";
@@ -11,7 +14,7 @@ import { UserRole } from "src/app/user/domain/user.interface";
 export class AccountService {
   constructor(
     @Inject("AccountRepository")
-    private readonly accountRepo: AccountRepository
+    private readonly accountRepo: AccountRepository,
   ) {}
 
   private async verifyUserAccount(userId: ID): Promise<void> {
@@ -47,9 +50,10 @@ export class AccountService {
     await this.accountRepo.delete(id);
   }
 
-  async findAllAccounts(request: SearchAccountRequest): Promise<FindAllOutput<Account>> {
-
-    ctxSrv.getUserRole() === UserRole.USER
+  async findAllAccounts(
+    request: SearchAccountRequest,
+  ): Promise<FindAllOutput<Account>> {
+    ctxSrv.getUserRole() === UserRole.USER;
 
     const { userId: _userId, storeId } = request;
     const result = await this.accountRepo.findAll(request);
@@ -57,15 +61,18 @@ export class AccountService {
     let { data: accounts } = result;
 
     // this is a restriction ... role user can only see his accounts
-    const userId = ctxSrv.getUserRole() === UserRole.USER ? ctxSrv.getUserId() : _userId;
+    const userId =
+      ctxSrv.getUserRole() === UserRole.USER ? ctxSrv.getUserId() : _userId;
 
     accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
-    accounts = storeId ? accounts.filter((a) => a.storeId === storeId) : accounts;
+    accounts = storeId
+      ? accounts.filter((a) => a.storeId === storeId)
+      : accounts;
 
     return {
       count,
       data: accounts,
-    }
+    };
   }
 
   async getAccountsFromStore(storeId: ID) {

@@ -1,6 +1,6 @@
 import { Body, Controller, Inject, Patch } from "@nestjs/common";
 import { samplePath } from "../../../shared/routes";
-import { sampleToDto } from "../../domain/sample.interface";
+import { SampleDto } from "../../domain/sample.interface";
 import { UpdateSampleUseCse } from "./update-sample.usecase";
 import { UpdateSampleRequest } from "./update-sample.request";
 
@@ -12,8 +12,8 @@ export class UpdateSampleController {
   ) {}
 
   @Patch()
-  async updateSample(@Body() request: UpdateSampleRequest) {
-    const pc = await this.useCase.execute(request);
-    return sampleToDto(pc);
+  async updateSample(@Body() request: UpdateSampleRequest): Promise<SampleDto> {
+    return await this.useCase.execute(request);
+    
   }
 }

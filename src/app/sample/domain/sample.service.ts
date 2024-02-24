@@ -2,7 +2,10 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { SampleRepository } from "../infrastructure/sample-repository.type";
 import { AddSampleCommand } from "../application/add-sample/add-sample.command";
 import { Sample } from "./sample.interface";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 import { UpdateSampleRequest } from "../application/update-sample/update-sample.request";
 
@@ -45,7 +48,7 @@ export class SampleService {
     await this.sampleRepo.delete(id);
   }
 
-  async findAllSamples(request: SearchRequest): Promise<FindAllOutput<Sample>>  {
+  async findAllSamples(request: SearchRequest): Promise<FindAllOutput<Sample>> {
     return await this.sampleRepo.findAll(request);
   }
 

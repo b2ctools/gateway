@@ -3,7 +3,10 @@ import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
-import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
+import {
+  FindAllOutput,
+  ID,
+} from "../../shared/abstract-repository/repository.interface";
 import { AccountService } from "../../account/domain/account.service";
 
 @Injectable()

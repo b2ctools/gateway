@@ -15,9 +15,10 @@ import { SubProductCategoriesController } from "./application/sub-product-catego
 import { SubProductCategoriesUseCase } from "./application/sub-product-categories/sub-product-categories.usecase";
 import { FindOneProductCategoryController } from "./application/find-one-product-category/find-one-product-category.controller";
 import { FindOneProductCategoryUsecase } from "./application/find-one-product-category/find-one-product-category.usecase";
+import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [],
+  imports: [TenantModule],
   controllers: [
     AddProductCategoryController,
     SearchProductCategoryController,
