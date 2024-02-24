@@ -12,7 +12,7 @@ import {
   getMockedUserList,
 } from "./shared/mocks/mock";
 import { AccountService } from "./account/domain/account.service";
-import { getPermissionsList } from "./access/domain/permissions";
+import { getPermissionsIdList } from "./access/domain/permissions";
 import { Scope } from "./account/domain/account.interface";
 import { TenantService } from "./tenant/domain/tenant.service";
 import { ctxSrv } from "./shared/context.service";
@@ -45,7 +45,7 @@ export class InitService {
   private async seedAccountsForElmer() {
     const user = await this.userService.findUserByEmail("elmer@email.com");
     const { data: stores } = await this.soreService.findAllStores({ take: 3 });
-    const permissions = getPermissionsList();
+    const permissions = getPermissionsIdList();
     stores.map((store) => {
       this.accountService
         .addAccount({
