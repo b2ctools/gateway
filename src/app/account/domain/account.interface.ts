@@ -42,7 +42,7 @@ export const accountToDto = (
     ...a,
     code: codeFromId(a.id),
     ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
-    ...(role === UserRole.ADMIN ? { store: storeRef } : {}),
+    store: storeRef,
   };
 };
 
