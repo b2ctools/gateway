@@ -118,3 +118,21 @@ export const getMockedProductCategoryList = () => {
       parent: "0",
     }));
 };
+
+export const getMockedPlansList = () => {
+  return [
+    { name: "Starter" },
+    { name: "Pro" },
+  ]
+}
+
+export const getMockedResourcesList = () => {
+  return [
+    { name: "user" },
+    { name: "tenant" },
+    { name: "sample" },
+    { name: "product" },
+    { name: "order" },
+    { name: "location" },
+  ]
+}

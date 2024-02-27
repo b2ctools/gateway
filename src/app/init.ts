@@ -7,7 +7,9 @@ import { ProductCategoryService } from "./product-category/domain/product-catego
 import {
   getMockedBrandList,
   getMockedCountryList,
+  getMockedPlansList,
   getMockedProductCategoryList,
+  getMockedResourcesList,
   getMockedStoreList,
   getMockedUserList,
 } from "./shared/mocks/mock";
@@ -16,6 +18,8 @@ import { getPermissionsIdList } from "./access/domain/permissions";
 import { Scope } from "./account/domain/account.interface";
 import { TenantService } from "./tenant/domain/tenant.service";
 import { ctxSrv } from "./shared/context.service";
+import { PlanService } from "./plan/domain/plan.service";
+import { ResourceService } from "./resource/domain/resource.service";
 
 @Injectable()
 export class InitService {
@@ -40,6 +44,12 @@ export class InitService {
 
     @Inject(TenantService)
     private readonly tenantService: TenantService,
+
+    @Inject(PlanService)
+    private readonly planService: PlanService,
+
+    @Inject(ResourceService)
+    private readonly resourceService: ResourceService,
   ) {}
 
   private async seedAccountsForElmer() {
@@ -62,6 +72,17 @@ export class InitService {
           ]);
         });
     });
+  }
+
+  private async setResourcesToPlan() {
+    const plan = await this.planService.findPlanByName("Pro");
+    const { data: resources } = await this.resourceService.findAllResources({});
+    const resourcesIds = resources.map(r => r.id);
+    const request = {
+      id: plan.id,
+      resources: resourcesIds
+    }
+    await this.planService.setResources(request);
   }
 
   async onApplicationBootstrap() {
@@ -91,6 +112,19 @@ export class InitService {
       ),
     );
 
+    await Promise.all(
+      getMockedPlansList().map((plan) =>
+        this.planService.addPlan(plan),
+      ),
+    )
+
+    await Promise.all(
+      getMockedResourcesList().map((resource) =>
+        this.resourceService.addResource(resource),
+      ),
+    )
+
     await this.seedAccountsForElmer();
+    await this.setResourcesToPlan()
   }
 }

@@ -1,7 +1,9 @@
 import { Tenant } from "../../domain/tenant.interface";
 import { AddTenantRequest } from "./add-tenant.request";
 
-export class AddTenantCommand implements Omit<Tenant, "id" | "tenantId"> {
+export class AddTenantCommand
+  implements Omit<Tenant, "id" | "tenantId" | "planId">
+{
   name: string;
   description?: string;
 

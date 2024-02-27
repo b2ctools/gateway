@@ -5,13 +5,13 @@ import { PlanDto, planToDto } from "../../domain/plan.interface";
 
 @Injectable()
 export class FindOnePlanUseCase {
-    constructor(
-        @Inject(PlanService)
-        private readonly planService: PlanService
-    ) {}
-    
-    async execute(id: ID): Promise<PlanDto> {
-        const plan = await this.planService.findByIdOrFail(id);
-        return planToDto(plan);
-    }
+  constructor(
+    @Inject(PlanService)
+    private readonly planService: PlanService,
+  ) {}
+
+  async execute(id: ID): Promise<PlanDto> {
+    const plan = await this.planService.findByIdOrFail(id);
+    return planToDto(plan);
+  }
 }

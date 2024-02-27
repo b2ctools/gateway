@@ -11,15 +11,19 @@ import { UpdateTenantController } from "./application/update-tenant/update-tenan
 import { UpdateTenantUseCse } from "./application/update-tenant/update-tenant.usecase";
 import { FineOneTenantUseCase } from "./application/find-one-tenant/find-one-tenant.usecase";
 import { FindOneTenantController } from "./application/find-one-tenant/find-one-tenant.controller";
+import { SetPlanController } from "./application/set-plan/set-plan.controller";
+import { SetPlanUseCase } from "./application/set-plan/set-plan.usecase";
+import { PlanModule } from "../plan/plan.module";
 
 @Module({
-  imports: [],
+  imports: [PlanModule],
   controllers: [
     AddTenantController,
     SearchTenantController,
     RemoveTenantController,
     UpdateTenantController,
     FindOneTenantController,
+    SetPlanController,
   ],
   providers: [
     AddTenantUseCase,
@@ -29,6 +33,7 @@ import { FindOneTenantController } from "./application/find-one-tenant/find-one-
     TenantService,
     getTenantRepo(),
     FineOneTenantUseCase,
+    SetPlanUseCase,
   ],
   exports: [TenantService],
 })

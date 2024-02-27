@@ -11,6 +11,7 @@ export const orderPath = "order";
 export const clientPath = "client";
 export const tenantPath = "tenant";
 export const planPath = "plan";
+export const resourcePath = "resource";
 
 export const excludeRoutes = [
   { path: "/", method: RequestMethod.GET },
@@ -23,8 +24,10 @@ export const excludeRoutes = [
   { path: userPath + "/recover-password", method: RequestMethod.POST },
 
   // TODO: just for testing... remove it later.
-  { path: samplePath, method: RequestMethod.POST },
-  { path: samplePath, method: RequestMethod.GET },
-  { path: samplePath + "/:id", method: RequestMethod.DELETE },
-  { path: samplePath, method: RequestMethod.PATCH },
+  // { path: samplePath, method: RequestMethod.POST },
+  // { path: samplePath, method: RequestMethod.GET },
+  // { path: samplePath + "/:id", method: RequestMethod.DELETE },
+  // { path: samplePath, method: RequestMethod.PATCH },
+
+  { path: planPath + "/plan/set-resources", method: RequestMethod.POST },
 ];

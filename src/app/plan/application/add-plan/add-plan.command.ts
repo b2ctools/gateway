@@ -1,9 +1,8 @@
-
-import { Plan } from '../../domain/plan.interface';
-import { AddPlanRequest } from './add-plan.request';
+import { Plan } from "../../domain/plan.interface";
+import { AddPlanRequest } from "./add-plan.request";
 
 export class AddPlanCommand
-  implements Omit<Plan, 'id' | 'tenantId'>
+  implements Omit<Plan, "id" | "tenantId" | "resources">
 {
   name: string;
   description?: string;
