@@ -6,7 +6,7 @@ import {
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
 import { UserDto, sortable, userToDto } from "../../domain/user.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class SearchUsersUseCase {

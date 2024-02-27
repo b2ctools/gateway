@@ -1,8 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ProductCategoryService } from "../../domain/product-category.service";
 import { AddProductCategoryCommand } from "./add-product-category.command";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+
 import { productCategoryToDto } from "../../domain/product-category.interface";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class AddProductCategoryUseCase {

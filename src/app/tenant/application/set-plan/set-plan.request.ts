@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 export class SetPlanRequest {
   @IsNotEmpty()

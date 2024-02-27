@@ -11,7 +11,7 @@ import { fetchTokenFromRequest } from "./token-from-request";
 import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { User, UserRole } from "../../../user/domain/user.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 /** Middleware to fetch header info from request */
 

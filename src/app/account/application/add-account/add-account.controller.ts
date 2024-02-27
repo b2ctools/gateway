@@ -3,9 +3,9 @@ import { accountPath } from "../../../shared/routes";
 import { AddAccountUseCase } from "./add-account.usecase";
 import { AddAccountRequest } from "./add-account.request";
 import { AddAccountCommand } from "./add-account.command";
-import { RoleChecking } from "src/app/auth/domain/middleware/role.guard";
-import { UserRole } from "src/app/user/domain/user.interface";
-import { Roles } from "src/app/auth/domain/middleware/roles.decorator";
+import { RoleChecking } from "../../../auth/domain/middleware/role.guard";
+import { UserRole } from "../../../user/domain/user.interface";
+import { Roles } from "../../../auth/domain/middleware/roles.decorator";
 import { AccountDto } from "../../domain/account.interface";
 
 @Controller(accountPath)

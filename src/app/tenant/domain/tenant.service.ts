@@ -5,7 +5,7 @@ import { Tenant, TenantRef } from "./tenant.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 import { UpdateTenantRequest } from "../application/update-tenant/update-tenant.request";
-import { codeFromId } from "src/app/shared/utils/gen-id";
+import { codeFromId } from "../../shared/utils/gen-id";
 import { SetPlanRequest } from "../application/set-plan/set-plan.request";
 
 @Injectable()
