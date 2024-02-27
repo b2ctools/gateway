@@ -31,7 +31,7 @@ export const accountToDto = (
   storeRef: StoreRef = null,
 ): AccountDto => {
   const role = ctxSrv.getUserRole();
-  delete a.tenantId;
+  // delete a.tenantId;
 
   if (role === UserRole.ADMIN) {
     delete a.storeId;

@@ -34,7 +34,6 @@ export class ResourceService {
 
     const resource: Resource = {
       id: null,
-      tenantId: null,
       ...command,
     };
 

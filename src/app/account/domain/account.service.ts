@@ -38,7 +38,6 @@ export class AccountService {
 
     const account: Account = {
       id: null,
-      tenantId: null,
       permissions: [],
       ...command,
     };

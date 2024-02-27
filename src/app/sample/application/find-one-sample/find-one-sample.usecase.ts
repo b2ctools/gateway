@@ -15,7 +15,7 @@ export class FindOneSampleUseCase {
   ) {}
   async execute(id: ID): Promise<SampleDto> {
     const sample = await this.sampleService.findByIdOrFail(id);
-    const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
-    return sampleToDto(sample, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
+    return sampleToDto(sample, null);
   }
 }

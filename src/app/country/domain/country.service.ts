@@ -46,7 +46,6 @@ export class CountryService {
 
     const country: Country = {
       id: null,
-      tenantId: null,
       ...command,
     };
 

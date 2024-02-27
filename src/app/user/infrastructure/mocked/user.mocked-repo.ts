@@ -18,7 +18,6 @@ export class UserMockedRepository extends MockedRepository<
     entity.password = d.password;
     entity.status = d.status;
     entity.role = d.role;
-    entity.tenantId = d.tenantId;
     entity.recoveryPasswordCode = d.recoveryPasswordCode;
     entity.failedLogin = d.failedLogin;
     entity.phone = d.phone;
@@ -42,7 +41,6 @@ export class UserMockedRepository extends MockedRepository<
       nickname: e.nickname,
       email: e.email,
       password: e.password,
-      tenantId: e.tenantId,
       status: e.status,
       role: e.role,
       recoveryPasswordCode: e.recoveryPasswordCode,

@@ -24,8 +24,8 @@ export class SearchBrandUseCase {
     );
 
     const brands = data.map((b) => {
-      const tenantRef = this.tenantService.getTenantRef(b.tenantId);
-      return brandToDto(b, tenantRef);
+      // const tenantRef = this.tenantService.getTenantRef(b.tenantId);
+      return brandToDto(b, null);
     });
     return {
       count,

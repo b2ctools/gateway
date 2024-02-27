@@ -18,7 +18,7 @@ export interface TenantRef {
 }
 
 export const tenantToDto = (u: Tenant): TenantDto => {
-  delete u.tenantId;
+  // delete u.tenantId;
   return {
     ...u,
     code: codeFromId(u.id),

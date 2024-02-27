@@ -56,9 +56,9 @@ export class SearchAccountUseCase {
     );
 
     const items = data.map((s) => {
-      const tenantRef = this.tenantService.getTenantRef(s.tenantId);
+      // const tenantRef = this.tenantService.getTenantRef(s.tenantId);
       const storeRef = this.storeService.getStoreRef(s.storeId);
-      return accountToDto(s, tenantRef, storeRef);
+      return accountToDto(s, null, storeRef);
     });
     return {
       count,

@@ -35,7 +35,6 @@ export class PlanService {
 
     const plan: Plan = {
       id: null,
-      tenantId: null,
       resources: [],
       ...command,
     };

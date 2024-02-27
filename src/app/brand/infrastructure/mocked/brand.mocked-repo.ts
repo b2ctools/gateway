@@ -12,7 +12,6 @@ export class BrandMockedRepository extends MockedRepository<
     const entity = new BrandMockedEntity();
     entity.name = d.name;
     entity.description = d.description;
-    entity.tenantId = d.tenantId;
     return entity;
   }
 
@@ -21,7 +20,6 @@ export class BrandMockedRepository extends MockedRepository<
       id: e._id,
       name: e.name,
       description: e.description,
-      tenantId: e.tenantId,
     };
   }
 

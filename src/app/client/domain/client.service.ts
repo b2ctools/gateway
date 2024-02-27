@@ -50,7 +50,6 @@ export class ClientService {
 
     const client: Client = {
       id: null,
-      tenantId: null,
       ...command,
     };
 

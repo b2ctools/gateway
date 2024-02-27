@@ -13,7 +13,6 @@ export class CountryMockedRepository extends MockedRepository<
     entity.code = d.code;
     entity.name = d.name;
     entity.continent = d.continent;
-    entity.tenantId = d.tenantId;
     return entity;
   }
 
@@ -23,7 +22,6 @@ export class CountryMockedRepository extends MockedRepository<
       code: e.code,
       name: e.name,
       continent: e.continent,
-      tenantId: e.tenantId,
     };
   }
 

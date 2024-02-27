@@ -31,13 +31,9 @@ export class UserService {
     //verifying email
     await this.verifyEmail(comand.email);
 
-    //setting tenantId on context service
-    ctxSrv.setTenantId(comand.tenantId);
-
     const user: User = {
       ...comandInfo,
       id: null,
-      tenantId: null,
       recoveryPasswordCode: null,
       failedLogin: 0,
       isEmailConfirmed: false,

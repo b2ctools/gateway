@@ -19,7 +19,6 @@ export class RegisterUserCommand
   lastName: string;
   password: string;
   email: string;
-  tenantId: ID;
   nickname: string;
   role: UserRole;
   phone: string;
@@ -36,7 +35,6 @@ export class RegisterUserCommand
       firstName,
       email,
       password,
-      tenantId,
       nickname,
       role,
       phone,
@@ -52,7 +50,6 @@ export class RegisterUserCommand
     this.firstName = firstName;
     this.password = password;
     this.email = sanitizeEmail(email);
-    this.tenantId = tenantId;
     this.nickname = nickname;
     this.role = role;
     this.phone = phone;

@@ -139,14 +139,6 @@ export abstract class MockedRepository<
 
       let results = Object.values(this.elements);
 
-      /**
-       *
-       */
-      const tenantId = this.getTenantOnSearch(request);
-      if (tenantId) {
-        results = results.filter((item) => item.tenantId === tenantId);
-      }
-
       // applying filter field-string-value
       const { filter } = request;
       results = applyFilterFieldFromRequest(results, filter);

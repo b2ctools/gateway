@@ -37,7 +37,6 @@ export class BrandService {
 
     const brand: Brand = {
       id: null,
-      tenantId: null,
       ...command,
     };
 

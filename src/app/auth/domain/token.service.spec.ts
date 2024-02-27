@@ -37,11 +37,10 @@ describe("TOKEN SERVICE TEST SUITE", () => {
 
       const payload = srv.validateAccessToken(accessToken);
 
-      const { userId, tenantId, email, role, session } = payload;
+      const { userId, email, role, session } = payload;
 
       expect(expiresAt).toBeTruthy();
       expect(userId).toBe(_userId);
-      expect(tenantId).toBe(_tenantId);
       expect(email).toBe(_email);
       expect(role).toBe(_role);
       expect(session).toBe(_session);

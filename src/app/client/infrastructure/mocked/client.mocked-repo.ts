@@ -14,7 +14,6 @@ export class ClientMockedRepository extends MockedRepository<
 
     entity.userId = d.userId;
     entity.description = d.description;
-    entity.tenantId = d.tenantId;
     return entity;
   }
 
@@ -23,7 +22,6 @@ export class ClientMockedRepository extends MockedRepository<
       id: e._id,
       userId: e.userId,
       description: e.description,
-      tenantId: e.tenantId,
     };
   }
 

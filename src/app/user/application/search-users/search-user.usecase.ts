@@ -23,8 +23,8 @@ export class SearchUsersUseCase {
       sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
     const users = data.map((u) => {
-      const tenantRef = this.tenantService.getTenantRef(u.tenantId);
-      return userToDto(u, tenantRef);
+      // const tenantRef = this.tenantService.getTenantRef(u.tenantId);
+      return userToDto(u);
     });
     return {
       count,

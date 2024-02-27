@@ -37,7 +37,6 @@ export class SampleService {
 
     const sample: Sample = {
       id: null,
-      tenantId: null,
       ...command,
     };
 
