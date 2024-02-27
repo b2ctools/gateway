@@ -10,5 +10,5 @@ export class SetResourcesRequest {
   @IsArray()
   @ArrayMinSize(1)
   @IsString({ each: true })
-  resources: string[];
+  resources: ID[];
 }

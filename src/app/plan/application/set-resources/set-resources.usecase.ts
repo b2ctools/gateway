@@ -2,6 +2,7 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { PlanService } from "../../domain/plan.service";
 import { ResourceService } from "src/app/resource/domain/resource.service";
 import { SetResourcesRequest } from "./set-resources.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class SetResourcesUseCase {
@@ -13,7 +14,7 @@ export class SetResourcesUseCase {
     private readonly resourceService: ResourceService,
   ) {}
 
-  private async validateResources(resourceIds: string[]) {
+  private async validateResources(resourceIds: ID[]) {
     await Promise.all(
       resourceIds.map(async (id) => {
         const resource = await this.resourceService.findByIdOrFail(id);

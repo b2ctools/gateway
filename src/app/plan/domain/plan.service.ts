@@ -76,4 +76,8 @@ export class PlanService {
     existingPlan.resources = [...new Set(resources)];
     return await this.planRepo.persist(existingPlan);
   }
+
+  async findPlanByName(name: string) {
+    return await this.planRepo.getPlanByName(name);
+  }
 }

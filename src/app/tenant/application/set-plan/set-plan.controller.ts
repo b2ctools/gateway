@@ -12,7 +12,7 @@ export class SetPlanController {
 
   @Post("/set-plan")
   async setPlan(@Body() request: SetPlanRequest) {
-    return await this.useCase.execute(request);
+    await this.useCase.execute(request);
     return { message: "Plan set successfully" };
   }
 }
