@@ -29,9 +29,8 @@ export class HeaderCheckMiddleware implements NestMiddleware {
   ) {}
 
   private fetchUserAndTenantFromToken(token: string) {
-    const { tenantId, userId } = this.tokenService.validateAccessToken(token);
+    const { userId } = this.tokenService.validateAccessToken(token);
     return {
-      tenantId,
       userId,
     };
   }
@@ -99,19 +98,19 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       throw new ForbiddenException("Auth Error. Token must be specified.");
     }
 
-    const { tenantId: tenantIdFetchFromToken, userId } =
+    const { /**tenantId: tenantIdFetchFromToken, */ userId } =
       this.fetchUserAndTenantFromToken(token);
     const { role } = await this.verifyUser(userId);
-    await this.verifyTenant(tenantIdFetchFromToken);
-    const tenantId = this.setTenantIdBasedOnUserRole(
-      tenantIdFetchFromToken,
-      role,
-    );
+    // await this.verifyTenant(tenantIdFetchFromToken);
+    // const tenantId = this.setTenantIdBasedOnUserRole(
+    //   tenantIdFetchFromToken,
+    //   role,
+    // );
 
     console.log(`
       ===============================================================
       Request Header Information
-      ${JSON.stringify({ tenantId, userId })}
+      ${JSON.stringify({ userId, role })}
       ===============================================================
     `);
 

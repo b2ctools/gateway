@@ -10,7 +10,7 @@ export interface Plan extends IDomain {
 export interface PlanDto extends Plan {}
 
 export const planToDto = (u: Plan): PlanDto => {
-  delete u.tenantId;
+  // delete u.tenantId;
   return { ...u };
 };
 

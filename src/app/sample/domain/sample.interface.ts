@@ -36,7 +36,7 @@ export const sampleToDto = (
   tenantRef: TenantRef = null,
 ): SampleDto => {
   const role = ctxSrv.getUserRole();
-  delete u.tenantId;
+  // delete u.tenantId;
   return {
     ...u,
     ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),

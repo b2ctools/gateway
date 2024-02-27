@@ -13,7 +13,6 @@ export class SampleMockedRepository extends MockedRepository<
 
     entity.name = d.name;
     entity.description = d.description;
-    entity.tenantId = d.tenantId;
     entity.images = d.images;
     entity.price = d.price;
     entity.stock = d.stock;
@@ -33,7 +32,6 @@ export class SampleMockedRepository extends MockedRepository<
       id: e._id,
       name: e.name,
       description: e.description,
-      tenantId: e.tenantId,
       images: e.images,
       price: e.price,
       stock: e.stock,

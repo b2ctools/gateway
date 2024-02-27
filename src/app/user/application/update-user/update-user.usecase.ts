@@ -53,7 +53,7 @@ export class UpdateUserUseCase {
     const user = await this.userService.updateUser(
       this.sanitazeRequest(request),
     );
-    const tenantRef = this.tenantService.getTenantRef(user.tenantId);
-    return userToDto(user, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(user.tenantId);
+    return userToDto(user, null);
   }
 }

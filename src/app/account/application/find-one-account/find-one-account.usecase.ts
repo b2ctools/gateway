@@ -20,8 +20,8 @@ export class FindOneAccountUsecase {
 
   async execute(id: ID): Promise<AccountDto> {
     const account = await this.accountService.findByIdOrFail(id);
-    const tenantRef = this.tenantService.getTenantRef(account.tenantId);
+    // const tenantRef = this.tenantService.getTenantRef(account.tenantId);
     const storeRef = this.storeService.getStoreRef(account.storeId);
-    return accountToDto(account, tenantRef, storeRef);
+    return accountToDto(account, null, storeRef);
   }
 }

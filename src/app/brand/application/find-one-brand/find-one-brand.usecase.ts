@@ -16,7 +16,7 @@ export class FindOneBrandUseCase {
 
   async execute(id: ID): Promise<Brand> {
     const brand = await this.brandService.findByIdOrFail(id);
-    const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
-    return brandToDto(brand, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
+    return brandToDto(brand, null);
   }
 }

@@ -14,7 +14,6 @@ export class ProductCategoryMockedRepository extends MockedRepository<
 
     entity.name = d.name;
     entity.description = d.description;
-    entity.tenantId = d.tenantId;
     entity.parent = d.parent;
     entity.status = d.status;
 
@@ -29,7 +28,6 @@ export class ProductCategoryMockedRepository extends MockedRepository<
       id: e._id,
       name: e.name,
       description: e.description,
-      tenantId: e.tenantId,
       parent: e.parent,
       status: e.status,
 

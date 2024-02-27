@@ -16,7 +16,7 @@ export class UpdateProductCategoryUseCse {
 
   async execute(request: UpdateProductCategoryRequest) {
     const pc = await this.pcService.updateProductCategory(request);
-    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return productCategoryToDto(pc, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return productCategoryToDto(pc, null);
   }
 }

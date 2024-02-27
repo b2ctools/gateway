@@ -58,7 +58,6 @@ export class TenantService {
 
     const tenant: Tenant = {
       id: null,
-      tenantId: null,
       planId: null,
       ...command,
     };

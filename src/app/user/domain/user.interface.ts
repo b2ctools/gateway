@@ -42,7 +42,7 @@ export interface UserDto
 }
 
 export const userToDto = (u: User, tenantRef: TenantRef = null): UserDto => {
-  delete u.tenantId;
+  // delete u.tenantId;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, recoveryPasswordCode, failedLogin, ...info } = u;
   const role = ctxSrv.getUserRole();

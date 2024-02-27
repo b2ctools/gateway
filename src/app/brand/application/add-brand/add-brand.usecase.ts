@@ -16,7 +16,7 @@ export class AddBrandUseCase {
 
   async execute(command: AddBrandCommand): Promise<BrandDto> {
     const brand = await this.brandService.addBrand(command);
-    const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
-    return brandToDto(brand, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
+    return brandToDto(brand, null);
   }
 }

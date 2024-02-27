@@ -1,7 +1,6 @@
 import casual from "casual";
 
 import { UserRole } from "../../user/domain/user.interface";
-import { ctxSrv } from "../context.service";
 
 export const getMockedUserList = () => {
   const commondData = {
@@ -23,7 +22,6 @@ export const getMockedUserList = () => {
       lastName: "Entenza", //casual.last_name,
       email: `elmer@email.com`, //casual.email.toLowerCase(),
       password: "12345", //casual.password,
-      tenantId: ctxSrv.getTenantId(),
       role: UserRole.USER,
       ...commondData,
     },
@@ -32,7 +30,6 @@ export const getMockedUserList = () => {
       lastName: "Rodriguez", //casual.last_name,
       email: "yoennis@email.com", //casual.email.toLowerCase(),
       password: "12345", //casual.password,
-      tenantId: ctxSrv.getTenantId(),
       role: UserRole.ADMIN,
       ...commondData,
     },
@@ -41,7 +38,6 @@ export const getMockedUserList = () => {
       lastName: "McTesterson", //casual.last_name,
       email: "leo@email.com", //casual.email.toLowerCase(),
       password: "12345", //casual.password,
-      tenantId: ctxSrv.getTenantId(),
       role: UserRole.OWNER,
       ...commondData,
     },
@@ -57,7 +53,7 @@ export const getMockedUserList = () => {
         email: casual.email.toLowerCase(),
         password: "12345",
         role: UserRole.USER,
-        tenantId: ctxSrv.getTenantId(),
+
         ...commondData,
       });
     });
@@ -72,7 +68,7 @@ export const getMockedUserList = () => {
         email: casual.email.toLowerCase(),
         password: "12345",
         role: UserRole.CLIENT,
-        tenantId: ctxSrv.getTenantId(),
+
         ...commondData,
       });
     });
@@ -86,7 +82,6 @@ export const getMockedStoreList = () => {
     .map(() => ({
       name: "Store " + casual.title,
       description: casual.description.slice(0, 50),
-      tenantId: ctxSrv.getTenantId(),
     }));
 };
 
@@ -96,7 +91,6 @@ export const getMockedBrandList = () => {
     .map(() => ({
       name: "Brand " + casual.title,
       description: casual.description.slice(0, 50),
-      tenantId: ctxSrv.getTenantId(),
     }));
 };
 

@@ -14,7 +14,7 @@ export interface BrandDto extends Brand {
 
 export const brandToDto = (u: Brand, tenantRef: TenantRef = null): BrandDto => {
   const role = ctxSrv.getUserRole();
-  delete u.tenantId;
+  // delete u.tenantId;
   return {
     ...u,
     ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),

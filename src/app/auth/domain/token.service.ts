@@ -11,7 +11,6 @@ export type Token = {
 
 export type AccessPayload = {
   userId: ID;
-  tenantId: ID;
   email: string;
   role: UserRole;
   session: string;
@@ -63,10 +62,9 @@ export class TokenService {
   /** access token */
 
   private buildAccessPayload(user: User): AccessPayload {
-    const { id: userId, tenantId, email, role } = user;
+    const { id: userId, email, role } = user;
     return {
       userId,
-      tenantId,
       email,
       role,
       session: this.session,
@@ -90,12 +88,11 @@ export class TokenService {
   validateAccessToken(token: string): AccessPayload {
     const payload = this.decodeToken(token) as AccessPayload;
 
-    const { userId, tenantId, email, role, session } = payload;
+    const { userId, email, role, session } = payload;
 
-    if (!userId || !tenantId || !email || !role || !session) {
+    if (!userId || !email || !role || !session) {
       const errors = {
         userId: !userId ? "there is no userId on the payload" : "",
-        tenantId: !tenantId ? "there is no tenantId on the payload" : "",
         email: !email ? "there is no email on the payload" : "",
         role: !role ? "there is no role on the payload" : "",
         session: !session ? "there is no session on the payload" : "",

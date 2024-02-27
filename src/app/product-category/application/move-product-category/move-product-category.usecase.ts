@@ -16,7 +16,7 @@ export class MoveProductCategoryUseCase {
 
   async execute({ id, parent }: { id: ID; parent?: ID }) {
     const pc = await this.pcService.updateProductCategory({ id, parent });
-    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return productCategoryToDto(pc, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return productCategoryToDto(pc, null);
   }
 }

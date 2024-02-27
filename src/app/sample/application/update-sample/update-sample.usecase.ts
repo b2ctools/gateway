@@ -60,7 +60,7 @@ export class UpdateSampleUseCse {
     await this.validateCountry(countryId);
 
     const sample = await this.sampleService.updateSample(request);
-    const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
-    return sampleToDto(sample, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
+    return sampleToDto(sample, null);
   }
 }

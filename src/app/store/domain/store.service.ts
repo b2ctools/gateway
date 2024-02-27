@@ -50,7 +50,6 @@ export class StoreService {
     await this.verifyStoreName(command.name);
     const store: Store = {
       id: null,
-      tenantId: null,
       ...command,
     };
 

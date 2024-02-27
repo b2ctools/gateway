@@ -40,8 +40,8 @@ export class AddAccountUseCase {
     await this.verifyUser(userId);
 
     const pc = await this.pcService.addAccount(command);
-    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
     const storeRef = this.storeService.getStoreRef(pc.storeId);
-    return accountToDto(pc, tenantRef, storeRef);
+    return accountToDto(pc, null, storeRef);
   }
 }

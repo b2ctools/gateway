@@ -17,8 +17,8 @@ export class AddProductCategoryUseCase {
 
   async addProductCategory(command: AddProductCategoryCommand) {
     const pc = await this.pcService.addProductCategory(command);
-    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return productCategoryToDto(pc, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return productCategoryToDto(pc, null);
   }
 
   async loadFromJson(json: string) {

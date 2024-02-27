@@ -50,7 +50,6 @@ export class ProductCategoryService {
     await this.verifyProductCategoryName(command.name);
     const pc: ProductCategory = {
       id: null,
-      tenantId: null,
       status: "active",
       ...command,
     };
@@ -125,7 +124,7 @@ export class ProductCategoryService {
         if (subcategories.length > 0) {
           category.subcategories = subcategories;
         }
-        delete category.tenantId;
+        // delete category.tenantId;
         result.push(category);
       });
       return result;

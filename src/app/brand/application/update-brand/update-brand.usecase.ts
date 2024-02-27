@@ -28,7 +28,7 @@ export class UpdateBrandUseCse {
       name,
       description,
     });
-    const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
-    return brandToDto(brand, tenantRef);
+    // const tenantRef = this.tenantService.getTenantRef(brand.tenantId);
+    return brandToDto(brand, null);
   }
 }

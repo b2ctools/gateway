@@ -16,7 +16,6 @@ export class AccountMockedRepository extends MockedRepository<
     entity.scope = d.scope;
     entity.userId = d.userId;
     entity.storeId = d.storeId;
-    entity.tenantId = d.tenantId;
     return entity;
   }
 
@@ -27,7 +26,6 @@ export class AccountMockedRepository extends MockedRepository<
       storeId: e.storeId,
       permissions: e.permissions,
       scope: e.scope,
-      tenantId: e.tenantId,
     };
   }
 

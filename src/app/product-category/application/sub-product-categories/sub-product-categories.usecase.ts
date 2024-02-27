@@ -31,8 +31,8 @@ export class SubProductCategoriesUseCase {
     );
 
     const data = categories.map((pc) => {
-      const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-      return productCategoryToDto(pc, tenantRef);
+      // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+      return productCategoryToDto(pc, null);
     });
     return {
       data,

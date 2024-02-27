@@ -23,7 +23,7 @@ export interface StoreRef {
 
 export const storeToDto = (u: Store, tenantRef: TenantRef = null): StoreDto => {
   const role = ctxSrv.getUserRole();
-  delete u.tenantId;
+  // delete u.tenantId;
   return {
     ...u,
     code: codeFromId(u.id),
