@@ -31,6 +31,7 @@ export const envVarsSchema = Joi.object({
   CLIENT_REPO: Joi.string().valid("mock", "mongo").required(),
   TENANT_REPO: Joi.string().valid("mock", "mongo").required(),
   PLAN_REPO: Joi.string().valid("mock", "mongo").required(),
+  RESOURCE_REPO: Joi.string().valid("mock", "mongo").required(),
 
   DISABLED_LOGIN: Joi.string().required(),
   DISABLED_LOGIN_ATTEMPS_ALLOWED: Joi.number().required(),
@@ -65,7 +66,8 @@ export const envVarValues = {
   CLIENT_REPO: process.env.CLIENT_REPO,
   TENANT_REPO: process.env.TENANT_REPO,
   PLAN_REPO: process.env.PLAN_REPO,
-  
+  RESOURCE_REPO: process.env.RESOURCE_REPO,
+
   DISABLED_LOGIN: process.env.DISABLED_LOGIN,
   DISABLED_LOGIN_ATTEMPS_ALLOWED: process.env.DISABLED_LOGIN_ATTEMPS_ALLOWED,
   DISABLED_LOGIN_EXPIRE_TIMESTAMP: process.env.DISABLED_LOGIN_EXPIRE_TIMESTAMP,

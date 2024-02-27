@@ -17,6 +17,7 @@ import { AccountModule } from "./account/account.module";
 import { ClientModule } from "./client/client.module";
 import { TenantModule } from "./tenant/tenant.module";
 import { PlanModule } from "./plan/plan.module";
+import { ResourceModule } from "./resource/resource.module";
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { PlanModule } from "./plan/plan.module";
     ClientModule,
     TenantModule,
     PlanModule,
+    ResourceModule,
   ],
   controllers: [AppController],
   providers: [AppService, InitService],

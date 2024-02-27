@@ -5,6 +5,7 @@ import { ID } from "src/app/shared/abstract-repository/repository.interface";
 export interface Tenant extends IDomain {
   name: string;
   description?: string;
+  planId: ID;
 }
 
 export interface TenantDto extends Tenant {

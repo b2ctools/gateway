@@ -6,13 +6,13 @@ import { PlanDto } from "../../domain/plan.interface";
 
 @Controller(planPath)
 export class FindOnePlanController {
-    constructor(
-        @Inject(FindOnePlanUseCase)
-        private readonly useCase: FindOnePlanUseCase
-    ) {}
+  constructor(
+    @Inject(FindOnePlanUseCase)
+    private readonly useCase: FindOnePlanUseCase,
+  ) {}
 
-    @Get(":id")
-    async findOne(@Param("id") id: ID): Promise<PlanDto> {
-        return await this.useCase.execute(id);
-    }
+  @Get(":id")
+  async findOne(@Param("id") id: ID): Promise<PlanDto> {
+    return await this.useCase.execute(id);
+  }
 }

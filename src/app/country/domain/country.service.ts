@@ -99,9 +99,7 @@ export class CountryService {
   private async canUpdateName(name: string, existingId: ID) {
     const country = await this.countryRepo.getCountryByName(name);
     if (country && country.id !== existingId) {
-      throw new BadRequestException(
-        `Country name ${name} is already taken`,
-      );
+      throw new BadRequestException(`Country name ${name} is already taken`);
     }
   }
 }
