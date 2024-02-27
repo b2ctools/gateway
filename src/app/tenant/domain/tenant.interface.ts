@@ -1,6 +1,6 @@
-import { codeFromId } from "src/app/shared/utils/gen-id";
+import { codeFromId } from "../../shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { ID } from "../../shared/abstract-repository/repository.interface";
 
 export interface Tenant extends IDomain {
   name: string;

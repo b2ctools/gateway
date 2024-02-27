@@ -1,5 +1,5 @@
 import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { tenantPath } from "src/app/shared/routes";
+import { tenantPath } from "../../../shared/routes";
 import { FineOneTenantUseCase } from "./find-one-tenant.usecase";
 
 @Controller(tenantPath)

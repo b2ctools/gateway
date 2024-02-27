@@ -9,7 +9,7 @@ import {
   productCategoryToDto,
   sortable,
 } from "../../domain/product-category.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class SubProductCategoriesUseCase {

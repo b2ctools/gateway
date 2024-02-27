@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { BrandService } from "../../domain/brand.service";
 import { BrandDto, brandToDto } from "../../domain/brand.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class UpdateBrandUseCse {

@@ -13,7 +13,7 @@ import {
   SearchOutput,
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class SearchAccountUseCase {

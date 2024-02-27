@@ -7,8 +7,8 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
-import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { ctxSrv } from "../../shared/context.service";
+import { UserRole } from "../../user/domain/user.interface";
 
 @Injectable()
 export class AccountService {

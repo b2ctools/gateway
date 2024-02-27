@@ -6,7 +6,7 @@ import { StoreService } from "../../../store/domain/store.service";
 import { BrandService } from "../../../brand/domain/brand.service";
 import { CountryService } from "../../../country/domain/country.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 import { SampleDto, sampleToDto } from "../../domain/sample.interface";
 
 @Injectable()

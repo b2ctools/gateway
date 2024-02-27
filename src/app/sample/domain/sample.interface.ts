@@ -1,4 +1,4 @@
-import { TenantRef } from "src/app/tenant/domain/tenant.interface";
+import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import {
@@ -8,8 +8,8 @@ import {
   IUnit,
   IWeight,
 } from "../application/common.request";
-import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { ctxSrv } from "../../shared/context.service";
+import { UserRole } from "../../user/domain/user.interface";
 
 export interface Sample extends IDomain {
   name: string;

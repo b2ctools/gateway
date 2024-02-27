@@ -1,11 +1,11 @@
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
-import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
-import { TenantRef } from "src/app/tenant/domain/tenant.interface";
-import { getPermissionNamesListFromIds } from "src/app/access/domain/permissions";
-import { StoreRef } from "src/app/store/domain/store.interface";
-import { codeFromId } from "src/app/shared/utils/gen-id";
+import { ctxSrv } from "../../shared/context.service";
+import { UserRole } from "../../user/domain/user.interface";
+import { TenantRef } from "../../tenant/domain/tenant.interface";
+import { getPermissionNamesListFromIds } from "../../access/domain/permissions";
+import { StoreRef } from "../../store/domain/store.interface";
+import { codeFromId } from "../../shared/utils/gen-id";
 
 export enum Scope {
   STORE_ADMIN = "STORE_ADMIN",

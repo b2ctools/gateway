@@ -6,7 +6,7 @@ import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { UserRole } from "../../../user/domain/user.interface";
 import { AccountDto, accountToDto } from "../../domain/account.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 
 @Injectable()
 export class AddAccountUseCase {

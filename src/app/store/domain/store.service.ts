@@ -8,7 +8,7 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { AccountService } from "../../account/domain/account.service";
-import { codeFromId } from "src/app/shared/utils/gen-id";
+import { codeFromId } from "../../shared/utils/gen-id";
 
 @Injectable()
 export class StoreService {

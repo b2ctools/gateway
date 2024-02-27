@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ProductCategoryService } from "../../domain/product-category.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 import { productCategoryToDto } from "../../domain/product-category.interface";
 
 @Injectable()

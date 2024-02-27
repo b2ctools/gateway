@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { BrandService } from "../../domain/brand.service";
 import { AddBrandCommand } from "./add-brand.command";
-import { TenantService } from "src/app/tenant/domain/tenant.service";
+import { TenantService } from "../../../tenant/domain/tenant.service";
 import { BrandDto, brandToDto } from "../../domain/brand.interface";
 
 @Injectable()
