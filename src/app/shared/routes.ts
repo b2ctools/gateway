@@ -12,6 +12,7 @@ export const clientPath = "client";
 export const tenantPath = "tenant";
 export const planPath = "plan";
 export const resourcePath = "resource";
+export const permissionPath = "permission";
 
 export const excludeRoutes = [
   { path: "/", method: RequestMethod.GET },
