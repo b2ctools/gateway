@@ -1,9 +1,8 @@
-
-import { Permission } from '../../domain/permission.interface';
-import { AddPermissionRequest } from './add-permission.request';
+import { Permission } from "../../domain/permission.interface";
+import { AddPermissionRequest } from "./add-permission.request";
 
 export class AddPermissionCommand
-  implements Omit<Permission, 'id' | 'tenantId'>
+  implements Omit<Permission, "id" | "tenantId">
 {
   name: string;
   description?: string;

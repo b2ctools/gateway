@@ -1,8 +1,7 @@
-
-import { Injectable } from '@nestjs/common';
-import { MockedRepository } from '../../../shared/abstract-repository/mocked-repository';
-import { PermissionMockedEntity } from './permission.mocked-entity';
-import { Permission } from '../../domain/permission.interface';
+import { Injectable } from "@nestjs/common";
+import { MockedRepository } from "../../../shared/abstract-repository/mocked-repository";
+import { PermissionMockedEntity } from "./permission.mocked-entity";
+import { Permission } from "../../domain/permission.interface";
 
 @Injectable()
 export class PermissionMockedRepository extends MockedRepository<
@@ -22,15 +21,13 @@ export class PermissionMockedRepository extends MockedRepository<
       id: e._id,
       name: e.name,
       description: e.description,
-      
     };
   }
 
   async getPermissionByName(name: string): Promise<Permission> {
-    const { data: permissions} = await this.findAll({});
+    const { data: permissions } = await this.findAll({});
     if (permissions.length === 0) return null;
     const filtered = permissions.filter((s) => s.name === name);
     return filtered.length > 0 ? filtered.shift() : null;
   }
-
 }

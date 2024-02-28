@@ -13,7 +13,10 @@ export class UpdateBrandController {
   ) {}
 
   @Patch(":id")
-  async updateBrand(@Param("id") id: ID, @Body() request: UpdateBrandRequest): Promise<BrandDto> {
+  async updateBrand(
+    @Param("id") id: ID,
+    @Body() request: UpdateBrandRequest,
+  ): Promise<BrandDto> {
     return await this.useCase.execute(id, request);
   }
 }

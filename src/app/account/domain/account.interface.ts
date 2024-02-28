@@ -3,7 +3,6 @@ import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ctxSrv } from "../../shared/context.service";
 import { UserRole } from "../../user/domain/user.interface";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
-import { getPermissionNamesListFromIds } from "../../access/domain/permissions";
 import { StoreRef } from "../../store/domain/store.interface";
 import { codeFromId } from "../../shared/utils/gen-id";
 
@@ -37,7 +36,6 @@ export const accountToDto = (
     delete a.storeId;
   }
 
-  a.permissions = getPermissionNamesListFromIds(a.permissions);
   return {
     ...a,
     code: codeFromId(a.id),
