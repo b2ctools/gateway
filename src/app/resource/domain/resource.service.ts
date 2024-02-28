@@ -48,8 +48,8 @@ export class ResourceService {
     return await this.resourceRepo.findAll(request);
   }
 
-  async updateResource(request: UpdateResourceRequest): Promise<Resource> {
-    const { id, name, description } = request;
+  async updateResource(id: ID, request: UpdateResourceRequest): Promise<Resource> {
+    const { name, description } = request;
     const existingResource = await this.findByIdOrFail(id);
 
     existingResource.name = name ? name : existingResource.name;

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ResourceService } from "../../domain/resource.service";
 import { UpdateResourceRequest } from "./update-resource.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class UpdateResourceUseCse {
@@ -9,7 +10,7 @@ export class UpdateResourceUseCse {
     private readonly resourceService: ResourceService,
   ) {}
 
-  async execute(request: UpdateResourceRequest) {
-    return await this.resourceService.updateResource(request);
+  async execute(id: ID, request: UpdateResourceRequest) {
+    return await this.resourceService.updateResource(id, request);
   }
 }
