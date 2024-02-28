@@ -21,10 +21,9 @@ export class SetPermissionsUseCase {
     });
   }
 
-  async execute(request: SetPermissionsRequest) {
-    const { id, permissions } = request;
+  async execute(id: ID, request: SetPermissionsRequest) {
+    const { permissions } = request;
     this.validatePermissions(permissions);
-
     return await this.accountService.setPermissions(id, permissions);
   }
 }

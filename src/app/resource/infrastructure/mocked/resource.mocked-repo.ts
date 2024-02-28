@@ -13,6 +13,8 @@ export class ResourceMockedRepository extends MockedRepository<
 
     entity.name = d.name;
     entity.description = d.description;
+    entity.module = d.module;
+    entity.permissions = d.permissions;
     return entity;
   }
 
@@ -21,6 +23,8 @@ export class ResourceMockedRepository extends MockedRepository<
       id: e._id,
       name: e.name,
       description: e.description,
+      module: e.module,
+      permissions: e.permissions,
     };
   }
 

@@ -10,6 +10,7 @@ export class UpdateResourceUseCse {
     private readonly resourceService: ResourceService,
   ) {}
 
+  // TODO: Add validation for permissions
   async execute(id: ID, request: UpdateResourceRequest) {
     return await this.resourceService.updateResource(id, request);
   }

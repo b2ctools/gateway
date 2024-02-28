@@ -1,5 +1,6 @@
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { MongoEntity } from "../../../shared/abstract-repository/entities/mongo-entity";
-import { Resource } from "../../domain/resource.interface";
+import { Resource, ResourseModuleType } from "../../domain/resource.interface";
 
 export class ResourceMongoEntity
   extends MongoEntity
@@ -7,4 +8,6 @@ export class ResourceMongoEntity
 {
   name: string;
   description?: string;
+  module: ResourseModuleType;
+  permissions: ID[];
 }
