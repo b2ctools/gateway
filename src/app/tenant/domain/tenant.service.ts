@@ -78,8 +78,8 @@ export class TenantService {
     return response;
   }
 
-  async updateTenant(request: UpdateTenantRequest): Promise<Tenant> {
-    const { id, name, description } = request;
+  async updateTenant(id: ID, request: UpdateTenantRequest): Promise<Tenant> {
+    const { name, description } = request;
     const existingTenant = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, existingTenant.id);
