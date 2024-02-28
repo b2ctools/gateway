@@ -3,6 +3,7 @@ import { ProductCategoryService } from "../../domain/product-category.service";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { productCategoryToDto } from "../../domain/product-category.interface";
 import { UpdateProductCategoryRequest } from "./update-product-category.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class UpdateProductCategoryUseCse {
@@ -14,8 +15,9 @@ export class UpdateProductCategoryUseCse {
     private readonly tenantService: TenantService,
   ) {}
 
-  async execute(request: UpdateProductCategoryRequest) {
-    const pc = await this.pcService.updateProductCategory(request);
+  async execute(id: ID, request: UpdateProductCategoryRequest) {
+    const { name, description } = request;
+    const pc = await this.pcService.updateProductCategory({ id, name, description });
     // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
     return productCategoryToDto(pc, null);
   }

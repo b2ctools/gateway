@@ -12,8 +12,11 @@ export class UpdateResourceController {
     private readonly useCase: UpdateResourceUseCse,
   ) {}
 
-  @Patch(':id')
-  async updateResource(@Param("id") id: ID, @Body() request: UpdateResourceRequest) {
+  @Patch(":id")
+  async updateResource(
+    @Param("id") id: ID,
+    @Body() request: UpdateResourceRequest,
+  ) {
     const pc = await this.useCase.execute(id, request);
     return resourceToDto(pc);
   }
