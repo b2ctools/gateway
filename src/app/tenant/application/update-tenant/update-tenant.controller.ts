@@ -12,8 +12,11 @@ export class UpdateTenantController {
     private readonly useCase: UpdateTenantUseCse,
   ) {}
 
-  @Patch(':id')
-  async updateTenant(@Param("id") id: ID, @Body() request: UpdateTenantRequest) {
+  @Patch(":id")
+  async updateTenant(
+    @Param("id") id: ID,
+    @Body() request: UpdateTenantRequest,
+  ) {
     const pc = await this.useCase.execute(id, request);
     return tenantToDto(pc);
   }

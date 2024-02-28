@@ -13,7 +13,7 @@ export class UpdateStoreController {
     private readonly useCase: UpdateStoreUseCase,
   ) {}
 
-  @Patch(':id')
+  @Patch(":id")
   async updateStore(@Param("id") id: ID, @Body() request: UpdateStoreRequest) {
     const pc = await this.useCase.execute(id, new UpdateStoreCommand(request));
     return storeToDto(pc);

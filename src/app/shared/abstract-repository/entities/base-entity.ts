@@ -14,7 +14,6 @@ export abstract class IEntity {
   deletedBy: ID;
 
   toCreate() {
-
     this.createdAt = new Date();
     this.createdBy = ctxSrv.getUserId();
 

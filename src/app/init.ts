@@ -20,6 +20,8 @@ import { TenantService } from "./tenant/domain/tenant.service";
 import { ctxSrv } from "./shared/context.service";
 import { PlanService } from "./plan/domain/plan.service";
 import { ResourceService } from "./resource/domain/resource.service";
+import { SampleService } from "./sample/domain/sample.service";
+import { AddSampleCommand } from "./sample/application/add-sample/add-sample.command";
 
 @Injectable()
 export class InitService {
@@ -50,6 +52,9 @@ export class InitService {
 
     @Inject(ResourceService)
     private readonly resourceService: ResourceService,
+
+    @Inject(SampleService)
+    private readonly sampleService: SampleService,
   ) {}
 
   private async seedAccountsForElmer() {
@@ -77,12 +82,52 @@ export class InitService {
   private async setResourcesToPlan() {
     const plan = await this.planService.findPlanByName("Pro");
     const { data: resources } = await this.resourceService.findAllResources({});
-    const resourcesIds = resources.map(r => r.id);
+    const resourcesIds = resources.map((r) => r.id);
     const request = {
       id: plan.id,
-      resources: resourcesIds
-    }
+      resources: resourcesIds,
+    };
     await this.planService.setResources(request);
+  }
+
+  private async seedSample() {
+    const { data: stores } = await this.soreService.findAllStores({ take: 3 });
+    const { data: brands } = await this.brandService.findAllBrands({ take: 3 });
+    const { data: categories } =
+      await this.productCategoryService.findAllProductCategories({ take: 3 });
+    const { data: countries } = await this.countryService.findAllCountries({
+      take: 3,
+    });
+    // const { data: users } = await this.userService.findAllUsers({ take: 3 });
+    // const user = users[0];
+    const store = stores[0];
+    const brand = brands[0];
+    const category = categories[0];
+    const country = countries[0];
+    const sample: AddSampleCommand = {
+      name: "Pasta Perla",
+      description: "Pasta dental cubana",
+      images: [
+        "https://www.sample.com/image1",
+        "https://www.sample.com/image2",
+      ],
+      price: {
+        current: 100,
+      },
+      stock: 100,
+      unit: "Oz",
+      weight: {
+        gross: 100,
+        net: 80,
+      },
+      categoryId: category.id,
+      storeId: store.id,
+      brandId: brand.id,
+      countryId: country.id,
+      hidden: false,
+      locations: ["Managua"],
+    };
+    await this.sampleService.addSample(sample);
   }
 
   async onApplicationBootstrap() {
@@ -113,18 +158,17 @@ export class InitService {
     );
 
     await Promise.all(
-      getMockedPlansList().map((plan) =>
-        this.planService.addPlan(plan),
-      ),
-    )
+      getMockedPlansList().map((plan) => this.planService.addPlan(plan)),
+    );
 
     await Promise.all(
       getMockedResourcesList().map((resource) =>
         this.resourceService.addResource(resource),
       ),
-    )
+    );
 
     await this.seedAccountsForElmer();
-    await this.setResourcesToPlan()
+    await this.setResourcesToPlan();
+    await this.seedSample();
   }
 }

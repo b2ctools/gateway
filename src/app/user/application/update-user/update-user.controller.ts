@@ -13,7 +13,10 @@ export class UpdateUserController {
   ) {}
 
   @Patch(":id")
-  async update(@Param('id') id: ID, @Body() request: UpdateUserRequest): Promise<UserDto> {
+  async update(
+    @Param("id") id: ID,
+    @Body() request: UpdateUserRequest,
+  ): Promise<UserDto> {
     return await this.useCase.execute(id, request);
   }
 }

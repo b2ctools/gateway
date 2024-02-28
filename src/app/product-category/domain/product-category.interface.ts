@@ -1,4 +1,3 @@
-
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";

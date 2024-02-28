@@ -12,7 +12,7 @@ export class SetPlanController {
   ) {}
 
   @Post("/:id/set-plan")
-  async setPlan(@Param('id') id: ID, @Body() request: SetPlanRequest) {
+  async setPlan(@Param("id") id: ID, @Body() request: SetPlanRequest) {
     await this.useCase.execute(id, request);
     return { message: "Plan set successfully" };
   }

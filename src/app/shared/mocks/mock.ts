@@ -114,11 +114,8 @@ export const getMockedProductCategoryList = () => {
 };
 
 export const getMockedPlansList = () => {
-  return [
-    { name: "Starter" },
-    { name: "Pro" },
-  ]
-}
+  return [{ name: "Starter" }, { name: "Pro" }];
+};
 
 export const getMockedResourcesList = () => {
   return [
@@ -128,5 +125,5 @@ export const getMockedResourcesList = () => {
     { name: "product" },
     { name: "order" },
     { name: "location" },
-  ]
-}
+  ];
+};
