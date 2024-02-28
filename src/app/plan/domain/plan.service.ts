@@ -50,8 +50,8 @@ export class PlanService {
     return await this.planRepo.findAll(request);
   }
 
-  async updatePlan(request: UpdatePlanRequest): Promise<Plan> {
-    const { id, name, description } = request;
+  async updatePlan(id: ID, request: UpdatePlanRequest): Promise<Plan> {
+    const { name, description } = request;
     const existingPlan = await this.findByIdOrFail(id);
 
     existingPlan.name = name ? name : existingPlan.name;

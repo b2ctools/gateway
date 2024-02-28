@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PlanService } from "../../domain/plan.service";
 import { UpdatePlanRequest } from "./update-plan.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class UpdatePlanUseCse {
@@ -9,7 +10,7 @@ export class UpdatePlanUseCse {
     private readonly planService: PlanService,
   ) {}
 
-  async execute(request: UpdatePlanRequest) {
-    return await this.planService.updatePlan(request);
+  async execute(id: ID, request: UpdatePlanRequest) {
+    return await this.planService.updatePlan(id, request);
   }
 }
