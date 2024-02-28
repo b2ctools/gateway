@@ -8,6 +8,7 @@ import {
 } from "../../shared/abstract-repository/repository.interface";
 import { BrandRepository } from "../infrastructure/brand-repositor.type";
 import { SearchRequest } from "../../shared/base.request";
+import { UpdateBrandRequest } from "../application/update-brand/update-brand.request";
 
 @Injectable()
 export class BrandService {
@@ -56,15 +57,8 @@ export class BrandService {
     return await this.brandRepo.findAll(request);
   }
 
-  async updateBrand({
-    id,
-    name,
-    description,
-  }: {
-    id: ID;
-    name?: string;
-    description?: string;
-  }): Promise<Brand> {
+  async updateBrand(id: ID, request: UpdateBrandRequest): Promise<Brand> {
+    const { name, description } = request;
     const existingBrand = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, existingBrand.id);
