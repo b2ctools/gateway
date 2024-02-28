@@ -15,5 +15,4 @@ export class AddResourceCommand implements Omit<Resource, "id" | "tenantId"> {
     this.module = module;
     this.permissions = permissions;
   }
-
 }

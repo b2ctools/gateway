@@ -16,7 +16,6 @@ export const getMockedUserList = () => {
     countryId: null,
   };
 
-  
   const users = [
     //  elmer
     {
@@ -129,4 +128,13 @@ export const getMockedResourcesList = (): AddResourceCommand[] => {
     { name: "order", module: "billing", permissions: [] },
     { name: "location", module: "delivery", permissions: [] },
   ];
+};
+
+export const getMockedPermissionList = () => {
+  return Array(5)
+    .fill(null)
+    .map(() => ({
+      name: "Permission " + casual.title,
+      description: casual.description.slice(0, 50),
+    }));
 };

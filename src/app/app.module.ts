@@ -12,7 +12,6 @@ import { BrandModule } from "./brand/brand.module";
 import { CountryModule } from "./country/country.module";
 import { SampleModule } from "./sample/sample.module";
 import { InitService } from "./init";
-import { AccessModule } from "./access/access.module";
 import { AccountModule } from "./account/account.module";
 import { ClientModule } from "./client/client.module";
 import { TenantModule } from "./tenant/tenant.module";
@@ -29,7 +28,6 @@ import { PermissionModule } from "./permission/permission.module";
     BrandModule,
     CountryModule,
     SampleModule,
-    AccessModule,
     AccountModule,
     ClientModule,
     TenantModule,

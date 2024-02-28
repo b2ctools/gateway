@@ -10,15 +10,15 @@ export class UpdateResourceUseCse {
     private readonly pcService: ResourceService,
 
     @Inject(ResourceService)
-    private readonly resourceService: ResourceService
+    private readonly resourceService: ResourceService,
   ) {}
 
   private async validatePermissions(permissions: ID[]) {
     if (permissions && permissions.length > 0) {
       await Promise.all(
         permissions.map(async (permission) =>
-          this.resourceService.findByIdOrFail(permission)
-        )
+          this.resourceService.findByIdOrFail(permission),
+        ),
       );
     }
   }

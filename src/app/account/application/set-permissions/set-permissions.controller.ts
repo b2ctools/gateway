@@ -12,7 +12,10 @@ export class SetPermissionsController {
   ) {}
 
   @Post("/:id/set-permissions")
-  async setPermissions(@Param("id") id: ID, @Body() request: SetPermissionsRequest) {
+  async setPermissions(
+    @Param("id") id: ID,
+    @Body() request: SetPermissionsRequest,
+  ) {
     return await this.useCase.execute(id, request);
   }
 }

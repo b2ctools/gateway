@@ -7,6 +7,7 @@ import { ProductCategoryService } from "./product-category/domain/product-catego
 import {
   getMockedBrandList,
   getMockedCountryList,
+  getMockedPermissionList,
   getMockedPlansList,
   getMockedProductCategoryList,
   getMockedResourcesList,
@@ -14,7 +15,6 @@ import {
   getMockedUserList,
 } from "./shared/mocks/mock";
 import { AccountService } from "./account/domain/account.service";
-import { getPermissionsIdList } from "./access/domain/permissions";
 import { Scope } from "./account/domain/account.interface";
 import { TenantService } from "./tenant/domain/tenant.service";
 import { ctxSrv } from "./shared/context.service";
@@ -22,6 +22,7 @@ import { PlanService } from "./plan/domain/plan.service";
 import { ResourceService } from "./resource/domain/resource.service";
 import { SampleService } from "./sample/domain/sample.service";
 import { AddSampleCommand } from "./sample/application/add-sample/add-sample.command";
+import { PermissionService } from "./permission/domain/permission.service";
 
 @Injectable()
 export class InitService {
@@ -55,12 +56,15 @@ export class InitService {
 
     @Inject(SampleService)
     private readonly sampleService: SampleService,
+
+    @Inject(PermissionService)
+    private readonly permissionService: PermissionService,
   ) {}
 
   private async seedAccountsForElmer() {
     const user = await this.userService.findUserByEmail("elmer@email.com");
     const { data: stores } = await this.soreService.findAllStores({ take: 3 });
-    const permissions = getPermissionsIdList();
+    const { data: permissions } = await this.permissionService.findAllPermissions({});
     stores.map((store) => {
       this.accountService
         .addAccount({
@@ -70,10 +74,10 @@ export class InitService {
         })
         .then((account) => {
           this.accountService.setPermissions(account.id, [
-            permissions[0],
-            permissions[1],
-            permissions[2],
-            permissions[3],
+            permissions[0].id,
+            permissions[1].id,
+            permissions[2].id,
+            permissions[3].id,
           ]);
         });
     });
@@ -164,6 +168,12 @@ export class InitService {
     await Promise.all(
       getMockedResourcesList().map((resource) =>
         this.resourceService.addResource(resource),
+      ),
+    );
+
+    await Promise.all(
+      getMockedPermissionList().map((p) =>
+        this.permissionService.addPermission(p),
       ),
     );
 

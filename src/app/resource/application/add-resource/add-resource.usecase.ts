@@ -11,22 +11,22 @@ export class AddResourceUseCase {
     private readonly pcService: ResourceService,
 
     @Inject(PermissionService)
-    private readonly permissionService: PermissionService
+    private readonly permissionService: PermissionService,
   ) {}
 
   private async validatePermissions(permissions: ID[]) {
     if (permissions && permissions.length > 0) {
       await Promise.all(
         permissions.map(async (permission) =>
-          this.permissionService.findByIdOrFail(permission)
-        )
+          this.permissionService.findByIdOrFail(permission),
+        ),
       );
     }
   }
 
   async execute(command: AddResourceCommand) {
     await this.validatePermissions(command.permissions);
-    
+
     return await this.pcService.addResource(command);
   }
 }

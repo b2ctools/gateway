@@ -19,8 +19,8 @@ export class SetPermissionsUseCase {
       await Promise.all(
         permissions.map((permission) => {
           this.permissionService.findByIdOrFail(permission);
-        })
-      )
+        }),
+      );
     }
   }
 
