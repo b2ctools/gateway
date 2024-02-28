@@ -6,7 +6,6 @@ import { ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
 import { UpdateTenantRequest } from "../application/update-tenant/update-tenant.request";
 import { codeFromId } from "../../shared/utils/gen-id";
-import { SetPlanRequest } from "../application/set-plan/set-plan.request";
 
 @Injectable()
 export class TenantService {
@@ -108,9 +107,8 @@ export class TenantService {
     }
   }
 
-  async setPlan(request: SetPlanRequest) {
-    const { id: tenantId, planId } = request;
-    const tenant = await this.findByIdOrFail(tenantId);
+  async setPlan(id: ID, planId: ID) {
+    const tenant = await this.findByIdOrFail(id);
     tenant.planId = planId;
     return await this.tenantRepo.persist(tenant);
   }
