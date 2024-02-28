@@ -107,9 +107,8 @@ export class UserService {
     return await this.userRepo.persist(existingUser);
   }
 
-  async updateUser(userInfo: Partial<Omit<User, ", tenantId" | "password">>) {
+  async updateUser(id: ID, userInfo: Partial<Omit<User, ", tenantId" | "password">>) {
     const {
-      id,
       firstName,
       lastName,
       nickname,
