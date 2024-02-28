@@ -51,9 +51,8 @@ export class SampleService {
     return await this.sampleRepo.findAll(request);
   }
 
-  async updateSample(request: UpdateSampleRequest): Promise<Sample> {
+  async updateSample(id: ID, request: UpdateSampleRequest): Promise<Sample> {
     const {
-      id,
       name,
       description,
       images,

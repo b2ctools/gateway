@@ -51,7 +51,7 @@ export class UpdateSampleUseCse {
     await this.countryService.findByIdOrFail(countryId);
   }
 
-  async execute(request: UpdateSampleRequest): Promise<SampleDto> {
+  async execute(id: ID, request: UpdateSampleRequest): Promise<SampleDto> {
     const { categoryId, storeId, brandId, countryId } = request;
     // validations
     await this.validteProductCategoryId(categoryId);
@@ -59,7 +59,7 @@ export class UpdateSampleUseCse {
     await this.validateBrandId(brandId);
     await this.validateCountry(countryId);
 
-    const sample = await this.sampleService.updateSample(request);
+    const sample = await this.sampleService.updateSample(id, request);
     // const tenantRef = this.tenantService.getTenantRef(sample.tenantId);
     return sampleToDto(sample, null);
   }

@@ -3,6 +3,7 @@ import { UserService } from "../../domain/user.service";
 import { UpdateUserRequest } from "./update-user.request";
 import { UserDto, userToDto } from "../../domain/user.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -16,7 +17,6 @@ export class UpdateUserUseCase {
 
   private sanitazeRequest(request: UpdateUserRequest) {
     const {
-      id,
       firstName,
       lastName,
       nickname,
@@ -32,7 +32,6 @@ export class UpdateUserUseCase {
       countryId,
     } = request;
     return {
-      id,
       firstName,
       lastName,
       nickname,
@@ -49,8 +48,9 @@ export class UpdateUserUseCase {
     };
   }
 
-  async execute(request: UpdateUserRequest): Promise<UserDto> {
+  async execute(id: ID, request: UpdateUserRequest): Promise<UserDto> {
     const user = await this.userService.updateUser(
+      id,
       this.sanitazeRequest(request),
     );
     // const tenantRef = this.tenantService.getTenantRef(user.tenantId);

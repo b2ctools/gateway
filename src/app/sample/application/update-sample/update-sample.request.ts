@@ -25,10 +25,6 @@ export class UpdateSampleRequest
 {
   @IsNotEmpty()
   @IsString()
-  id: ID;
-
-  @IsNotEmpty()
-  @IsString()
   @IsOptional()
   name: string;
 

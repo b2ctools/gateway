@@ -12,8 +12,6 @@ import {
 import { SearchProductCategoryRequest } from "../application/search-product-categories/search-product-category.request";
 import { SearchSubProductCategoryRequest } from "../application/sub-product-categories/sub-product-categories.request";
 
-// import { jsonCategories } from './json-categories';
-// console.log(JSON.stringify(jsonCategories))
 export interface JsonProductCategoryItem {
   name: string;
   subcategories?: JsonProductCategoryItem[];

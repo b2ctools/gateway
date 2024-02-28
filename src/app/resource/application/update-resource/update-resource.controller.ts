@@ -1,8 +1,9 @@
-import { Body, Controller, Inject, Patch } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Patch } from "@nestjs/common";
 import { resourcePath } from "../../../shared/routes";
 import { resourceToDto } from "../../domain/resource.interface";
 import { UpdateResourceUseCse } from "./update-resource.usecase";
 import { UpdateResourceRequest } from "./update-resource.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Controller(resourcePath)
 export class UpdateResourceController {
@@ -11,9 +12,12 @@ export class UpdateResourceController {
     private readonly useCase: UpdateResourceUseCse,
   ) {}
 
-  @Patch()
-  async updateResource(@Body() request: UpdateResourceRequest) {
-    const pc = await this.useCase.execute(request);
+  @Patch(":id")
+  async updateResource(
+    @Param("id") id: ID,
+    @Body() request: UpdateResourceRequest,
+  ) {
+    const pc = await this.useCase.execute(id, request);
     return resourceToDto(pc);
   }
 }

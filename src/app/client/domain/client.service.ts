@@ -67,8 +67,8 @@ export class ClientService {
     return await this.clientRepo.findAll(request);
   }
 
-  async updateClient(request: UpdateClientRequest): Promise<Client> {
-    const { id, description } = request;
+  async updateClient(id: ID, request: UpdateClientRequest): Promise<Client> {
+    const { description } = request;
     const existingClient = await this.findByIdOrFail(id);
 
     existingClient.description = description

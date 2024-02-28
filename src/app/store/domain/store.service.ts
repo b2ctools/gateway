@@ -9,6 +9,7 @@ import {
 } from "../../shared/abstract-repository/repository.interface";
 import { AccountService } from "../../account/domain/account.service";
 import { codeFromId } from "../../shared/utils/gen-id";
+import { UpdateStoreCommand } from "../application/update-store/update-store.command";
 
 @Injectable()
 export class StoreService {
@@ -87,8 +88,8 @@ export class StoreService {
     await this.updateBackupStores();
   }
 
-  async updateStore(storeRequest: Omit<Store, "tenantId">) {
-    const { id, name, description } = storeRequest;
+  async updateStore(id: ID, command: UpdateStoreCommand) {
+    const { name, description } = command;
     const store = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, id);

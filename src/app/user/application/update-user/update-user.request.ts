@@ -11,10 +11,6 @@ import { UserRole, UserStatus } from "../../domain/user.interface";
 export class UpdateUserRequest {
   @IsNotEmpty()
   @IsString()
-  id: ID;
-
-  @IsNotEmpty()
-  @IsString()
   @IsOptional()
   firstName: string;
 
