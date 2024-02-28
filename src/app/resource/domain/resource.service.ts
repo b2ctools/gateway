@@ -24,7 +24,7 @@ export class ResourceService {
   async findByIdOrFail(resourceId: ID) {
     const existingResource = await this.resourceRepo.findById(resourceId);
     if (!existingResource) {
-      throw new BadRequestException(`Resource with id ${resourceId} not found`);
+      throw new BadRequestException(`Permission with id ${resourceId} not found`);
     }
     return existingResource;
   }
