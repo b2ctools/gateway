@@ -13,9 +13,15 @@ export class UpdateCountryController {
     private readonly useCase: UpdateCountryUseCse,
   ) {}
 
-  @Patch(':id')
-  async UpdateCountry(@Param("id") id: ID, @Body() request: UpdateCountryRequest) {
-    const pc = await this.useCase.execute(id, new UpdateCountryCommand(request));
+  @Patch(":id")
+  async UpdateCountry(
+    @Param("id") id: ID,
+    @Body() request: UpdateCountryRequest,
+  ) {
+    const pc = await this.useCase.execute(
+      id,
+      new UpdateCountryCommand(request),
+    );
     return countryToDto(pc);
   }
 }

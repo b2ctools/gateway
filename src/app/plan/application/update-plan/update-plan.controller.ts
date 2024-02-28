@@ -12,7 +12,7 @@ export class UpdatePlanController {
     private readonly useCase: UpdatePlanUseCse,
   ) {}
 
-  @Patch(':id')
+  @Patch(":id")
   async updatePlan(@Param("id") id: ID, @Body() request: UpdatePlanRequest) {
     const pc = await this.useCase.execute(id, request);
     return planToDto(pc);

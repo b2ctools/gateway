@@ -17,7 +17,11 @@ export class UpdateProductCategoryUseCse {
 
   async execute(id: ID, request: UpdateProductCategoryRequest) {
     const { name, description } = request;
-    const pc = await this.pcService.updateProductCategory({ id, name, description });
+    const pc = await this.pcService.updateProductCategory({
+      id,
+      name,
+      description,
+    });
     // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
     return productCategoryToDto(pc, null);
   }
