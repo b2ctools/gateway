@@ -24,7 +24,7 @@ export class ResourceService {
   async findByIdOrFail(resourceId: ID) {
     const existingResource = await this.resourceRepo.findById(resourceId);
     if (!existingResource) {
-      throw new BadRequestException(`Resource with id ${resourceId} not found`);
+      throw new BadRequestException(`Permission with id ${resourceId} not found`);
     }
     return existingResource;
   }
@@ -52,13 +52,17 @@ export class ResourceService {
     id: ID,
     request: UpdateResourceRequest,
   ): Promise<Resource> {
-    const { name, description } = request;
+    const { name, description, module, permissions } = request;
     const existingResource = await this.findByIdOrFail(id);
 
     existingResource.name = name ? name : existingResource.name;
     existingResource.description = description
       ? description
       : existingResource.description;
+    existingResource.module = module ? module : existingResource.module;
+    existingResource.permissions = permissions
+      ? permissions
+      : existingResource.permissions;
 
     console.log(
       `Updating Resource - ${JSON.stringify({

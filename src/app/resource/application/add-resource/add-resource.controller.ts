@@ -14,7 +14,7 @@ export class AddResourceController {
 
   @Post()
   async addResource(@Body() request: AddResourceRequest) {
-    const pc = await this.useCase.addResource(new AddResourceCommand(request));
+    const pc = await this.useCase.execute(new AddResourceCommand(request));
     return resourceToDto(pc);
   }
 }

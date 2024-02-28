@@ -1,5 +1,6 @@
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
-import { Resource } from "../../domain/resource.interface";
+import { Resource, ResourseModuleType } from "../../domain/resource.interface";
 
 export class ResourceMockedEntity
   extends MockedEntity
@@ -7,4 +8,6 @@ export class ResourceMockedEntity
 {
   name: string;
   description?: string;
+  module: ResourseModuleType;
+  permissions: ID[];
 }

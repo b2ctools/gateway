@@ -11,9 +11,10 @@ import { UpdateResourceController } from "./application/update-resource/update-r
 import { UpdateResourceUseCse } from "./application/update-resource/update-resource.usecase";
 import { FindOneResourceController } from "./application/find-one-resource/find-one-resource.controller";
 import { FindOneResourceUseCase } from "./application/find-one-resource/find-one-resource.usecase";
+import { PermissionModule } from "../permission/permission.module";
 
 @Module({
-  imports: [],
+  imports: [PermissionModule],
   controllers: [
     AddResourceController,
     SearchResourceController,

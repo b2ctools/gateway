@@ -1,6 +1,7 @@
 import casual from "casual";
 
 import { UserRole } from "../../user/domain/user.interface";
+import { AddResourceCommand } from "src/app/resource/application/add-resource/add-resource.command";
 
 export const getMockedUserList = () => {
   const commondData = {
@@ -15,8 +16,9 @@ export const getMockedUserList = () => {
     countryId: null,
   };
 
-  //  elmer
+  
   const users = [
+    //  elmer
     {
       firstName: "Elmer", //casual.name,
       lastName: "Entenza", //casual.last_name,
@@ -25,6 +27,7 @@ export const getMockedUserList = () => {
       role: UserRole.USER,
       ...commondData,
     },
+    //  yoennis
     {
       firstName: "Yoennis", //casual.name,
       lastName: "Rodriguez", //casual.last_name,
@@ -33,8 +36,9 @@ export const getMockedUserList = () => {
       role: UserRole.ADMIN,
       ...commondData,
     },
+    //  leonardo
     {
-      firstName: "Leonargo", //casual.name,
+      firstName: "Leonardo", //casual.name,
       lastName: "McTesterson", //casual.last_name,
       email: "leo@email.com", //casual.email.toLowerCase(),
       password: "12345", //casual.password,
@@ -117,13 +121,12 @@ export const getMockedPlansList = () => {
   return [{ name: "Starter" }, { name: "Pro" }];
 };
 
-export const getMockedResourcesList = () => {
+export const getMockedResourcesList = (): AddResourceCommand[] => {
   return [
-    { name: "user" },
-    { name: "tenant" },
-    { name: "sample" },
-    { name: "product" },
-    { name: "order" },
-    { name: "location" },
+    { name: "user", module: "user", permissions: [] },
+    { name: "sample", module: "product", permissions: [] },
+    { name: "product", module: "product", permissions: [] },
+    { name: "order", module: "billing", permissions: [] },
+    { name: "location", module: "delivery", permissions: [] },
   ];
 };

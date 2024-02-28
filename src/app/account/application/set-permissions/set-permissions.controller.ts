@@ -1,7 +1,8 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Param, Post } from "@nestjs/common";
 import { accountPath } from "../../../shared/routes";
 import { SetPermissionsUseCase } from "./set-permissions.usecase";
 import { SetPermissionsRequest } from "./set-permissions.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Controller(accountPath)
 export class SetPermissionsController {
@@ -10,8 +11,8 @@ export class SetPermissionsController {
     private readonly useCase: SetPermissionsUseCase,
   ) {}
 
-  @Post("set-permissions")
-  async setPermissions(@Body() request: SetPermissionsRequest) {
-    return await this.useCase.execute(request);
+  @Post("/:id/set-permissions")
+  async setPermissions(@Param("id") id: ID, @Body() request: SetPermissionsRequest) {
+    return await this.useCase.execute(id, request);
   }
 }

@@ -7,10 +7,25 @@ import { ID } from "src/app/shared/abstract-repository/repository.interface";
 export class UpdateResourceUseCse {
   constructor(
     @Inject(ResourceService)
-    private readonly resourceService: ResourceService,
+    private readonly pcService: ResourceService,
+
+    @Inject(ResourceService)
+    private readonly resourceService: ResourceService
   ) {}
 
+  private async validatePermissions(permissions: ID[]) {
+    if (permissions && permissions.length > 0) {
+      await Promise.all(
+        permissions.map(async (permission) =>
+          this.resourceService.findByIdOrFail(permission)
+        )
+      );
+    }
+  }
+
   async execute(id: ID, request: UpdateResourceRequest) {
+    await this.validatePermissions(request.permissions);
+
     return await this.resourceService.updateResource(id, request);
   }
 }

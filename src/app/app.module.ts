@@ -18,6 +18,7 @@ import { ClientModule } from "./client/client.module";
 import { TenantModule } from "./tenant/tenant.module";
 import { PlanModule } from "./plan/plan.module";
 import { ResourceModule } from "./resource/resource.module";
+import { PermissionModule } from "./permission/permission.module";
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { ResourceModule } from "./resource/resource.module";
     TenantModule,
     PlanModule,
     ResourceModule,
+    PermissionModule,
   ],
   controllers: [AppController],
   providers: [AppService, InitService],
