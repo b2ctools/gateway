@@ -7,6 +7,8 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { AccountDto, accountToDto } from "../../domain/account.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { PermissionService } from "src/app/permission/domain/permission.service";
+import { ctxSrv } from "src/app/shared/context.service";
+import { UserRole } from "src/app/user/domain/user.interface";
 
 @Injectable()
 export class AddAccountUseCase {
@@ -27,22 +29,36 @@ export class AddAccountUseCase {
     private readonly permissionService: PermissionService,
   ) {}
 
+
+
   private async verifyUser(userId: ID) {
-    await this.userService.findByIdOrFail(userId);
+    const { role } = await this.userService.findByIdOrFail(userId);
+
+    // userId - role can not be admin
+    if (role === UserRole.ADMIN) {
+      throw new Error('Specified userId- role can not be ' + UserRole.ADMIN);
+    }
+  }
+
+  private async verifyTenant(tenantId: ID) {
+    await this.tenantService.findByIdOrFail(tenantId);
   }
 
   async execute(command: AddAccountCommand): Promise<AccountDto> {
-    const { storeId, userId } = command;
+    const { storeId, userId, tenantId } = command;
     // validations
     await this.storeService.findByIdOrFail(storeId);
     await this.verifyUser(userId);
+    await this.verifyTenant(tenantId);
+
+    console.log('role', ctxSrv.getUserRole());
 
     const account = await this.pcService.addAccount(command);
-    // const tenantRef = this.tenantService.getTenantRef(account.tenantId);
+    const tenantRef = this.tenantService.getTenantRef(account.tenantId);
     const storeRef = this.storeService.getStoreRef(account.storeId);
     const permissionsRef = account.permissions.map((p) =>
       this.permissionService.getPermissionRef(p),
     );
-    return accountToDto(account, null, storeRef, permissionsRef);
+    return accountToDto(account, tenantRef, storeRef, permissionsRef);
   }
 }

@@ -120,6 +120,7 @@ export abstract class MockedRepository<
    * - if user is admin and tenantOnSearchRequest is null, then use user tenant
    * - if user is not admin, then use user tenant
    *
+   * @deprecated
    * @param request
    * @returns
    */
@@ -138,7 +139,7 @@ export abstract class MockedRepository<
         request;
 
       let results = Object.values(this.elements);
-
+      
       // applying filter field-string-value
       const { filter } = request;
       results = applyFilterFieldFromRequest(results, filter);

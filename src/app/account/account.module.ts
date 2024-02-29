@@ -41,6 +41,6 @@ import { PermissionModule } from "../permission/permission.module";
     SetPermissionsUseCase,
     FindOneAccountUsecase,
   ],
-  exports: [AccountService],
+  exports: [AccountService, AddAccountUseCase],
 })
 export class AccountModule {}

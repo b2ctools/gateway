@@ -1,4 +1,4 @@
-import { IsEnum, IsNotEmpty, IsString } from "class-validator";
+import { IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Account, Scope } from "../../domain/account.interface";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 
@@ -15,4 +15,8 @@ export class AddAccountRequest
 
   @IsEnum(Scope)
   scope: Scope;
+
+  @IsString()
+  @IsOptional()
+  tenantId?: ID;
 }

@@ -11,4 +11,5 @@ export class AccountMongoEntity
   permissions: ID[];
   scope: Scope;
   type: AccountType;
+  tenantId: ID;
 }

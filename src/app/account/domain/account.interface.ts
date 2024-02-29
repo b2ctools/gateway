@@ -20,6 +20,7 @@ export interface Account extends IDomain {
   storeId?: ID;
   permissions: ID[];
   scope: Scope;
+  tenantId: ID;
 }
 
 export interface AccountDto extends Omit<Account, "permissions"> {
@@ -36,11 +37,8 @@ export const accountToDto = (
   permissionsRef: PermissionRef[] = null,
 ): AccountDto => {
   const role = ctxSrv.getUserRole();
-  // delete a.tenantId;
-
-  if (role === UserRole.ADMIN) {
-    delete a.storeId;
-  }
+  delete a.tenantId;
+  delete a.storeId;
 
   return {
     ...a,
