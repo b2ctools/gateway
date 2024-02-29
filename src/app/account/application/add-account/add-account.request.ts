@@ -3,7 +3,7 @@ import { Account, Scope } from "../../domain/account.interface";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 export class AddAccountRequest
-  implements Omit<Account, "id" | "tenantId" | "permissions">
+  implements Omit<Account, "id" | "tenantId" | "permissions" | "type">
 {
   @IsNotEmpty()
   @IsString()
@@ -11,7 +11,7 @@ export class AddAccountRequest
 
   @IsNotEmpty()
   @IsString()
-  storeId: string;
+  storeId?: ID;
 
   @IsEnum(Scope)
   scope: Scope;

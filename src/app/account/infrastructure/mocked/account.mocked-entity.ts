@@ -1,6 +1,6 @@
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
-import { Account, Scope } from "../../domain/account.interface";
+import { Account, AccountType, Scope } from "../../domain/account.interface";
 
 export class AccountMockedEntity
   extends MockedEntity
@@ -10,4 +10,5 @@ export class AccountMockedEntity
   storeId: ID;
   permissions: ID[];
   scope: Scope;
+  type: AccountType;
 }

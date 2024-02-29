@@ -5,16 +5,19 @@ import { UserRole } from "../../user/domain/user.interface";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { StoreRef } from "../../store/domain/store.interface";
 import { codeFromId } from "../../shared/utils/gen-id";
-import { PermissionRef } from "src/app/permission/domain/permission.interface";
+import { PermissionRef } from "../../permission/domain/permission.interface";
 
 export enum Scope {
   STORE_ADMIN = "STORE_ADMIN",
   DELIVERY_MANAGER = "DELIVERY_MANAGER",
 }
 
+export type AccountType = "tenant" | "store";
+
 export interface Account extends IDomain {
   userId: ID;
-  storeId: ID;
+  type: AccountType;
+  storeId?: ID;
   permissions: ID[];
   scope: Scope;
 }

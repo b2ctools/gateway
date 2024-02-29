@@ -23,6 +23,7 @@ import { ResourceService } from "./resource/domain/resource.service";
 import { SampleService } from "./sample/domain/sample.service";
 import { AddSampleCommand } from "./sample/application/add-sample/add-sample.command";
 import { PermissionService } from "./permission/domain/permission.service";
+import { AddAccountCommand } from "./account/application/add-account/add-account.command";
 
 @Injectable()
 export class InitService {
@@ -58,30 +59,45 @@ export class InitService {
     private readonly sampleService: SampleService,
 
     @Inject(PermissionService)
-    private readonly permissionService: PermissionService,
+    private readonly permissionService: PermissionService
   ) {}
 
   private async seedAccountsForElmer() {
     const user = await this.userService.findUserByEmail("elmer@email.com");
-    const { data: stores } = await this.soreService.findAllStores({ take: 3 });
+    const { data: stores } = await this.soreService.findAllStores({ take: 2 });
     const { data: permissions } =
       await this.permissionService.findAllPermissions({});
-    stores.map((store) => {
-      this.accountService
-        .addAccount({
-          userId: user.id,
-          storeId: store.id,
-          scope: Scope.STORE_ADMIN,
-        })
-        .then((account) => {
-          this.accountService.setPermissions(account.id, [
-            permissions[0].id,
-            permissions[1].id,
-            permissions[2].id,
-            permissions[3].id,
-          ]);
-        });
-    });
+    await Promise.all(
+      stores.map((store) => {
+        this.accountService
+          .addAccount(
+            new AddAccountCommand({
+              userId: user.id,
+              storeId: store.id,
+              scope: Scope.STORE_ADMIN,
+            })
+          )
+          .then((account) => {
+            this.accountService.setPermissions(account.id, [
+              permissions[0].id,
+              permissions[1].id,
+              permissions[2].id,
+              permissions[3].id,
+            ]);
+          });
+      })
+    );
+
+    const account1 = await this.accountService
+      .addAccount(
+        new AddAccountCommand({ userId: user.id, scope: Scope.STORE_ADMIN })
+      );
+      this.accountService.setPermissions(account1.id, [
+        permissions[0].id,
+        permissions[1].id,
+        permissions[2].id,
+        permissions[3].id,
+      ]);
   }
 
   private async setResourcesToPlan() {
@@ -142,40 +158,40 @@ export class InitService {
     ctxSrv.setTenantId(tenant.id);
 
     await Promise.all(
-      getMockedUserList().map((user) => this.userService.registerUser(user)),
+      getMockedUserList().map((user) => this.userService.registerUser(user))
     );
     await Promise.all(
-      getMockedStoreList().map((store) => this.soreService.addStore(store)),
+      getMockedStoreList().map((store) => this.soreService.addStore(store))
     );
     await Promise.all(
-      getMockedBrandList().map((brand) => this.brandService.addBrand(brand)),
+      getMockedBrandList().map((brand) => this.brandService.addBrand(brand))
     );
     await Promise.all(
       getMockedCountryList().map((country) =>
-        this.countryService.addCountry(country),
-      ),
+        this.countryService.addCountry(country)
+      )
     );
 
     await Promise.all(
       getMockedProductCategoryList().map((pc) =>
-        this.productCategoryService.addProductCategory(pc),
-      ),
+        this.productCategoryService.addProductCategory(pc)
+      )
     );
 
     await Promise.all(
-      getMockedPlansList().map((plan) => this.planService.addPlan(plan)),
+      getMockedPlansList().map((plan) => this.planService.addPlan(plan))
     );
 
     await Promise.all(
       getMockedResourcesList().map((resource) =>
-        this.resourceService.addResource(resource),
-      ),
+        this.resourceService.addResource(resource)
+      )
     );
 
     await Promise.all(
       getMockedPermissionList().map((p) =>
-        this.permissionService.addPermission(p),
-      ),
+        this.permissionService.addPermission(p)
+      )
     );
 
     await this.seedAccountsForElmer();

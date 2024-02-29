@@ -23,7 +23,7 @@ export class AccountMongoRepository extends MongoRepository<
     throw new Error("Method not implemented.");
   }
 
-  async getAccountOfUser(userId: ID): Promise<Account> {
+  async getAccountsFromUser(userId: ID): Promise<Account[]> {
     console.log(userId);
     throw new Error("Method not implemented.");
   }
