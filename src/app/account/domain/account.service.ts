@@ -21,12 +21,12 @@ export class AccountService {
     private readonly storeService: StoreService,
   ) {}
 
-  private async verifyStoreAccount(userId: ID, storeId: ID): Promise<void> {
+  private async verifyStoreAccount(userId: ID, storeId: ID, tenantId: ID): Promise<void> {
     // verifing existing store
     const store = await this.storeService.findByIdOrFail(storeId);
 
     // verifing existing account on store
-    const accounts = await this.accountRepo.getAccountsFromUser(userId);
+    const accounts = await this.accountRepo.getAccountsFromUser(userId, tenantId);
     const existing = accounts.find((a) => a.storeId == storeId);
     if (existing) {
       throw new BadRequestException(
@@ -35,10 +35,10 @@ export class AccountService {
     }
   }
 
-  private async verifyTenantAccount(userId: ID): Promise<void> {
+  private async verifyTenantAccount(userId: ID, tenantId: ID): Promise<void> {
     // TODO: add tenant references in the validation look up
     // verifing existing account on tenant
-    const accounts = await this.accountRepo.getAccountsFromUser(userId);
+    const accounts = await this.accountRepo.getAccountsFromUser(userId, tenantId);
     const existing = accounts.find((a) => a.type === "tenant");
     if (existing) {
       throw new BadRequestException(
@@ -57,11 +57,11 @@ export class AccountService {
 
 
   async addAccount(command: AddAccountCommand) {
-    const { userId, storeId} = command;
+    const { userId, storeId, tenantId} = command;
     
     storeId ? 
-      await this.verifyStoreAccount(userId, storeId) : 
-      await this.verifyTenantAccount(command.userId);
+      await this.verifyStoreAccount(userId, storeId, tenantId) : 
+      await this.verifyTenantAccount(userId, tenantId);
   
     const account: Account = {
       id: null,
@@ -81,10 +81,13 @@ export class AccountService {
   ): Promise<FindAllOutput<Account>> {
     ctxSrv.getUserRole() === UserRole.USER;
 
-    const { userId: _userId, storeId } = request;
+    const { userId: _userId, storeId, tenantId } = request;
     const result = await this.accountRepo.findAll(request);
     const { count } = result;
     let { data: accounts } = result;
+
+    // accounts will always be filtered by tenantId
+    accounts = accounts.filter((a) => a.tenantId === tenantId);
 
     // this is a restriction ... role user can only see his accounts
     const userId =
@@ -93,7 +96,7 @@ export class AccountService {
     accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
     accounts = storeId
       ? accounts.filter((a) => a.storeId === storeId)
-      : accounts;
+      : accounts;    
 
     return {
       count,

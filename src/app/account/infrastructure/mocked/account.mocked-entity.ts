@@ -11,4 +11,5 @@ export class AccountMockedEntity
   permissions: ID[];
   scope: Scope;
   type: AccountType;
+  tenantId: ID;
 }
