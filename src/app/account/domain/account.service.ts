@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
 import { AccountRepository } from "../infrastructure/account-repository.type";
 import { AddAccountCommand } from "../application/add-account/add-account.command";
 import { Account } from "./account.interface";
@@ -9,19 +9,41 @@ import {
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
 import { ctxSrv } from "../../shared/context.service";
 import { UserRole } from "../../user/domain/user.interface";
+import { StoreService } from "src/app/store/domain/store.service";
 
 @Injectable()
 export class AccountService {
   constructor(
     @Inject("AccountRepository")
     private readonly accountRepo: AccountRepository,
+
+    @Inject(forwardRef(() => StoreService))
+    private readonly storeService: StoreService,
   ) {}
 
-  private async verifyUserAccount(userId: ID): Promise<void> {
-    const existing = await this.accountRepo.getAccountOfUser(userId);
+  private async verifyStoreAccount(userId: ID, storeId: ID): Promise<void> {
+    // verifing existing store
+    const store = await this.storeService.findByIdOrFail(storeId);
 
+    // verifing existing account on store
+    const accounts = await this.accountRepo.getAccountsFromUser(userId);
+    const existing = accounts.find((a) => a.storeId == storeId);
     if (existing) {
-      throw new BadRequestException(`Account of user ${userId} already exists`);
+      throw new BadRequestException(
+        `Account of user ${userId} for store ${store.name} already exists`,
+      );
+    }
+  }
+
+  private async verifyTenantAccount(userId: ID): Promise<void> {
+    // TODO: add tenant references in the validation look up
+    // verifing existing account on tenant
+    const accounts = await this.accountRepo.getAccountsFromUser(userId);
+    const existing = accounts.find((a) => a.type === "tenant");
+    if (existing) {
+      throw new BadRequestException(
+        `Account of user ${userId} in the tenant already exists`,
+      );
     }
   }
 
@@ -33,12 +55,17 @@ export class AccountService {
     return existingAccount;
   }
 
-  async addAccount(command: AddAccountCommand) {
-    await this.verifyUserAccount(command.userId);
 
+  async addAccount(command: AddAccountCommand) {
+    const { userId, storeId} = command;
+    
+    storeId ? 
+      await this.verifyStoreAccount(userId, storeId) : 
+      await this.verifyTenantAccount(command.userId);
+  
     const account: Account = {
       id: null,
-      permissions: [],
+      
       ...command,
     };
 
