@@ -32,7 +32,7 @@ export class SearchAccountUseCase {
     private readonly tenantService: TenantService,
 
     @Inject(PermissionService)
-    private readonly permissionService: PermissionService,
+    private readonly permissionService: PermissionService
   ) {}
 
   private async validateUser(userId: ID) {
@@ -50,13 +50,13 @@ export class SearchAccountUseCase {
   }
 
   async execute(
-    request: SearchAccountRequest,
+    request: SearchAccountRequest
   ): Promise<SearchOutput<AccountDto>> {
     const { userId, storeId } = request;
     await this.validateUser(userId);
     await this.validateStore(storeId);
     const { count, data: accounts } = await this.accountService.findAllAccounts(
-      sanitazeSearchQueryParams<SearchAccountRequest>(request, sortable),
+      sanitazeSearchQueryParams<SearchAccountRequest>(request, sortable)
     );
 
     const items = accounts.map((account) => {
@@ -64,7 +64,7 @@ export class SearchAccountUseCase {
       const storeRef = this.storeService.getStoreRef(account.storeId);
 
       const permissionsRef = account.permissions.map((p) =>
-        this.permissionService.getPermissionRef(p),
+        this.permissionService.getPermissionRef(p)
       );
       return accountToDto(account, null, storeRef, permissionsRef);
     });
