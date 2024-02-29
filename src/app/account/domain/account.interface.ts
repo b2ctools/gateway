@@ -5,6 +5,7 @@ import { UserRole } from "../../user/domain/user.interface";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { StoreRef } from "../../store/domain/store.interface";
 import { codeFromId } from "../../shared/utils/gen-id";
+import { PermissionRef } from "src/app/permission/domain/permission.interface";
 
 export enum Scope {
   STORE_ADMIN = "STORE_ADMIN",
@@ -18,16 +19,18 @@ export interface Account extends IDomain {
   scope: Scope;
 }
 
-export interface AccountDto extends Account {
+export interface AccountDto extends Omit<Account, "permissions"> {
   code: string;
   tenant?: TenantRef;
   store?: StoreRef;
+  permissions: PermissionRef[];
 }
 
 export const accountToDto = (
   a: Account,
   tenantRef: TenantRef = null,
   storeRef: StoreRef = null,
+  permissionsRef: PermissionRef[] = null,
 ): AccountDto => {
   const role = ctxSrv.getUserRole();
   // delete a.tenantId;
@@ -41,6 +44,7 @@ export const accountToDto = (
     code: codeFromId(a.id),
     ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
     store: storeRef,
+    permissions: permissionsRef,
   };
 };
 

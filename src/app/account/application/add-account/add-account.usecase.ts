@@ -7,6 +7,7 @@ import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { UserRole } from "../../../user/domain/user.interface";
 import { AccountDto, accountToDto } from "../../domain/account.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
+import { PermissionService } from "src/app/permission/domain/permission.service";
 
 @Injectable()
 export class AddAccountUseCase {
@@ -22,6 +23,9 @@ export class AddAccountUseCase {
 
     @Inject(TenantService)
     private readonly tenantService: TenantService,
+
+    @Inject(PermissionService)
+    private readonly permissionService: PermissionService,
   ) {}
 
   private async verifyUser(userId: ID) {
@@ -39,9 +43,12 @@ export class AddAccountUseCase {
     await this.storeService.findByIdOrFail(storeId);
     await this.verifyUser(userId);
 
-    const pc = await this.pcService.addAccount(command);
-    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    const storeRef = this.storeService.getStoreRef(pc.storeId);
-    return accountToDto(pc, null, storeRef);
+    const account = await this.pcService.addAccount(command);
+    // const tenantRef = this.tenantService.getTenantRef(account.tenantId);
+    const storeRef = this.storeService.getStoreRef(account.storeId);
+    const permissionsRef = account.permissions.map((p) =>
+      this.permissionService.getPermissionRef(p),
+    );
+    return accountToDto(account, null, storeRef, permissionsRef);
   }
 }

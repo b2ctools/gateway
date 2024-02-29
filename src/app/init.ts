@@ -64,7 +64,8 @@ export class InitService {
   private async seedAccountsForElmer() {
     const user = await this.userService.findUserByEmail("elmer@email.com");
     const { data: stores } = await this.soreService.findAllStores({ take: 3 });
-    const { data: permissions } = await this.permissionService.findAllPermissions({});
+    const { data: permissions } =
+      await this.permissionService.findAllPermissions({});
     stores.map((store) => {
       this.accountService
         .addAccount({

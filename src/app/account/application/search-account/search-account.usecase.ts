@@ -14,6 +14,7 @@ import {
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
 import { TenantService } from "../../../tenant/domain/tenant.service";
+import { PermissionService } from "src/app/permission/domain/permission.service";
 
 @Injectable()
 export class SearchAccountUseCase {
@@ -29,6 +30,9 @@ export class SearchAccountUseCase {
 
     @Inject(TenantService)
     private readonly tenantService: TenantService,
+
+    @Inject(PermissionService)
+    private readonly permissionService: PermissionService,
   ) {}
 
   private async validateUser(userId: ID) {
@@ -51,14 +55,18 @@ export class SearchAccountUseCase {
     const { userId, storeId } = request;
     await this.validateUser(userId);
     await this.validateStore(storeId);
-    const { count, data } = await this.accountService.findAllAccounts(
+    const { count, data: accounts } = await this.accountService.findAllAccounts(
       sanitazeSearchQueryParams<SearchAccountRequest>(request, sortable),
     );
 
-    const items = data.map((s) => {
+    const items = accounts.map((account) => {
       // const tenantRef = this.tenantService.getTenantRef(s.tenantId);
-      const storeRef = this.storeService.getStoreRef(s.storeId);
-      return accountToDto(s, null, storeRef);
+      const storeRef = this.storeService.getStoreRef(account.storeId);
+
+      const permissionsRef = account.permissions.map((p) =>
+        this.permissionService.getPermissionRef(p),
+      );
+      return accountToDto(account, null, storeRef, permissionsRef);
     });
     return {
       count,
