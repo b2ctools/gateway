@@ -78,7 +78,7 @@ export class TenantService {
   }
 
   async updateTenant(id: ID, request: UpdateTenantRequest): Promise<Tenant> {
-    const { name, description } = request;
+    const { name, description, address, logo, primaryOwnerId } = request;
     const existingTenant = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, existingTenant.id);
@@ -87,6 +87,9 @@ export class TenantService {
     existingTenant.description = description
       ? description
       : existingTenant.description;
+    existingTenant.address = address ? address : existingTenant.address;
+    existingTenant.logo = logo ? logo : existingTenant.logo;
+    existingTenant.primaryOwnerId = primaryOwnerId ? primaryOwnerId : existingTenant.primaryOwnerId;
 
     console.log(
       `Updating Tenant - ${JSON.stringify({

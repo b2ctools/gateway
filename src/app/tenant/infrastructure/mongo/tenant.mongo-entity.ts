@@ -9,4 +9,7 @@ export class TenantMongoEntity
   name: string;
   description?: string;
   planId: ID;
+  address: string;
+  logo: string;
+  primaryOwnerId: ID;
 }

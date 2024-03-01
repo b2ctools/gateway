@@ -153,6 +153,8 @@ export class InitService {
   async onApplicationBootstrap() {
     const tenant = await this.tenantService.addTenant({
       name: "Leo",
+      address: "Managua",
+      logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
     });
     ctxSrv.setTenantId(tenant.id);
 

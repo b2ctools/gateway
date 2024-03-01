@@ -1,15 +1,22 @@
 import { Tenant } from "../../domain/tenant.interface";
 import { AddTenantRequest } from "./add-tenant.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 export class AddTenantCommand
-  implements Omit<Tenant, "id" | "tenantId" | "planId">
+  implements Omit<Tenant, "id" | "planId">
 {
   name: string;
   description?: string;
+  address: string;
+  logo: string;
+  primaryOwnerId?: ID = undefined;
 
   constructor(request: AddTenantRequest) {
-    const { name, description } = request;
+    const { name, description, address, logo } = request;
     this.name = name;
     this.description = description;
+    this.address = address;
+    this.logo = logo;
   }
+
 }
