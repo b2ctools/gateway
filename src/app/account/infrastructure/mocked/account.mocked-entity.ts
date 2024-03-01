@@ -12,4 +12,5 @@ export class AccountMockedEntity
   scope: Scope;
   type: AccountType;
   tenantId: ID;
+  isActive: boolean;
 }

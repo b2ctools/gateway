@@ -74,7 +74,7 @@ export class InitService {
             new AddAccountCommand({
               userId: user.id,
               storeId: store.id,
-              scope: Scope.STORE_ADMIN,
+              scope: Scope.MANAGER,
             })
           )
           .then((account) => {
@@ -90,7 +90,7 @@ export class InitService {
 
     const account1 = await this.accountService
       .addAccount(
-        new AddAccountCommand({ userId: user.id, scope: Scope.STORE_ADMIN })
+        new AddAccountCommand({ userId: user.id, scope: Scope.MANAGER })
       );
       this.accountService.setPermissions(account1.id, [
         permissions[0].id,

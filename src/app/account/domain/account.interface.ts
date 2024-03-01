@@ -8,8 +8,9 @@ import { codeFromId } from "../../shared/utils/gen-id";
 import { PermissionRef } from "../../permission/domain/permission.interface";
 
 export enum Scope {
-  STORE_ADMIN = "STORE_ADMIN",
-  DELIVERY_MANAGER = "DELIVERY_MANAGER",
+  OWNER = 'owner',
+  MANAGER = 'manager',
+  EMPLOYEE = 'employee',
 }
 
 export type AccountType = "tenant" | "store";
@@ -21,9 +22,10 @@ export interface Account extends IDomain {
   permissions: ID[];
   scope: Scope;
   tenantId: ID;
+  isActive: boolean;
 }
 
-export interface AccountDto extends Omit<Account, "permissions"> {
+export interface AccountDto extends Omit<Account, "permissions" | "type"> {
   code: string;
   tenant?: TenantRef;
   store?: StoreRef;
@@ -39,6 +41,7 @@ export const accountToDto = (
   const role = ctxSrv.getUserRole();
   delete a.tenantId;
   delete a.storeId;
+  delete a.type;
 
   return {
     ...a,

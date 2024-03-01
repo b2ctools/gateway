@@ -13,6 +13,7 @@ export class AddAccountCommand
   type: AccountType;
   permissions: ID[];
   tenantId: ID;
+  isActive: boolean;
 
   constructor(request: AddAccountRequest) {
     const { userId, storeId, scope, tenantId = null } = request;
@@ -22,5 +23,6 @@ export class AddAccountCommand
     this.type = storeId ? "store" : "tenant";
     this.permissions = [];
     this.tenantId = ctxSrv.getUserRole() === UserRole.ADMIN ? tenantId : ctxSrv.getTenantId();
+    this.isActive = true;
   }
 }

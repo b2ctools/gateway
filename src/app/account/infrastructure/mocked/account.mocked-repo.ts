@@ -18,6 +18,7 @@ export class AccountMockedRepository extends MockedRepository<
     entity.storeId = d.storeId;
     entity.type = d.type;
     entity.tenantId = d.tenantId;
+    entity.isActive = d.isActive;
     return entity;
   }
 
@@ -30,6 +31,7 @@ export class AccountMockedRepository extends MockedRepository<
       scope: e.scope,
       type: e.type,
       tenantId: e.tenantId,
+      isActive: e.isActive,
     };
   }
 

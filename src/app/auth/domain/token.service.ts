@@ -79,6 +79,7 @@ export class TokenService {
       permissions: [],
       scope: undefined,
       tenantId: undefined,
+      isActive: undefined,
     };
   }
 
