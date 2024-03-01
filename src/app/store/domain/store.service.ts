@@ -94,7 +94,7 @@ export class StoreService {
   }
 
   async updateStore(id: ID, command: UpdateStoreCommand) {
-    const { name, description } = command;
+    const { name, description, address, logo, managedBy } = command;
     const store = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, id);
@@ -103,6 +103,9 @@ export class StoreService {
       ...store,
       ...(name ? { name } : {}),
       ...(description ? { description } : {}),
+      ...(address ? { address } : {}),
+      ...(logo ? { logo } : {}),
+      ...(managedBy ? { managedBy } : {}),
     };
 
     const response = await this.storeRepo.persist(storeToUpdate);

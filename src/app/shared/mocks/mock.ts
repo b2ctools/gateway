@@ -85,6 +85,9 @@ export const getMockedStoreList = () => {
     .map(() => ({
       name: "Store " + casual.title,
       description: casual.description.slice(0, 50),
+      address: casual.address1,
+      logo: casual.url,
+      managedBy: undefined,
     }));
 };
 
