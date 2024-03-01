@@ -34,7 +34,7 @@ export class AddAccountUseCase {
 
     // userId - role can not be admin
     if (role === UserRole.ADMIN) {
-      throw new Error('Specified userId- role can not be ' + UserRole.ADMIN);
+      throw new Error("Specified userId- role can not be " + UserRole.ADMIN);
     }
   }
 
@@ -49,7 +49,7 @@ export class AddAccountUseCase {
     await this.verifyUser(userId);
     await this.verifyTenant(tenantId);
 
-    console.log('role', ctxSrv.getUserRole());
+    console.log("role", ctxSrv.getUserRole());
 
     const account = await this.pcService.addAccount(command);
     const tenantRef = this.tenantService.getTenantRef(account.tenantId);

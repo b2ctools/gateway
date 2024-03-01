@@ -44,8 +44,8 @@ export class AccountMockedRepository extends MockedRepository<
   async getAccountsFromUser(userId: ID, tenantId: ID): Promise<Account[]> {
     const { data: accounts } = await this.findAll({});
     if (accounts.length === 0) return [];
-    return accounts.filter((s) => s.userId === userId && s.tenantId === tenantId);
+    return accounts.filter(
+      (s) => s.userId === userId && s.tenantId === tenantId,
+    );
   }
-
-  
 }

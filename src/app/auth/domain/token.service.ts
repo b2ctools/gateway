@@ -3,7 +3,11 @@ import { User, UserRole } from "../../user/domain/user.interface";
 import { config } from "../../config/config.service";
 import { JwtService } from "@nestjs/jwt";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { Account, AccountType, Scope } from "src/app/account/domain/account.interface";
+import {
+  Account,
+  AccountType,
+  Scope,
+} from "src/app/account/domain/account.interface";
 
 export type Token = {
   token: string;
@@ -83,8 +87,11 @@ export class TokenService {
     };
   }
 
-  private buildAccessPayload(user: User, _account: Account = undefined): AccessPayload {
-    const account = !_account  ? this.getUndefienedAccount() : _account;
+  private buildAccessPayload(
+    user: User,
+    _account: Account = undefined,
+  ): AccessPayload {
+    const account = !_account ? this.getUndefienedAccount() : _account;
     const { storeId, type, scope, tenantId, permissions } = account;
     const { id: userId, email, role } = user;
     return {

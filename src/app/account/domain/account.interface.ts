@@ -8,9 +8,9 @@ import { codeFromId } from "../../shared/utils/gen-id";
 import { PermissionRef } from "../../permission/domain/permission.interface";
 
 export enum Scope {
-  OWNER = 'owner',
-  MANAGER = 'manager',
-  EMPLOYEE = 'employee',
+  OWNER = "owner",
+  MANAGER = "manager",
+  EMPLOYEE = "employee",
 }
 
 export type AccountType = "tenant" | "store";

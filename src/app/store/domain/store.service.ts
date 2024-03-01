@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  forwardRef,
+} from "@nestjs/common";
 import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store, StoreRef } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";

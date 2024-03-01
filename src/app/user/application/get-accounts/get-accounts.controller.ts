@@ -7,7 +7,7 @@ import { AccountDto } from "src/app/account/domain/account.interface";
 export class GetAccountsController {
   constructor(
     @Inject(GetAccountUseCase)
-    private readonly getAccountUseCase: GetAccountUseCase
+    private readonly getAccountUseCase: GetAccountUseCase,
   ) {}
 
   @Get("/accounts")

@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  forwardRef,
+} from "@nestjs/common";
 import { LoginService } from "../../domain/login.service";
 import { sessionService } from "../../domain/session.service";
 import { Credentials } from "./login.request";
@@ -39,30 +44,29 @@ export class LoginUseCase {
   }
 
   private validateAccount(account: Account) {
-    if (!account.isActive){
+    if (!account.isActive) {
       throw new BadRequestException(
         `Failed Login. Account with id [${account.id}] is not active.`,
       );
     }
 
-    if (account.type === "store" && !account.storeId){
+    if (account.type === "store" && !account.storeId) {
       throw new BadRequestException(
         `Failed Login. Account with id [${account.id}] is not associated with a store.`,
       );
     }
 
-    if (account.type === "tenant" && !account.tenantId){
+    if (account.type === "tenant" && !account.tenantId) {
       throw new BadRequestException(
         `Failed Login. Account with id [${account.id}] is not associated with a tenant.`,
       );
     }
 
-    if (account.userId != ctxSrv.getUserId()){
+    if (account.userId != ctxSrv.getUserId()) {
       throw new BadRequestException(
         `Failed Login. Account with id [${account.id}] does not belong to the user.`,
       );
     }
-
   }
 
   async loginAccount(accountId: ID) {

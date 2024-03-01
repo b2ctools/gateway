@@ -1,4 +1,9 @@
-import { Injectable, Inject, BadRequestException, forwardRef } from "@nestjs/common";
+import {
+  Injectable,
+  Inject,
+  BadRequestException,
+  forwardRef,
+} from "@nestjs/common";
 import { RegisterUserCommand } from "../application/register-user/register-user.command";
 import { User, UserStatus } from "./user.interface";
 import { UserRepository } from "../infrastructure/user-repository.type";
