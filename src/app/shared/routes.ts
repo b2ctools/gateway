@@ -3,7 +3,7 @@ import { RequestMethod } from "@nestjs/common";
 export const userPath = "users";
 export const storePath = "stores";
 export const productCategoryPath = "product-category";
-export const brandPath = "brand";
+export const brandPath = "brands";
 export const countryPath = "country";
 export const samplePath = "sample";
 export const accountPath = "account";
