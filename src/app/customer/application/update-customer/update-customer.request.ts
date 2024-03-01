@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class UpdateClientRequest {
+export class UpdateCustomerRequest {
   @IsNotEmpty()
   @IsString()
   @IsOptional()

@@ -1,8 +1,8 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Client } from "../../domain/client.interface";
+import { Customer } from "../../domain/customer.interface";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 
-export class AddClientRequest implements Omit<Client, "id" | "tenantId"> {
+export class AddCustomerRequest implements Omit<Customer, "id" | "tenantId"> {
   @IsNotEmpty()
   @IsString()
   userId: ID;

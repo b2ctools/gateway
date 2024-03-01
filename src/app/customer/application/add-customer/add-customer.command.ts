@@ -1,13 +1,13 @@
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { Client } from "../../domain/client.interface";
-import { AddClientRequest } from "./add-client.request";
+import { Customer } from "../../domain/customer.interface";
+import { AddCustomerRequest } from "./add-customer.request";
 
-export class AddClientCommand implements Omit<Client, "id" | "tenantId"> {
+export class AddCustomerCommand implements Omit<Customer, "id" | "tenantId"> {
   userId: ID;
   description?: string;
   parent: ID;
 
-  constructor(request: AddClientRequest) {
+  constructor(request: AddCustomerRequest) {
     const { userId, description } = request;
     this.userId = userId;
     this.description = description;

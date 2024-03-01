@@ -13,7 +13,7 @@ import { CountryModule } from "./country/country.module";
 import { SampleModule } from "./sample/sample.module";
 import { InitService } from "./init";
 import { AccountModule } from "./account/account.module";
-import { ClientModule } from "./client/client.module";
+import { CustomerModule } from "./customer/customer.module";
 import { TenantModule } from "./tenant/tenant.module";
 import { PlanModule } from "./plan/plan.module";
 import { ResourceModule } from "./resource/resource.module";
@@ -29,7 +29,7 @@ import { PermissionModule } from "./permission/permission.module";
     CountryModule,
     SampleModule,
     AccountModule,
-    ClientModule,
+    CustomerModule,
     TenantModule,
     PlanModule,
     ResourceModule,

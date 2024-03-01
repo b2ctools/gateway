@@ -1,10 +1,10 @@
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
-import { Client } from "../../domain/client.interface";
+import { Customer } from "../../domain/customer.interface";
 
-export class ClientMockedEntity
+export class CustomerMockedEntity
   extends MockedEntity
-  implements Omit<Client, "id">
+  implements Omit<Customer, "id">
 {
   userId: ID;
   description?: string;

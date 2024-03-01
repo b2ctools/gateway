@@ -62,41 +62,51 @@ export class InitService {
     private readonly permissionService: PermissionService,
   ) {}
 
+  private async seedAccountsForLeo() {
+    const user = await this.userService.findUserByEmail("leo@email.com");
+    await this.accountService.addAccount(
+      new AddAccountCommand({
+        userId: user.id,
+        scope: Scope.OWNER,
+      }),
+    );
+  }
+
   private async seedAccountsForElmer() {
     const user = await this.userService.findUserByEmail("elmer@email.com");
     const { data: stores } = await this.soreService.findAllStores({ take: 2 });
     const { data: permissions } =
       await this.permissionService.findAllPermissions({});
-    await Promise.all(
-      stores.map((store) => {
-        this.accountService
-          .addAccount(
-            new AddAccountCommand({
-              userId: user.id,
-              storeId: store.id,
-              scope: Scope.MANAGER,
-            }),
-          )
-          .then((account) => {
-            this.accountService.setPermissions(account.id, [
-              permissions[0].id,
-              permissions[1].id,
-              permissions[2].id,
-              permissions[3].id,
-            ]);
-          });
+    
+    await this.accountService.addAccount(
+      new AddAccountCommand({
+        userId: user.id,
+        storeId: stores[0].id,
+        scope: Scope.MANAGER,
       }),
-    );
+    ).then((account) => {
+      this.accountService.setPermissions(account.id, [
+        permissions[0].id,
+        permissions[1].id,
+        permissions[2].id,
+        permissions[3].id,
+      ]);
+    });
 
-    const account1 = await this.accountService.addAccount(
-      new AddAccountCommand({ userId: user.id, scope: Scope.MANAGER }),
-    );
-    this.accountService.setPermissions(account1.id, [
-      permissions[0].id,
-      permissions[1].id,
-      permissions[2].id,
-      permissions[3].id,
-    ]);
+    await this.accountService.addAccount(
+      new AddAccountCommand({
+        userId: user.id,
+        storeId: stores[1].id,
+        scope: Scope.MANAGER,
+      }),
+    ).then((account) => {
+      this.accountService.setPermissions(account.id, [
+        permissions[0].id,
+        permissions[1].id,
+        permissions[2].id,
+        permissions[3].id,
+      ]);
+    });
   }
 
   private async setResourcesToPlan() {
@@ -196,6 +206,7 @@ export class InitService {
     );
 
     await this.seedAccountsForElmer();
+    await this.seedAccountsForLeo();
     await this.setResourcesToPlan();
     await this.seedSample();
   }
