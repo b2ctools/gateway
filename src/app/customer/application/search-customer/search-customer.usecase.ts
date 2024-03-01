@@ -1,20 +1,20 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ClientService } from "../../domain/client.service";
+import { CustomerService } from "../../domain/customer.service";
 import {
   SearchRequest,
   sanitazeSearchQueryParams,
 } from "../../../shared/base.request";
-import { sortable } from "../../domain/client.interface";
+import { sortable } from "../../domain/customer.interface";
 
 @Injectable()
-export class SearchClientUseCase {
+export class SearchCustomerUseCase {
   constructor(
-    @Inject(ClientService)
-    private readonly clientService: ClientService,
+    @Inject(CustomerService)
+    private readonly customerService: CustomerService,
   ) {}
 
   async execute(request: SearchRequest) {
-    return await this.clientService.findAllClients(
+    return await this.customerService.findAllCustomers(
       sanitazeSearchQueryParams<SearchRequest>(request, sortable),
     );
   }

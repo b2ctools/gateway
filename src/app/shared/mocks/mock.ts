@@ -70,7 +70,7 @@ export const getMockedUserList = () => {
         lastName: casual.last_name,
         email: casual.email.toLowerCase(),
         password: "12345",
-        role: UserRole.CLIENT,
+        role: UserRole.USER,
 
         ...commondData,
       });

@@ -1,14 +1,14 @@
 import { RequestMethod } from "@nestjs/common";
 
-export const userPath = "user";
-export const storePath = "store";
+export const userPath = "users";
+export const storePath = "stores";
 export const productCategoryPath = "product-category";
 export const brandPath = "brand";
 export const countryPath = "country";
 export const samplePath = "sample";
 export const accountPath = "account";
 export const orderPath = "order";
-export const clientPath = "client";
+export const customerPath = "customers";
 export const tenantPath = "tenant";
 export const planPath = "plan";
 export const resourcePath = "resource";

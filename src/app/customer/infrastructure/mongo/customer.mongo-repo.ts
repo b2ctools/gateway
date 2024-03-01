@@ -1,25 +1,25 @@
 import { Injectable } from "@nestjs/common";
 import { MongoRepository } from "../../../shared/abstract-repository/mongo-repository";
-import { ClientMongoEntity } from "./client.mongo-entity";
-import { Client } from "../../domain/client.interface";
+import { CustomerMongoEntity } from "./customer.mongo-entity";
+import { Customer } from "../../domain/customer.interface";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 
 @Injectable()
-export class ClientMongoRepository extends MongoRepository<
-  ClientMongoEntity,
-  Client
+export class CustomerMongoRepository extends MongoRepository<
+  CustomerMongoEntity,
+  Customer
 > {
-  domainToEntity(d: Client): ClientMongoEntity {
+  domainToEntity(d: Customer): CustomerMongoEntity {
     console.log(d);
     throw new Error("Method not implemented.");
   }
-  entityToDomain(e: ClientMongoEntity): Client {
+  entityToDomain(e: CustomerMongoEntity): Customer {
     console.log(e);
     throw new Error("Method not implemented.");
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getClientByUserId(userId: ID): Promise<Client> {
+  async getCustomerByUserId(userId: ID): Promise<Customer> {
     console.log(name);
     throw new Error("Method not implemented.");
   }
