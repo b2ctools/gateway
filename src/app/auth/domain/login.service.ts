@@ -8,6 +8,8 @@ import { User } from "../../user/domain/user.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { sessionService } from "./session.service";
 import { sanitizeEmail } from "../../shared/utils/string";
+import { Account } from "src/app/account/domain/account.interface";
+import { ctxSrv } from "src/app/shared/context.service";
 
 export interface LoginResponse {
   accessToken: Token;
@@ -70,6 +72,30 @@ export class LoginService {
 
     return {
       accessToken: this.tokenService.getAccessToken(existingUser),
+      refreshToken: this.tokenService.getRefreshToken(existingUser),
+      session,
+    };
+  }
+
+  async loginAccount(account: Account): Promise<LoginResponse> {
+
+    const closeSession = () => {
+      const session = ctxSrv.getSession();
+      const userId = ctxSrv.getUserId();
+      
+      console.log({ session, userId, });
+      console.log(`Close session [${session}] of userid [${userId}]`);
+      sessionService.unRegisterSession(session);
+    }
+
+    const existingUser = await this.userService.findByIdOrFail(ctxSrv.getUserId());
+
+    closeSession();
+
+    const session = genId();
+    this.tokenService.setSession(session);
+    return {
+      accessToken: this.tokenService.getAccessToken(existingUser, account),
       refreshToken: this.tokenService.getRefreshToken(existingUser),
       session,
     };

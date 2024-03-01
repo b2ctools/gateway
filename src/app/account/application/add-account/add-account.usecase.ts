@@ -29,8 +29,6 @@ export class AddAccountUseCase {
     private readonly permissionService: PermissionService,
   ) {}
 
-
-
   private async verifyUser(userId: ID) {
     const { role } = await this.userService.findByIdOrFail(userId);
 

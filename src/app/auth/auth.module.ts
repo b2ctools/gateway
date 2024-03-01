@@ -12,10 +12,12 @@ import { RefreshTokenService } from "./domain/refresh-token.service";
 import { RefreshTokenUseCase } from "./aplication/refresh-token/refresh-token.usecase";
 import { RefreshController } from "./aplication/refresh-token/refresh-controller";
 import { TestingAuth } from "./aplication/test-auth._test_";
+import { AccountModule } from "../account/account.module";
 
 @Module({
   imports: [
     forwardRef(() => UserModule),
+    forwardRef(() => AccountModule),
     JwtModule.register({
       secret: config.get("jwtSecret") as string,
     }),

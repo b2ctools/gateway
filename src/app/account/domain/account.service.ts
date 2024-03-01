@@ -113,4 +113,9 @@ export class AccountService {
     account.permissions = permissions;
     return await this.accountRepo.persist(account);
   }
+
+  async getAccountsFromUserOnly(userId: ID): Promise<Account[]>{
+    const { data: accounts } =  await this.accountRepo.findAll({ filter: { field: "userId", value: userId as string }});
+    return accounts;
+  }
 }

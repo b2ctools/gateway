@@ -22,7 +22,7 @@ import { PermissionModule } from "../permission/permission.module";
     forwardRef(() => StoreModule),
     forwardRef(() => UserModule),
     forwardRef(() => AuthModule),
-    TenantModule,
+    forwardRef(() => TenantModule),
     PermissionModule,
   ],
   controllers: [
