@@ -14,7 +14,7 @@ import {
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
 import { ctxSrv } from "../../shared/context.service";
 import { UserRole } from "../../user/domain/user.interface";
-import { StoreService } from "src/app/store/domain/store.service";
+import { StoreService } from "../../store/domain/store.service";
 
 @Injectable()
 export class AccountService {
