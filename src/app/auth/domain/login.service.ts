@@ -78,17 +78,18 @@ export class LoginService {
   }
 
   async loginAccount(account: Account): Promise<LoginResponse> {
-
     const closeSession = () => {
       const session = ctxSrv.getSession();
       const userId = ctxSrv.getUserId();
-      
-      console.log({ session, userId, });
+
+      console.log({ session, userId });
       console.log(`Close session [${session}] of userid [${userId}]`);
       sessionService.unRegisterSession(session);
-    }
+    };
 
-    const existingUser = await this.userService.findByIdOrFail(ctxSrv.getUserId());
+    const existingUser = await this.userService.findByIdOrFail(
+      ctxSrv.getUserId(),
+    );
 
     closeSession();
 

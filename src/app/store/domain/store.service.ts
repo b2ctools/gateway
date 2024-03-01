@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  forwardRef,
+} from "@nestjs/common";
 import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store, StoreRef } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
@@ -89,7 +94,7 @@ export class StoreService {
   }
 
   async updateStore(id: ID, command: UpdateStoreCommand) {
-    const { name, description } = command;
+    const { name, description, address, logo, managedBy } = command;
     const store = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, id);
@@ -98,6 +103,9 @@ export class StoreService {
       ...store,
       ...(name ? { name } : {}),
       ...(description ? { description } : {}),
+      ...(address ? { address } : {}),
+      ...(logo ? { logo } : {}),
+      ...(managedBy ? { managedBy } : {}),
     };
 
     const response = await this.storeRepo.persist(storeToUpdate);

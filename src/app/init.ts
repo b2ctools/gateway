@@ -59,7 +59,7 @@ export class InitService {
     private readonly sampleService: SampleService,
 
     @Inject(PermissionService)
-    private readonly permissionService: PermissionService
+    private readonly permissionService: PermissionService,
   ) {}
 
   private async seedAccountsForElmer() {
@@ -74,8 +74,8 @@ export class InitService {
             new AddAccountCommand({
               userId: user.id,
               storeId: store.id,
-              scope: Scope.STORE_ADMIN,
-            })
+              scope: Scope.MANAGER,
+            }),
           )
           .then((account) => {
             this.accountService.setPermissions(account.id, [
@@ -85,19 +85,18 @@ export class InitService {
               permissions[3].id,
             ]);
           });
-      })
+      }),
     );
 
-    const account1 = await this.accountService
-      .addAccount(
-        new AddAccountCommand({ userId: user.id, scope: Scope.STORE_ADMIN })
-      );
-      this.accountService.setPermissions(account1.id, [
-        permissions[0].id,
-        permissions[1].id,
-        permissions[2].id,
-        permissions[3].id,
-      ]);
+    const account1 = await this.accountService.addAccount(
+      new AddAccountCommand({ userId: user.id, scope: Scope.MANAGER }),
+    );
+    this.accountService.setPermissions(account1.id, [
+      permissions[0].id,
+      permissions[1].id,
+      permissions[2].id,
+      permissions[3].id,
+    ]);
   }
 
   private async setResourcesToPlan() {
@@ -154,44 +153,46 @@ export class InitService {
   async onApplicationBootstrap() {
     const tenant = await this.tenantService.addTenant({
       name: "Leo",
+      address: "Managua",
+      logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
     });
     ctxSrv.setTenantId(tenant.id);
 
     await Promise.all(
-      getMockedUserList().map((user) => this.userService.registerUser(user))
+      getMockedUserList().map((user) => this.userService.registerUser(user)),
     );
     await Promise.all(
-      getMockedStoreList().map((store) => this.soreService.addStore(store))
+      getMockedStoreList().map((store) => this.soreService.addStore(store)),
     );
     await Promise.all(
-      getMockedBrandList().map((brand) => this.brandService.addBrand(brand))
+      getMockedBrandList().map((brand) => this.brandService.addBrand(brand)),
     );
     await Promise.all(
       getMockedCountryList().map((country) =>
-        this.countryService.addCountry(country)
-      )
+        this.countryService.addCountry(country),
+      ),
     );
 
     await Promise.all(
       getMockedProductCategoryList().map((pc) =>
-        this.productCategoryService.addProductCategory(pc)
-      )
+        this.productCategoryService.addProductCategory(pc),
+      ),
     );
 
     await Promise.all(
-      getMockedPlansList().map((plan) => this.planService.addPlan(plan))
+      getMockedPlansList().map((plan) => this.planService.addPlan(plan)),
     );
 
     await Promise.all(
       getMockedResourcesList().map((resource) =>
-        this.resourceService.addResource(resource)
-      )
+        this.resourceService.addResource(resource),
+      ),
     );
 
     await Promise.all(
       getMockedPermissionList().map((p) =>
-        this.permissionService.addPermission(p)
-      )
+        this.permissionService.addPermission(p),
+      ),
     );
 
     await this.seedAccountsForElmer();

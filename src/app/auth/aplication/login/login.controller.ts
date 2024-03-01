@@ -16,7 +16,7 @@ export class LoginController {
   }
 
   @Get("/login-account/:accountId")
-  async loginAccount(@Param('accountId') accountId: ID) {
+  async loginAccount(@Param("accountId") accountId: ID) {
     return await this.useCase.loginAccount(accountId);
   }
 }

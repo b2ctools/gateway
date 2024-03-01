@@ -139,7 +139,7 @@ export abstract class MockedRepository<
         request;
 
       let results = Object.values(this.elements);
-      
+
       // applying filter field-string-value
       const { filter } = request;
       results = applyFilterFieldFromRequest(results, filter);

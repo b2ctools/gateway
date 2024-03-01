@@ -1,4 +1,9 @@
-import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  forwardRef,
+} from "@nestjs/common";
 import { AccountRepository } from "../infrastructure/account-repository.type";
 import { AddAccountCommand } from "../application/add-account/add-account.command";
 import { Account } from "./account.interface";
@@ -21,12 +26,19 @@ export class AccountService {
     private readonly storeService: StoreService,
   ) {}
 
-  private async verifyStoreAccount(userId: ID, storeId: ID, tenantId: ID): Promise<void> {
+  private async verifyStoreAccount(
+    userId: ID,
+    storeId: ID,
+    tenantId: ID,
+  ): Promise<void> {
     // verifing existing store
     const store = await this.storeService.findByIdOrFail(storeId);
 
     // verifing existing account on store
-    const accounts = await this.accountRepo.getAccountsFromUser(userId, tenantId);
+    const accounts = await this.accountRepo.getAccountsFromUser(
+      userId,
+      tenantId,
+    );
     const existing = accounts.find((a) => a.storeId == storeId);
     if (existing) {
       throw new BadRequestException(
@@ -38,7 +50,10 @@ export class AccountService {
   private async verifyTenantAccount(userId: ID, tenantId: ID): Promise<void> {
     // TODO: add tenant references in the validation look up
     // verifing existing account on tenant
-    const accounts = await this.accountRepo.getAccountsFromUser(userId, tenantId);
+    const accounts = await this.accountRepo.getAccountsFromUser(
+      userId,
+      tenantId,
+    );
     const existing = accounts.find((a) => a.type === "tenant");
     if (existing) {
       throw new BadRequestException(
@@ -55,17 +70,16 @@ export class AccountService {
     return existingAccount;
   }
 
-
   async addAccount(command: AddAccountCommand) {
-    const { userId, storeId, tenantId} = command;
-    
-    storeId ? 
-      await this.verifyStoreAccount(userId, storeId, tenantId) : 
-      await this.verifyTenantAccount(userId, tenantId);
-  
+    const { userId, storeId, tenantId } = command;
+
+    storeId
+      ? await this.verifyStoreAccount(userId, storeId, tenantId)
+      : await this.verifyTenantAccount(userId, tenantId);
+
     const account: Account = {
       id: null,
-      
+
       ...command,
     };
 
@@ -96,7 +110,7 @@ export class AccountService {
     accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
     accounts = storeId
       ? accounts.filter((a) => a.storeId === storeId)
-      : accounts;    
+      : accounts;
 
     return {
       count,
@@ -114,8 +128,16 @@ export class AccountService {
     return await this.accountRepo.persist(account);
   }
 
-  async getAccountsFromUserOnly(userId: ID): Promise<Account[]>{
-    const { data: accounts } =  await this.accountRepo.findAll({ filter: { field: "userId", value: userId as string }});
+  async getAccountsFromUserOnly(userId: ID): Promise<Account[]> {
+    const { data: accounts } = await this.accountRepo.findAll({
+      filter: { field: "userId", value: userId as string },
+    });
     return accounts;
+  }
+
+  async setActive(id: ID, active: boolean): Promise<Account> {
+    const account = await this.findByIdOrFail(id);
+    account.isActive = !!active;
+    return await this.accountRepo.persist(account);
   }
 }

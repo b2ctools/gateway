@@ -12,4 +12,5 @@ export class AccountMongoEntity
   scope: Scope;
   type: AccountType;
   tenantId: ID;
+  isActive: boolean;
 }

@@ -14,6 +14,9 @@ export class TenantMockedRepository extends MockedRepository<
     entity.name = d.name;
     entity.description = d.description;
     entity.planId = d.planId;
+    entity.address = d.address;
+    entity.logo = d.logo;
+    entity.primaryOwnerId = d.primaryOwnerId;
     return entity;
   }
 
@@ -23,6 +26,9 @@ export class TenantMockedRepository extends MockedRepository<
       name: e.name,
       description: e.description,
       planId: e.planId,
+      address: e.address,
+      logo: e.logo,
+      primaryOwnerId: e.primaryOwnerId,
     };
   }
 

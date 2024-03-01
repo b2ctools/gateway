@@ -52,7 +52,16 @@ export class HeaderCheckMiddleware implements NestMiddleware {
   }
 
   private setContextValues(payload: AccessPayload) {
-    const { userId, role, tenantId, storeId, type, scope, permissions, session } = payload;
+    const {
+      userId,
+      role,
+      tenantId,
+      storeId,
+      type,
+      scope,
+      permissions,
+      session,
+    } = payload;
     ctxSrv.setUserId(userId);
     ctxSrv.setUserRole(role);
     ctxSrv.setTenantId(tenantId);

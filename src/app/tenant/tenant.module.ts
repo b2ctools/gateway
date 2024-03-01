@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, forwardRef } from "@nestjs/common";
 import { getTenantRepo } from "./infrastructure/tenant.repo-provider";
 import { AddTenantController } from "./application/add-tenant/add-tenant.controller";
 import { AddTenantUseCase } from "./application/add-tenant/add-tenant.usecase";
@@ -14,9 +14,10 @@ import { FindOneTenantController } from "./application/find-one-tenant/find-one-
 import { SetPlanController } from "./application/set-plan/set-plan.controller";
 import { SetPlanUseCase } from "./application/set-plan/set-plan.usecase";
 import { PlanModule } from "../plan/plan.module";
+import { AccountModule } from "../account/account.module";
 
 @Module({
-  imports: [PlanModule],
+  imports: [PlanModule, forwardRef(() => AccountModule)],
   controllers: [
     AddTenantController,
     SearchTenantController,

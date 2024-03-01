@@ -18,6 +18,7 @@ export class AccountMockedRepository extends MockedRepository<
     entity.storeId = d.storeId;
     entity.type = d.type;
     entity.tenantId = d.tenantId;
+    entity.isActive = d.isActive;
     return entity;
   }
 
@@ -30,6 +31,7 @@ export class AccountMockedRepository extends MockedRepository<
       scope: e.scope,
       type: e.type,
       tenantId: e.tenantId,
+      isActive: e.isActive,
     };
   }
 
@@ -42,8 +44,8 @@ export class AccountMockedRepository extends MockedRepository<
   async getAccountsFromUser(userId: ID, tenantId: ID): Promise<Account[]> {
     const { data: accounts } = await this.findAll({});
     if (accounts.length === 0) return [];
-    return accounts.filter((s) => s.userId === userId && s.tenantId === tenantId);
+    return accounts.filter(
+      (s) => s.userId === userId && s.tenantId === tenantId,
+    );
   }
-
-  
 }

@@ -2,10 +2,14 @@ import { codeFromId } from "../../shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 
+export type TenantAddress = string;
 export interface Tenant extends IDomain {
   name: string;
   description?: string;
   planId: ID;
+  address: TenantAddress;
+  logo: string;
+  primaryOwnerId?: ID;
 }
 
 export interface TenantDto extends Tenant {

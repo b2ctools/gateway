@@ -16,7 +16,11 @@ import { FindOneStoreUseCase } from "./application/find-one-store/find-one-store
 import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
-  imports: [forwardRef(() => AuthModule), forwardRef(() => AccountModule), TenantModule],
+  imports: [
+    forwardRef(() => AuthModule),
+    forwardRef(() => AccountModule),
+    TenantModule,
+  ],
   controllers: [
     AddStoreController,
     SearchStoreController,

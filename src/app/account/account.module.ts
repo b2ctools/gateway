@@ -16,6 +16,8 @@ import { FindOneAccountUsecase } from "./application/find-one-account/find-one-a
 import { AuthModule } from "../auth/auth.module";
 import { TenantModule } from "../tenant/tenant.module";
 import { PermissionModule } from "../permission/permission.module";
+import { SetActiveUseCase } from "./application/set-active/set-active.usecase";
+import { SetActiveController } from "./application/set-active/set-active.controller";
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { PermissionModule } from "../permission/permission.module";
     RemoveAccountController,
     SetPermissionsController,
     FindOneAccountController,
+    SetActiveController,
   ],
   providers: [
     AddAccountUseCase,
@@ -40,6 +43,7 @@ import { PermissionModule } from "../permission/permission.module";
     getAccountRepo(),
     SetPermissionsUseCase,
     FindOneAccountUsecase,
+    SetActiveUseCase,
   ],
   exports: [AccountService, AddAccountUseCase],
 })

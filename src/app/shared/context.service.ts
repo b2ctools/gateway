@@ -51,7 +51,6 @@ class ContextService {
     return this.session;
   }
 
-
   // storeId
   setStoreId(storeId: ID) {
     this.storeId = storeId;
@@ -83,7 +82,6 @@ class ContextService {
   getPermissions() {
     return this.permissions;
   }
-
 }
 
 export const ctxSrv = new ContextService();
