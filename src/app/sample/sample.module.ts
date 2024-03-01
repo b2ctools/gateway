@@ -9,7 +9,7 @@ import { RemoveSampleController } from "./application/remove-sample/remove-sampl
 import { RemoveSampleUseCase } from "./application/remove-sample/remove-sample.usecase";
 import { UpdateSampleController } from "./application/update-sample/update-sample.controller";
 import { UpdateSampleUseCse } from "./application/update-sample/update-sample.usecase";
-import { ProductCategoryModule } from "../product-category/product-category.module";
+import { CategoryModule } from "../category/category.module";
 import { StoreModule } from "../store/store.module";
 import { BrandModule } from "../brand/brand.module";
 import { CountryModule } from "../country/country.module";
@@ -19,7 +19,7 @@ import { TenantModule } from "../tenant/tenant.module";
 
 @Module({
   imports: [
-    ProductCategoryModule,
+    CategoryModule,
     StoreModule,
     BrandModule,
     CountryModule,

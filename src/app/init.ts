@@ -3,7 +3,7 @@ import { UserService } from "./user/domain/user.service";
 import { StoreService } from "./store/domain/store.service";
 import { BrandService } from "./brand/domain/brand.service";
 import { CountryService } from "./country/domain/country.service";
-import { ProductCategoryService } from "./product-category/domain/product-category.service";
+import { CategoryService } from "./category/domain/category.service";
 import {
   getMockedBrandList,
   getMockedCountryList,
@@ -40,8 +40,8 @@ export class InitService {
     @Inject(CountryService)
     private readonly countryService: CountryService,
 
-    @Inject(ProductCategoryService)
-    private readonly productCategoryService: ProductCategoryService,
+    @Inject(CategoryService)
+    private readonly productCategoryService: CategoryService,
 
     @Inject(AccountService)
     private readonly accountService: AccountService,
@@ -124,7 +124,7 @@ export class InitService {
     const { data: stores } = await this.soreService.findAllStores({ take: 3 });
     const { data: brands } = await this.brandService.findAllBrands({ take: 3 });
     const { data: categories } =
-      await this.productCategoryService.findAllProductCategories({ take: 3 });
+      await this.productCategoryService.findAllCategories({ take: 3 });
     const { data: countries } = await this.countryService.findAllCountries({
       take: 3,
     });
@@ -185,7 +185,7 @@ export class InitService {
 
     await Promise.all(
       getMockedProductCategoryList().map((pc) =>
-        this.productCategoryService.addProductCategory(pc),
+        this.productCategoryService.addCategory(pc),
       ),
     );
 

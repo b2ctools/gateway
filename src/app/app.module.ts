@@ -7,7 +7,7 @@ import { HeaderCheckMiddleware } from "./auth/domain/middleware/header-check.mid
 import { AuthModule } from "./auth/auth.module";
 import { StoreModule } from "./store/store.module";
 import { excludeRoutes } from "./shared/routes";
-import { ProductCategoryModule } from "./product-category/product-category.module";
+import { CategoryModule } from "./category/category.module";
 import { BrandModule } from "./brand/brand.module";
 import { CountryModule } from "./country/country.module";
 import { SampleModule } from "./sample/sample.module";
@@ -24,7 +24,7 @@ import { PermissionModule } from "./permission/permission.module";
     UserModule,
     AuthModule,
     StoreModule,
-    ProductCategoryModule,
+    CategoryModule,
     BrandModule,
     CountryModule,
     SampleModule,

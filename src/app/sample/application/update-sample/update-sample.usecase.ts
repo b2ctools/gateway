@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { SampleService } from "../../domain/sample.service";
 import { UpdateSampleRequest } from "./update-sample.request";
-import { ProductCategoryService } from "../../../product-category/domain/product-category.service";
+import { CategoryService } from "../../../category/domain/category.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { StoreService } from "../../../store/domain/store.service";
 import { BrandService } from "../../../brand/domain/brand.service";
@@ -15,8 +15,8 @@ export class UpdateSampleUseCse {
     @Inject(SampleService)
     private readonly sampleService: SampleService,
 
-    @Inject(ProductCategoryService)
-    private readonly productCategoryService: ProductCategoryService,
+    @Inject(CategoryService)
+    private readonly productCategoryService: CategoryService,
 
     @Inject(StoreService)
     private readonly storeService: StoreService,

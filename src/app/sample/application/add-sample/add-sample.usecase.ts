@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { SampleService } from "../../domain/sample.service";
 import { AddSampleCommand } from "./add-sample.command";
-import { ProductCategoryService } from "../../../product-category/domain/product-category.service";
+import { CategoryService } from "../../../category/domain/category.service";
 import { StoreService } from "../../../store/domain/store.service";
 import { BrandService } from "../../../brand/domain/brand.service";
 import { CountryService } from "../../../country/domain/country.service";
@@ -15,8 +15,8 @@ export class AddSampleUseCase {
     @Inject(SampleService)
     private readonly pcService: SampleService,
 
-    @Inject(ProductCategoryService)
-    private readonly productCategoryService: ProductCategoryService,
+    @Inject(CategoryService)
+    private readonly productCategoryService: CategoryService,
 
     @Inject(StoreService)
     private readonly storeService: StoreService,
