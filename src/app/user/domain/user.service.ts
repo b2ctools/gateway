@@ -1,4 +1,4 @@
-import { Injectable, Inject, BadRequestException } from "@nestjs/common";
+import { Injectable, Inject, BadRequestException, forwardRef } from "@nestjs/common";
 import { RegisterUserCommand } from "../application/register-user/register-user.command";
 import { User, UserStatus } from "./user.interface";
 import { UserRepository } from "../infrastructure/user-repository.type";
@@ -9,12 +9,17 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
+import { AccountService } from "src/app/account/domain/account.service";
+import { Account } from "src/app/account/domain/account.interface";
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject("UserRepository")
     private readonly userRepo: UserRepository,
+
+    @Inject(forwardRef(() => AccountService))
+    private readonly accountService: AccountService,
   ) {}
 
   private async verifyEmail(email: string): Promise<void> {
@@ -183,5 +188,10 @@ export class UserService {
     if (user && user.id !== existingId) {
       throw new BadRequestException(`User email ${email} is already taken`);
     }
+  }
+
+  async getAccounts(): Promise<Account[]> {
+    const userId = ctxSrv.getUserId();
+    return await this.accountService.getAccountsFromUserOnly(userId);
   }
 }

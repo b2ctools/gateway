@@ -19,12 +19,18 @@ import { UpdateUserUseCase } from "./application/update-user/update-user.usecase
 import { RemoveUserController } from "./application/remove-user/remove-user.controller";
 import { RemoveSampleUseCase } from "./application/remove-user/remove-user.usecase";
 import { TenantModule } from "../tenant/tenant.module";
+import { AccountModule } from "../account/account.module";
+import { StoreModule } from "../store/store.module";
+import { GetAccountUseCase } from "./application/get-accounts/get-accounts.usecase";
+import { GetAccountsController } from "./application/get-accounts/get-accounts.controller";
 @Module({
   imports: [
     NotificationModule,
     forwardRef(() => AuthModule),
     CountryModule,
     TenantModule,
+    forwardRef(() => AccountModule),
+    forwardRef(() => StoreModule),
   ],
   controllers: [
     RegisterUserController,
@@ -34,6 +40,7 @@ import { TenantModule } from "../tenant/tenant.module";
     MeController,
     UpdateUserController,
     RemoveUserController,
+    GetAccountsController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -45,6 +52,7 @@ import { TenantModule } from "../tenant/tenant.module";
     RecoverPasswordUseCase,
     UpdateUserUseCase,
     RemoveSampleUseCase,
+    GetAccountUseCase,
   ],
   exports: [UserService, RecoveryPasswordService],
 })

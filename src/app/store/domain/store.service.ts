@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable, forwardRef } from "@nestjs/common";
 import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store, StoreRef } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
@@ -18,7 +18,7 @@ export class StoreService {
     @Inject("StoreRepository")
     private readonly storeRepo: StoreRepository,
 
-    @Inject(AccountService)
+    @Inject(forwardRef(() => AccountService))
     private readonly accountService: AccountService,
   ) {}
 

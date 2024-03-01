@@ -12,7 +12,6 @@ export class AddAccountCommand
   scope: Scope;
   type: AccountType;
   permissions: ID[];
-
   tenantId: ID;
 
   constructor(request: AddAccountRequest) {

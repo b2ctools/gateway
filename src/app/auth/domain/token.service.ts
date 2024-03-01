@@ -3,6 +3,7 @@ import { User, UserRole } from "../../user/domain/user.interface";
 import { config } from "../../config/config.service";
 import { JwtService } from "@nestjs/jwt";
 import { ID } from "../../shared/abstract-repository/repository.interface";
+import { Account, AccountType, Scope } from "src/app/account/domain/account.interface";
 
 export type Token = {
   token: string;
@@ -10,10 +11,18 @@ export type Token = {
 };
 
 export type AccessPayload = {
+  // user info
   userId: ID;
   email: string;
   role: UserRole;
   session: string;
+
+  // account info
+  storeId: ID;
+  type: AccountType;
+  scope: Scope;
+  tenantId: ID;
+  permissions: ID[];
 };
 type RefreshPayload = {
   userId: ID;
@@ -61,18 +70,40 @@ export class TokenService {
 
   /** access token */
 
-  private buildAccessPayload(user: User): AccessPayload {
+  private getUndefienedAccount(): Account {
+    return {
+      id: undefined,
+      userId: undefined,
+      storeId: undefined,
+      type: undefined,
+      permissions: [],
+      scope: undefined,
+      tenantId: undefined,
+    };
+  }
+
+  private buildAccessPayload(user: User, _account: Account = undefined): AccessPayload {
+    const account = !_account  ? this.getUndefienedAccount() : _account;
+    const { storeId, type, scope, tenantId, permissions } = account;
     const { id: userId, email, role } = user;
     return {
+      // user info
       userId,
       email,
       role,
       session: this.session,
+
+      // account info
+      storeId,
+      type,
+      scope,
+      tenantId,
+      permissions,
     };
   }
 
-  getAccessToken(user: User): Token {
-    const payload = this.buildAccessPayload(user);
+  getAccessToken(user: User, account: Account = undefined): Token {
+    const payload = this.buildAccessPayload(user, account);
     const expiresIn = config.get("jwtAccessExpire") || "30m";
     const token = this.jwtService.sign(payload, { expiresIn });
     const expiresAt = this.formatExpiresAt(

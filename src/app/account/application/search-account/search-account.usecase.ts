@@ -63,7 +63,20 @@ export class SearchAccountUseCase {
       await this.tenantService.findByIdOrFail(request.tenantId);
       return request;
     }
+
+    /**
+     * TODO: validar el caso de que el propio usuario pues busca todas sus cuentas...
+     * y lo preocupante de esto es que no use el mismo mecanismo que usa el owner para ver las cuentas de un usuario...
+     */
+
+    // // if auth-user is not and admin and tenantId is not on request
+    // // then userId on request should be the same as auth-user
+    // if (request.userId !== ctxSrv.getUserRole()){
+    //   throw new BadRequestException('UserId on request should be the same as auth-user');
+    // }
+
     
+
     // if user is not admin, tenantId should come from context (token)
     const tenantId  = ctxSrv.getTenantId()
     return { ...request, tenantId };

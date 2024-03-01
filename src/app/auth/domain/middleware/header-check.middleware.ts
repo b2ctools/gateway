@@ -6,11 +6,11 @@ import {
 } from "@nestjs/common";
 import { Request, Response, NextFunction } from "express";
 import { ctxSrv } from "../../../shared/context.service";
-import { TokenService } from "../token.service";
+import { AccessPayload, TokenService } from "../token.service";
 import { fetchTokenFromRequest } from "./token-from-request";
 import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { User, UserRole } from "../../../user/domain/user.interface";
+import { User } from "../../../user/domain/user.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 
 /** Middleware to fetch header info from request */
@@ -28,14 +28,7 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     private readonly tenantService: TenantService,
   ) {}
 
-  private fetchUserAndTenantFromToken(token: string) {
-    const { userId } = this.tokenService.validateAccessToken(token);
-    return {
-      userId,
-    };
-  }
-
-  private async verifyUser(userId: ID) {
+  private async verifyUser(userId: ID): Promise<void> {
     if (!userId)
       throw new ForbiddenException("UserId not specified.. please try again");
 
@@ -56,41 +49,50 @@ export class HeaderCheckMiddleware implements NestMiddleware {
         `User with Id ${userId} not found.. please try again`,
       );
     }
+  }
+
+  private setContextValues(payload: AccessPayload) {
+    const { userId, role, tenantId, storeId, type, scope, permissions, session } = payload;
     ctxSrv.setUserId(userId);
-    ctxSrv.setUserRole(user.role);
-    return user;
-  }
-
-  private async verifyTenant(tenantId: ID) {
-    if (!tenantId)
-      throw new ForbiddenException("TenantId not specified.. please try again");
-
-    try {
-      const tenant = await this.tenantService.findByIdOrFail(tenantId);
-      if (!tenant) {
-        throw new ForbiddenException(
-          `Tenant with Id ${tenantId} not found.. please try again`,
-        );
-      }
-    } catch (error) {
-      throw new ForbiddenException(
-        `Error looking for Tenant with Id ${tenantId}.. please login again`,
-      );
-    }
-  }
-
-  /** this is a function to set the Tenant to 0 (not defined - multitenant)
-   * when the role is ADMIN
-   */
-  private setTenantIdBasedOnUserRole(
-    tenantIdFetchFromToken: ID,
-    userRole: UserRole,
-  ): ID {
-    const tenantId =
-      userRole === UserRole.ADMIN ? null : tenantIdFetchFromToken;
+    ctxSrv.setUserRole(role);
     ctxSrv.setTenantId(tenantId);
-    return tenantId;
+    ctxSrv.setStoreId(storeId);
+    ctxSrv.setType(type);
+    ctxSrv.setScope(scope);
+    ctxSrv.setPermissions(permissions);
+    ctxSrv.setSession(session);
   }
+
+  // private async verifyTenant(tenantId: ID) {
+  //   if (!tenantId)
+  //     throw new ForbiddenException("TenantId not specified.. please try again");
+
+  //   try {
+  //     const tenant = await this.tenantService.findByIdOrFail(tenantId);
+  //     if (!tenant) {
+  //       throw new ForbiddenException(
+  //         `Tenant with Id ${tenantId} not found.. please try again`,
+  //       );
+  //     }
+  //   } catch (error) {
+  //     throw new ForbiddenException(
+  //       `Error looking for Tenant with Id ${tenantId}.. please login again`,
+  //     );
+  //   }
+  // }
+
+  // /** this is a function to set the Tenant to 0 (not defined - multitenant)
+  //  * when the role is ADMIN
+  //  */
+  // private setTenantIdBasedOnUserRole(
+  //   tenantIdFetchFromToken: ID,
+  //   userRole: UserRole,
+  // ): ID {
+  //   const tenantId =
+  //     userRole === UserRole.ADMIN ? null : tenantIdFetchFromToken;
+  //   ctxSrv.setTenantId(tenantId);
+  //   return tenantId;
+  // }
 
   async use(req: Request, res: Response, next: NextFunction) {
     const token = fetchTokenFromRequest(req);
@@ -98,19 +100,16 @@ export class HeaderCheckMiddleware implements NestMiddleware {
       throw new ForbiddenException("Auth Error. Token must be specified.");
     }
 
-    const { /**tenantId: tenantIdFetchFromToken, */ userId } =
-      this.fetchUserAndTenantFromToken(token);
-    const { role } = await this.verifyUser(userId);
-    // await this.verifyTenant(tenantIdFetchFromToken);
-    // const tenantId = this.setTenantIdBasedOnUserRole(
-    //   tenantIdFetchFromToken,
-    //   role,
-    // );
+    const payload = this.tokenService.validateAccessToken(token);
+
+    const { userId, role, scope } = payload;
+    await this.verifyUser(userId);
+    this.setContextValues(payload);
 
     console.log(`
       ===============================================================
       Request Header Information
-      ${JSON.stringify({ userId, role })}
+      ${JSON.stringify({ userId, role, scope })}
       ===============================================================
     `);
 
