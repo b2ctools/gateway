@@ -23,7 +23,7 @@ export const envVarsSchema = Joi.object({
   // REPOSITORY TYPES
   USER_REPO: Joi.string().valid("mock", "mongo").required(),
   STORE_REPO: Joi.string().valid("mock", "mongo").required(),
-  PRODUCT_CATEGORY_REPO: Joi.string().valid("mock", "mongo").required(),
+  CATEGORY_REPO: Joi.string().valid("mock", "mongo").required(),
   BRAND_REPO: Joi.string().valid("mock", "mongo").required(),
   COUNTRY_REPO: Joi.string().valid("mock", "mongo").required(),
   SAMPLE_REPO: Joi.string().valid("mock", "mongo").required(),
@@ -59,7 +59,7 @@ export const envVarValues = {
 
   USER_REPO: process.env.USER_REPO,
   STORE_REPO: process.env.STORE_REPO,
-  PRODUCT_CATEGORY_REPO: process.env.PRODUCT_CATEGORY_REPO,
+  CATEGORY_REPO: process.env.CATEGORY_REPO,
   BRAND_REPO: process.env.BRAND_REPO,
   COUNTRY_REPO: process.env.COUNTRY_REPO,
   SAMPLE_REPO: process.env.SAMPLE_REPO,

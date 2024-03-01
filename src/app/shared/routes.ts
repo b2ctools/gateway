@@ -2,17 +2,17 @@ import { RequestMethod } from "@nestjs/common";
 
 export const userPath = "users";
 export const storePath = "stores";
-export const productCategoryPath = "product-category";
-export const brandPath = "brand";
-export const countryPath = "country";
-export const samplePath = "sample";
-export const accountPath = "account";
+export const categoryPath = "categories";
+export const brandPath = "brands";
+export const countryPath = "countries";
+export const samplePath = "samples";
+export const accountPath = "accounts";
 export const orderPath = "order";
 export const customerPath = "customers";
-export const tenantPath = "tenant";
-export const planPath = "plan";
-export const resourcePath = "resource";
-export const permissionPath = "permission";
+export const tenantPath = "tenants";
+export const planPath = "plans";
+export const resourcePath = "resources";
+export const permissionPath = "permissions";
 
 export const excludeRoutes = [
   { path: "/", method: RequestMethod.GET },

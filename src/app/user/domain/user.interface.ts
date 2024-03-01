@@ -9,10 +9,8 @@ export enum UserStatus {
 }
 
 export enum UserRole {
-  OWNER = "OWNER",
   ADMIN = "ADMIN",
   USER = "USER",
-  CLIENT = "CLIENT",
 }
 export interface User extends IDomain {
   firstName: string;
