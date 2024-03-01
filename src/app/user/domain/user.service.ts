@@ -14,7 +14,7 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/base.request";
-import { AccountService } from "src/app/account/domain/account.service";
+import { AccountService } from "../../account/domain/account.service";
 import { Account } from "src/app/account/domain/account.interface";
 
 @Injectable()

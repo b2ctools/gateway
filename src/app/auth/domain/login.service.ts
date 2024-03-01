@@ -8,8 +8,8 @@ import { User } from "../../user/domain/user.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { sessionService } from "./session.service";
 import { sanitizeEmail } from "../../shared/utils/string";
-import { Account } from "src/app/account/domain/account.interface";
-import { ctxSrv } from "src/app/shared/context.service";
+import { Account } from "../../account/domain/account.interface";
+import { ctxSrv } from "../../shared/context.service";
 
 export interface LoginResponse {
   accessToken: Token;
