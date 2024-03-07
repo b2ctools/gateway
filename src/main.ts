@@ -11,11 +11,15 @@ import { NestFactory } from "@nestjs/core";
 
 import { AppModule } from "./app/app.module";
 import { config } from "./app/config/config.service";
+import { join } from "path";
+import { NestExpressApplication } from "@nestjs/platform-express";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true });
   const globalPrefix = "api";
   app.setGlobalPrefix(globalPrefix);
+
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
   app.useGlobalPipes(new ValidationPipe({ forbidUnknownValues: false }));
 
