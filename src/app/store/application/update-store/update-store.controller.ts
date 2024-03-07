@@ -5,6 +5,8 @@ import { UpdateStoreRequest } from "./update-store.request";
 import { storeToDto } from "../../domain/store.interface";
 import { UpdateStoreCommand } from "./update-store.command";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { allowedForScope } from "src/app/auth/domain/middleware/access-control";
+import { Scope } from "src/app/account/domain/account.interface";
 
 @Controller(storePath)
 export class UpdateStoreController {
@@ -15,6 +17,7 @@ export class UpdateStoreController {
 
   @Patch(":id")
   async updateStore(@Param("id") id: ID, @Body() request: UpdateStoreRequest) {
+    allowedForScope([Scope.MANAGER, Scope.OWNER]);
     const pc = await this.useCase.execute(id, new UpdateStoreCommand(request));
     return storeToDto(pc);
   }

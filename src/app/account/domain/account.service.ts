@@ -130,7 +130,7 @@ export class AccountService {
 
   async getAccountsFromUserOnly(userId: ID): Promise<Account[]> {
     const { data: accounts } = await this.accountRepo.findAll({
-      filter: { field: "userId", value: userId as string },
+      filters: [{ field: "userId", value: userId as string }],
     });
     return accounts;
   }

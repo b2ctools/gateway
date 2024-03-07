@@ -31,7 +31,7 @@ export class RoleChecking implements CanActivate {
     if (!role) throw new ForbiddenException("Auth Error. Role not specified.");
     if (!requiredRoles.includes(role))
       throw new ForbiddenException(
-        "Auth Error. Not authorized to access to this resource.",
+        "Auth Error. Role Not authorized to access to this resource.",
       );
   }
 

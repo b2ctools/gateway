@@ -6,6 +6,8 @@ import { storePath } from "../../../shared/routes";
 // import { UserRole } from "../../../user/domain/user.interface";
 // import { Roles } from "../../../auth/domain/middleware/roles.decorator";
 import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { Scope } from "src/app/account/domain/account.interface";
+import { allowedForScope } from "src/app/auth/domain/middleware/access-control";
 @Controller(storePath)
 export class SearchStoreController {
   constructor(
@@ -19,6 +21,7 @@ export class SearchStoreController {
   async findAllStores(
     @Query() request: SearchRequest,
   ): Promise<SearchOutput<StoreDto>> {
+    allowedForScope([Scope.MANAGER, Scope.OWNER]);
     const { count, data } = await this.useCase.execute(request);
     const stores = data.map((s) => storeToDto(s));
     return {

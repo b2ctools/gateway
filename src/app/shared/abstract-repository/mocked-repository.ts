@@ -8,7 +8,7 @@ import { ctxSrv } from "../context.service";
 import {
   IOrder,
   SearchRequest,
-  applyFilterFieldFromRequest,
+  applyFiltersFromRequest,
 } from "../base.request";
 import { User, UserRole } from "../../user/domain/user.interface";
 
@@ -97,8 +97,8 @@ export abstract class MockedRepository<
     fieldName,
     items,
   }: {
-    fromDate?: Date;
-    toDate?: Date;
+    fromDate?: string;
+    toDate?: string;
     fieldName: string;
     items: TMockedEntity[];
   }) {
@@ -141,8 +141,8 @@ export abstract class MockedRepository<
       let results = Object.values(this.elements);
 
       // applying filter field-string-value
-      const { filter } = request;
-      results = applyFilterFieldFromRequest(results, filter);
+      const { filters } = request;
+      results = applyFiltersFromRequest(results, filters);
 
       // sorting data
       results = sortBy
