@@ -4,7 +4,7 @@ import { Store, StoreAddress } from "../../domain/store.interface";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 @Injectable()
-export class UpdateStoreCommand implements Omit<Store, "id">{
+export class UpdateStoreCommand implements Omit<Store, "id" | "tenantId">{
   name: string;
   description: string;
   address: StoreAddress;

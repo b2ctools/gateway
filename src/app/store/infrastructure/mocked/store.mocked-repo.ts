@@ -16,6 +16,7 @@ export class StoreMockedRepository extends MockedRepository<
     entity.address = d.address;
     entity.logo = d.logo;
     entity.managedBy = d.managedBy;
+    entity.tenantId = d.tenantId;
 
     return entity;
   }
@@ -28,6 +29,7 @@ export class StoreMockedRepository extends MockedRepository<
       address: e.address,
       logo: e.logo,
       managedBy: e.managedBy,
+      tenantId: e.tenantId,
     };
   }
 

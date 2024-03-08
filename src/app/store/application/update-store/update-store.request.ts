@@ -2,7 +2,7 @@ import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 import { Store, StoreAddress } from "../../domain/store.interface";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
-export class UpdateStoreRequest implements Omit<Store, "id">{
+export class UpdateStoreRequest implements Omit<Store, "id" | "tenantId">{
 
   @IsNotEmpty()
   @IsString()

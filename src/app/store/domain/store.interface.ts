@@ -13,6 +13,7 @@ export interface Store extends IDomain {
   address: StoreAddress;
   logo: string;
   managedBy: ID;
+  tenantId: ID;
 }
 
 export interface StoreDto extends Store {

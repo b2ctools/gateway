@@ -11,4 +11,5 @@ export class StoreMockedEntity
   address: string;
   logo: string;
   managedBy: ID;
+  tenantId: ID;
 }
