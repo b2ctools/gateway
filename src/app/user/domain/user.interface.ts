@@ -1,7 +1,7 @@
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
-import { isAdmin } from "src/app/auth/domain/middleware/access-control";
+import { isAdmin } from "../../auth/domain/middleware/access-control";
 
 export enum UserStatus {
   ENABLED = "ENABLED",

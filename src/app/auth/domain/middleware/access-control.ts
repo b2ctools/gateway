@@ -2,11 +2,11 @@ import {
   ForbiddenException,
   InternalServerErrorException,
 } from "@nestjs/common";
-import { Scope } from "src/app/account/domain/account.interface";
-import { IDomain } from "src/app/shared/abstract-repository/entities/domain";
-import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { Scope } from "../../../account/domain/account.interface";
+import { IDomain } from "../../../shared/abstract-repository/entities/domain";
+import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { ctxSrv } from "../../../shared/context.service";
+import { UserRole } from "../../../user/domain/user.interface";
 
 export const allowedForRole = (roles: UserRole[]) => {
   const currentRole = ctxSrv.getUserRole();
