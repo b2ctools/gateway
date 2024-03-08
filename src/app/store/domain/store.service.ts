@@ -15,7 +15,7 @@ import {
 import { AccountService } from "../../account/domain/account.service";
 import { codeFromId } from "../../shared/utils/gen-id";
 import { UpdateStoreCommand } from "../application/update-store/update-store.command";
-import { domainEntityFromTenantVerification } from "src/app/auth/domain/middleware/access-control";
+import { domainEntityFromTenantVerification } from "../../auth/domain/middleware/access-control";
 
 @Injectable()
 export class StoreService {
