@@ -112,13 +112,14 @@ export const getMockedCountryList = () => {
     }));
 };
 
-export const getMockedProductCategoryList = () => {
-  return Array(3)
+export const getMockedCategoryList = (size: number = 2) => {
+  return Array(size)
     .fill(null)
     .map(() => ({
       name: "Product Cateory" + casual.title.slice(0, 10),
       description: casual.description.slice(0, 50),
       parent: "0",
+      tenantId: ctxSrv.getTenantId(),
     }));
 };
 

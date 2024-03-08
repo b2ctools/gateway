@@ -1,3 +1,4 @@
+import { BadRequestException } from "@nestjs/common";
 import { isAdmin } from "../auth/domain/middleware/access-control";
 import { ID } from "./abstract-repository/repository.interface";
 import { ctxSrv } from "./context.service";
@@ -48,6 +49,9 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
     sortable && sortable.length > 0
       ? getFiltersFromRequest(sortable, request)
       : {};
+  console.log("=============================");
+  console.log("filters", filters);
+  console.log("=============================");
 
   return {
     ...request,
@@ -121,10 +125,15 @@ export const setTenantOnRequest = (sortable: string[], request: SearchRequest): 
     return { sortable, request }
   }
 
+  const tenantId = ctxSrv.getTenantId();
+  if (!tenantId) {
+    throw new BadRequestException("TenantId is not specified. Please do account-login.");
+  }
+
   return {
     request: {
       ...request,
-      tenantId: ctxSrv.getTenantId(),
+      tenantId,
     },
     sortable: [...sortable, "tenantId"],
   };

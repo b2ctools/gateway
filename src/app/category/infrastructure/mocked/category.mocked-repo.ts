@@ -19,6 +19,7 @@ export class CategoryMockedRepository extends MockedRepository<
 
     entity.createdAt = d.createdAt;
     entity.updatedAt = d.updatedAt;
+    entity.tenantId = d.tenantId;
 
     return entity;
   }
@@ -30,6 +31,7 @@ export class CategoryMockedRepository extends MockedRepository<
       description: e.description,
       parent: e.parent,
       status: e.status,
+      tenantId: e.tenantId,
 
       createdAt: e.createdAt,
       updatedAt: e.updatedAt,

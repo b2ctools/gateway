@@ -10,7 +10,7 @@ export interface Category extends IDomain {
   description?: string;
   parent: ID;
   status: CategoryStatus;
-  tenant?: TenantRef;
+  tenantId: ID;
 }
 
 export interface CategoryTree extends Category {

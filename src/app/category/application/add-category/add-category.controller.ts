@@ -24,8 +24,8 @@ export class AddCategoryController {
 
   @Post("/json")
   async loadFromJson(@Body() request: AddCategoryJSONRequest) {
-    const { categories: json } = request;
-    const categories = await this.useCase.loadFromJson(JSON.stringify(json));
+    const { categories: json, tenantId } = request;
+    const categories = await this.useCase.loadFromJson(JSON.stringify(json), tenantId);
     return {
       message: "Product Categories succesfully added",
       categories: categories.map((c) => categoryToDto(c)),

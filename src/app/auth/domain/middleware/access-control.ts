@@ -60,7 +60,7 @@ interface TenantDomaintEntity extends IDomain {
   tenantId: ID;
 }
 
-export const isAdmin = () => {
+export const isAdmin = (): boolean => {
   const currentRole = ctxSrv.getUserRole();
   return currentRole === UserRole.ADMIN;
 };

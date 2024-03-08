@@ -13,4 +13,5 @@ export class CategoryMongoEntity
   description?: string;
   parent: ID;
   status: CategoryStatus;
+  tenantId: ID;
 }

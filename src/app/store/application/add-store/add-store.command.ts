@@ -2,6 +2,7 @@ import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { Store } from "../../domain/store.interface";
 import { AddStoreRequest } from "./add-store.request";
 import { ctxSrv } from "src/app/shared/context.service";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export class AddStoreCommand implements Omit<Store, "id">{
   name: string;
@@ -19,7 +20,7 @@ export class AddStoreCommand implements Omit<Store, "id">{
     this.logo = logo;
     this.managedBy = undefined;
 
-    this.tenantId = ctxSrv.getUserRole() === "ADMIN" ? tenantId : ctxSrv.getTenantId();
+    this.tenantId = isAdmin() ? tenantId : ctxSrv.getTenantId();
   }
 
 }

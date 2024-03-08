@@ -19,7 +19,7 @@ export class FindOneCategoryUsecase {
 
   async execute(id: ID): Promise<CategoryDTO> {
     const pc = await this.categoryService.findByIdOrFail(id);
-    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return categoryToDto(pc, null);
+    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return categoryToDto(pc, tenantRef);
   }
 }

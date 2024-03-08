@@ -9,7 +9,7 @@ import {
   getMockedCountryList,
   getMockedPermissionList,
   getMockedPlansList,
-  getMockedProductCategoryList,
+  getMockedCategoryList,
   getMockedResourcesList,
   getMockedStoreList,
   getMockedUserList,
@@ -146,6 +146,8 @@ export class InitService {
     await this.sampleService.addSample(sample);
   }
 
+  
+
   async onApplicationBootstrap() {
     const tenant = await this.tenantService.addTenant({
       name: "Leo",
@@ -170,7 +172,7 @@ export class InitService {
     );
 
     await Promise.all(
-      getMockedProductCategoryList().map((pc) =>
+      getMockedCategoryList().map((pc) =>
         this.productCategoryService.addCategory(pc),
       ),
     );
@@ -209,6 +211,11 @@ export class InitService {
 
     await Promise.all(
       getMockedStoreList().map((store) => this.soreService.addStore(store)),
+    );
+    await Promise.all(
+      getMockedCategoryList(1).map((pc) =>
+        this.productCategoryService.addCategory(pc),
+      ),
     );
   }
 }
