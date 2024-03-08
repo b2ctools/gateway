@@ -12,7 +12,7 @@ import { Category } from "../../domain/category.interface";
 import { Optional } from "@nestjs/common";
 
 export class AddCategoryRequest
-  implements Omit<Category, "id" | "tenantId" | "status">
+  implements Omit<Category, "id" | "status">
 {
   @IsNotEmpty()
   @IsString()
@@ -25,6 +25,11 @@ export class AddCategoryRequest
   @IsNotEmpty()
   @IsString()
   parent: ID;
+
+  @IsNotEmpty()
+  @IsString()
+  @Optional()
+  tenantId: ID;
 }
 
 class JsonCategory {
@@ -46,4 +51,9 @@ export class AddCategoryJSONRequest {
   @ValidateNested({ each: true })
   @Type(() => JsonCategory)
   categories: JsonCategory[];
+
+  @IsNotEmpty()
+  @IsString()
+  @Optional()
+  tenantId: ID;
 }

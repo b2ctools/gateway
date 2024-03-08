@@ -4,6 +4,9 @@ import { AddCategoryCommand } from "./add-category.command";
 
 import { categoryToDto } from "../../domain/category.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
+import { ctxSrv } from "src/app/shared/context.service";
 
 @Injectable()
 export class AddCategoryUseCase {
@@ -15,13 +18,20 @@ export class AddCategoryUseCase {
     private readonly tenantService: TenantService,
   ) {}
 
-  async addCategory(command: AddCategoryCommand) {
-    const pc = await this.pcService.addCategory(command);
-    // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-    return categoryToDto(pc, null);
+  private async validateTenantId(tenantId: ID) {
+    await this.tenantService.findByIdOrFail(tenantId);
   }
 
-  async loadFromJson(json: string) {
-    return await this.pcService.insertCategoriesFromJson(json);
+  async addCategory(command: AddCategoryCommand) {
+    await this.validateTenantId(command.tenantId);
+    const pc = await this.pcService.addCategory(command);
+    const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+    return categoryToDto(pc, tenantRef);
+  }
+
+  async loadFromJson(json: string, tenantId: ID) {
+    const tenant = isAdmin() ? tenantId : ctxSrv.getTenantId();
+    await this.validateTenantId(tenant);
+    return await this.pcService.insertCategoriesFromJson(json, tenantId);
   }
 }

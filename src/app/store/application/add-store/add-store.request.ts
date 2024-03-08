@@ -1,8 +1,9 @@
 import { Optional } from "@nestjs/common";
 import { IsNotEmpty, IsString } from "class-validator";
 import { Store, StoreAddress } from "../../domain/store.interface";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
-export class AddStoreRequest implements Omit<Store, "id" | "tenantId" | "managedBy"> {
+export class AddStoreRequest implements Omit<Store, "id" | "managedBy"> {
   
   @IsNotEmpty()
   @IsString()
@@ -22,4 +23,9 @@ export class AddStoreRequest implements Omit<Store, "id" | "tenantId" | "managed
   @IsString()
   @Optional()
   logo: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Optional()
+  tenantId: ID;
 }

@@ -2,6 +2,8 @@ import casual from "casual";
 
 import { UserRole } from "../../user/domain/user.interface";
 import { AddResourceCommand } from "src/app/resource/application/add-resource/add-resource.command";
+import { AddStoreCommand } from "src/app/store/application/add-store/add-store.command";
+import { ctxSrv } from "../context.service";
 
 export const getMockedUserList = () => {
   const commondData = {
@@ -79,8 +81,8 @@ export const getMockedUserList = () => {
   return users;
 };
 
-export const getMockedStoreList = () => {
-  return Array(3)
+export const getMockedStoreList = (): AddStoreCommand[] => {
+  return Array(1)
     .fill(null)
     .map(() => ({
       name: "Store " + casual.title,
@@ -88,6 +90,7 @@ export const getMockedStoreList = () => {
       address: casual.address1,
       logo: casual.url,
       managedBy: undefined,
+      tenantId: ctxSrv.getTenantId(),
     }));
 };
 
@@ -109,13 +112,14 @@ export const getMockedCountryList = () => {
     }));
 };
 
-export const getMockedProductCategoryList = () => {
-  return Array(3)
+export const getMockedCategoryList = (size: number = 2) => {
+  return Array(size)
     .fill(null)
     .map(() => ({
       name: "Product Cateory" + casual.title.slice(0, 10),
       description: casual.description.slice(0, 50),
       parent: "0",
+      tenantId: ctxSrv.getTenantId(),
     }));
 };
 

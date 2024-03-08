@@ -16,7 +16,7 @@ import {
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { PermissionService } from "src/app/permission/domain/permission.service";
 import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 @Injectable()
 export class SearchAccountUseCase {
@@ -55,14 +55,14 @@ export class SearchAccountUseCase {
     request: SearchAccountRequest,
   ): Promise<SearchAccountRequest> {
     // if user is admin, tenantId is required
-    if (ctxSrv.getUserRole() === UserRole.ADMIN && !request.tenantId) {
+    if (isAdmin() && !request.tenantId) {
       throw new BadRequestException(
         "TenantId is required on request for admin role",
       );
     }
 
     // if user is admin, tenantId should be on request
-    if (ctxSrv.getUserRole() === UserRole.ADMIN) {
+    if (isAdmin()) {
       // if tenantId is on request, validate it
       await this.tenantService.findByIdOrFail(request.tenantId);
       return request;

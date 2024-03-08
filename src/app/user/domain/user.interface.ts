@@ -1,7 +1,7 @@
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
-import { ctxSrv } from "../../shared/context.service";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export enum UserStatus {
   ENABLED = "ENABLED",
@@ -43,10 +43,9 @@ export const userToDto = (u: User, tenantRef: TenantRef = null): UserDto => {
   // delete u.tenantId;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { password, recoveryPasswordCode, failedLogin, ...info } = u;
-  const role = ctxSrv.getUserRole();
   return {
     ...info,
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 

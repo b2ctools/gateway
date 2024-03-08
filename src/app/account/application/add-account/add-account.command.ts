@@ -1,8 +1,8 @@
-import { UserRole } from "src/app/user/domain/user.interface";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { Account, AccountType, Scope } from "../../domain/account.interface";
 import { AddAccountRequest } from "./add-account.request";
 import { ctxSrv } from "src/app/shared/context.service";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export class AddAccountCommand implements Omit<Account, "id"> {
   userId: ID;
@@ -21,7 +21,7 @@ export class AddAccountCommand implements Omit<Account, "id"> {
     this.type = storeId ? "store" : "tenant";
     this.permissions = [];
     this.tenantId =
-      ctxSrv.getUserRole() === UserRole.ADMIN ? tenantId : ctxSrv.getTenantId();
+      isAdmin() ? tenantId : ctxSrv.getTenantId();
     this.isActive = true;
   }
 }

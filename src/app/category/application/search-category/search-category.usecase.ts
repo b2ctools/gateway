@@ -4,7 +4,7 @@ import {
   SearchCategoryOutput,
   SearchCategoryRequest,
 } from "./search-category.request";
-import { sanitazeSearchQueryParams } from "../../../shared/base.request";
+import { sanitazeSearchQueryParams, setTenantOnRequest } from "../../../shared/base.request";
 import {
   categoryToDto,
   sortable,
@@ -24,15 +24,19 @@ export class SearchCategoryUseCase {
   async execute(
     request: SearchCategoryRequest,
   ): Promise<SearchCategoryOutput> {
+
+    const { request: requestToSanitize, sortable: fieldsToFilter } = setTenantOnRequest(sortable, request);
+
+
     const { count, data: pcs } = await this.pcService.findAllCategories(
       sanitazeSearchQueryParams<SearchCategoryRequest>(
-        request,
-        sortable,
+        requestToSanitize,
+        fieldsToFilter,
       ),
     );
     const data = pcs.map((pc) => {
-      // const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
-      return categoryToDto(pc, null);
+      const tenantRef = this.tenantService.getTenantRef(pc.tenantId);
+      return categoryToDto(pc, tenantRef);
     });
     return {
       data,

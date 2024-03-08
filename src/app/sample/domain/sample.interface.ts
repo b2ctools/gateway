@@ -8,8 +8,7 @@ import {
   IUnit,
   IWeight,
 } from "../application/common.request";
-import { ctxSrv } from "../../shared/context.service";
-import { UserRole } from "../../user/domain/user.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export interface Sample extends IDomain {
   name: string;
@@ -35,11 +34,10 @@ export const sampleToDto = (
   u: Sample,
   tenantRef: TenantRef = null,
 ): SampleDto => {
-  const role = ctxSrv.getUserRole();
   // delete u.tenantId;
   return {
     ...u,
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 

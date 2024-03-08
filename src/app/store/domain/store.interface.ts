@@ -1,9 +1,8 @@
 import { codeFromId } from "../../shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
-import { ctxSrv } from "../../shared/context.service";
-import { UserRole } from "../../user/domain/user.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export type StoreAddress = string;
 
@@ -13,6 +12,7 @@ export interface Store extends IDomain {
   address: StoreAddress;
   logo: string;
   managedBy: ID;
+  tenantId: ID;
 }
 
 export interface StoreDto extends Store {
@@ -27,12 +27,11 @@ export interface StoreRef {
 }
 
 export const storeToDto = (u: Store, tenantRef: TenantRef = null): StoreDto => {
-  const role = ctxSrv.getUserRole();
   // delete u.tenantId;
   return {
     ...u,
     code: codeFromId(u.id),
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 

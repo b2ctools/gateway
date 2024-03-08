@@ -13,4 +13,5 @@ export class CategoryMockedEntity
   description?: string;
   parent: ID;
   status: CategoryStatus;
+  tenantId: ID;
 }

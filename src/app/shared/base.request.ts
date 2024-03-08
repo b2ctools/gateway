@@ -1,4 +1,7 @@
+import { BadRequestException } from "@nestjs/common";
+import { isAdmin } from "../auth/domain/middleware/access-control";
 import { ID } from "./abstract-repository/repository.interface";
+import { ctxSrv } from "./context.service";
 
 export type IOrder = "asc" | "desc";
 
@@ -9,17 +12,21 @@ export interface SearchRequest {
   sortOrder?: IOrder;
   take?: number;
   skip?: number;
-  fromDate?: Date;
-  toDate?: Date;
+  fromDate?: string;
+  toDate?: string;
   dateFieldName?: TFieldName;
   tenantId?: ID;
-  filter?: FilterToApply;
+  filters?: FilterToApply[];
 }
 
 export interface SearchOutput<T> {
   sortable: string[];
   data: T[];
   count: number;
+}
+
+const validDateString = (date: string): boolean => {
+  return !isNaN(Date.parse(date));
 }
 
 export const sanitazeSearchQueryParams = <T extends SearchRequest>(
@@ -38,10 +45,13 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
     sortOrder = "desc";
   }
 
-  const filter =
+  const filters =
     sortable && sortable.length > 0
-      ? getFilterFieldFromRequest(sortable, request)
+      ? getFiltersFromRequest(sortable, request)
       : {};
+  console.log("=============================");
+  console.log("filters", filters);
+  console.log("=============================");
 
   return {
     ...request,
@@ -55,9 +65,9 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
       typeof request.skip === "string"
         ? parseInt(request.skip)
         : (request.skip as number),
-    filter,
-    // fromDate?: Date;
-    // toDate?: Date;
+    filters,
+    ...(validDateString(request.fromDate) ? { fromDate: request.fromDate } : {}),
+    ...(validDateString(request.toDate) ? { toDate: request.toDate } : {}),
     // dateFieldName?: string;
   };
 };
@@ -71,26 +81,60 @@ export interface FilterToApply {
   value: string;
 }
 
-export const getFilterFieldFromRequest = (
+export const getFiltersFromRequest = (
   sortable: string[],
   request: anyRequest,
-) => {
-  const fieldOnRequest = sortable.find((field) => field in request);
-  return fieldOnRequest
-    ? {
-        field: fieldOnRequest,
-        value: request[fieldOnRequest],
-      }
-    : null;
+): FilterToApply[] => {
+  return sortable.filter((field) => field in request)
+    .map((field) => ({
+        field,
+        value: request[field],
+    }));
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const applyFilterFieldFromRequest = (
+
+const applyFilter = (  
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   list: any[],
-  filter: FilterToApply,
+  filter: FilterToApply
 ) => {
-  if (!filter || !filter.field || !filter.value) return list;
+  if (!filter || !filter.value || !filter.field) return list;
   return list.filter((item) =>
     item[filter.field].toLowerCase().includes(filter.value.toLowerCase()),
   );
+}
+
+export const applyFiltersFromRequest = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  list: any[],
+  filter: FilterToApply[],
+) => {
+  if (!filter || filter.length === 0) return list;
+  let result = list;
+  filter.forEach((item) => {
+    result = applyFilter(result, item);
+  });
+  return result;
 };
+
+export const setTenantOnRequest = (sortable: string[], request: SearchRequest): {
+  request: SearchRequest;
+  sortable: string[];
+} => {
+    if (isAdmin()) {
+    return { sortable, request }
+  }
+
+  const tenantId = ctxSrv.getTenantId();
+  if (!tenantId) {
+    throw new BadRequestException("TenantId is not specified. Please do account-login.");
+  }
+
+  return {
+    request: {
+      ...request,
+      tenantId,
+    },
+    sortable: [...sortable, "tenantId"],
+  };
+}

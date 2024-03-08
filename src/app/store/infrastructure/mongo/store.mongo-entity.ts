@@ -8,4 +8,5 @@ export class StoreMongoEntity extends MongoEntity implements Omit<Store, "id"> {
   address: string;
   logo: string;
   managedBy: ID;
+  tenantId: ID;
 }

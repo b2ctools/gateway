@@ -11,6 +11,7 @@ import {
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchCategoryRequest } from "../application/search-category/search-category.request";
 import { SearchSubCategoryRequest } from "../application/sub-category/sub-category.request";
+import { domainEntityFromTenantVerification } from "src/app/auth/domain/middleware/access-control";
 
 export interface JsonCategoryItem {
   name: string;
@@ -162,7 +163,7 @@ export class CategoryService {
     };
   }
 
-  async insertCategoriesFromJson(json: string) {
+  async insertCategoriesFromJson(json: string, tenantId: ID) {
     const result: Category[] = [];
 
     const saveCategories = async (
@@ -174,6 +175,7 @@ export class CategoryService {
           new AddCategoryCommand({
             ...category,
             parent,
+            tenantId,
           }),
         );
         if (category.subcategories && category.subcategories.length > 0) {
@@ -205,6 +207,8 @@ export class CategoryService {
         `Product Category with id ${pcId} not found`,
       );
     }
+    domainEntityFromTenantVerification(existingPC);
+
     return existingPC;
   }
 
@@ -220,9 +224,15 @@ export class CategoryService {
     parent?: ID;
   }): Promise<Category> {
     const existingPC = await this.findByIdOrFail(id);
+    domainEntityFromTenantVerification(existingPC);
     if (name) {
       await this.canUpdateName(name, existingPC.id);
     }
+
+    if (parent) {
+      await this.canUpdateParent(parent, existingPC.id);
+    }
+
     existingPC.name = name ? name : existingPC.name;
     existingPC.description = description ? description : existingPC.description;
     existingPC.parent = parent ? parent : existingPC.parent;
@@ -238,8 +248,20 @@ export class CategoryService {
     return await this.pcRepo.persist(existingPC);
   }
 
+  private async canUpdateParent(parent: ID, existingId: ID) {
+    if (parent === existingId) {
+      throw new BadRequestException(
+        `Product Category can not be its own parent`,
+      );
+    }
+
+    const existingPC = await this.findByIdOrFail(parent);
+    domainEntityFromTenantVerification(existingPC);
+  }
+
   private async canUpdateName(name: string, existingId: ID) {
     const pc = await this.pcRepo.getCategoryByName(name);
+    domainEntityFromTenantVerification(pc);
     if (pc && pc.id !== existingId) {
       throw new BadRequestException(
         `Product Category name ${name} is already taken`,

@@ -15,6 +15,7 @@ import {
 import { AccountService } from "../../account/domain/account.service";
 import { codeFromId } from "../../shared/utils/gen-id";
 import { UpdateStoreCommand } from "../application/update-store/update-store.command";
+import { domainEntityFromTenantVerification } from "src/app/auth/domain/middleware/access-control";
 
 @Injectable()
 export class StoreService {
@@ -69,11 +70,12 @@ export class StoreService {
   }
 
   async findByIdOrFail(storeId: ID) {
-    const existingPC = await this.storeRepo.findById(storeId);
-    if (!existingPC) {
+    const existintStore = await this.storeRepo.findById(storeId);
+    if (!existintStore) {
       throw new BadRequestException(`Store with id ${storeId} not found`);
     }
-    return existingPC;
+    domainEntityFromTenantVerification(existintStore);
+    return existintStore;
   }
 
   async findAllStores(request: SearchRequest): Promise<FindAllOutput<Store>> {
@@ -82,13 +84,14 @@ export class StoreService {
   }
 
   async removeStore(storeId: ID) {
-    await this.findByIdOrFail(storeId);
+    const existintStore = await this.findByIdOrFail(storeId);
     const accounts = await this.accountService.getAccountsFromStore(storeId);
     if (accounts.length > 0) {
       throw new BadRequestException(
         `Store with id ${storeId} has accounts associated with it`,
       );
     }
+    domainEntityFromTenantVerification(existintStore);
     await this.storeRepo.delete(storeId);
     await this.updateBackupStores();
   }
@@ -96,6 +99,7 @@ export class StoreService {
   async updateStore(id: ID, command: UpdateStoreCommand) {
     const { name, description, address, logo, managedBy } = command;
     const store = await this.findByIdOrFail(id);
+    domainEntityFromTenantVerification(store);
     if (name) {
       await this.canUpdateName(name, id);
     }
