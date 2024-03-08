@@ -4,13 +4,12 @@ import { genId } from "../utils/gen-id";
 import { IDomain } from "./entities/domain";
 import { MockedEntity } from "./entities/mocked-entity";
 import { AppRepository, FindAllOutput, ID } from "./repository.interface";
-import { ctxSrv } from "../context.service";
 import {
   IOrder,
   SearchRequest,
   applyFiltersFromRequest,
 } from "../base.request";
-import { User, UserRole } from "../../user/domain/user.interface";
+import { User } from "../../user/domain/user.interface";
 
 interface HashMap<T> {
   [key: string]: T;
@@ -112,25 +111,6 @@ export abstract class MockedRepository<
     }
 
     return items;
-  }
-
-  /**
-   * rules for tenant on search
-   * - if user is admin and tenantOnSearchRequest is not null, then use tenantOnSearchRequest
-   * - if user is admin and tenantOnSearchRequest is null, then use user tenant
-   * - if user is not admin, then use user tenant
-   *
-   * @deprecated
-   * @param request
-   * @returns
-   */
-  private getTenantOnSearch(request: SearchRequest) {
-    const { tenantId: tenantOnSearchRequest } = request;
-    let tenantId = ctxSrv.getTenantId();
-    if (ctxSrv.getUserRole() === UserRole.ADMIN && tenantOnSearchRequest) {
-      tenantId = parseInt(tenantOnSearchRequest as string);
-    }
-    return tenantId;
   }
 
   async findAll(request: SearchRequest): Promise<FindAllOutput<TDomain>> {

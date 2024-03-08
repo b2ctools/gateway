@@ -1,4 +1,6 @@
+import { isAdmin } from "../auth/domain/middleware/access-control";
 import { ID } from "./abstract-repository/repository.interface";
+import { ctxSrv } from "./context.service";
 
 export type IOrder = "asc" | "desc";
 
@@ -110,3 +112,20 @@ export const applyFiltersFromRequest = (
   });
   return result;
 };
+
+export const setTenantOnRequest = (sortable: string[], request: SearchRequest): {
+  request: SearchRequest;
+  sortable: string[];
+} => {
+    if (isAdmin()) {
+    return { sortable, request }
+  }
+
+  return {
+    request: {
+      ...request,
+      tenantId: ctxSrv.getTenantId(),
+    },
+    sortable: [...sortable, "tenantId"],
+  };
+}

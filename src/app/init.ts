@@ -78,35 +78,21 @@ export class InitService {
     const { data: permissions } =
       await this.permissionService.findAllPermissions({});
     
-    await this.accountService.addAccount(
-      new AddAccountCommand({
-        userId: user.id,
-        storeId: stores[0].id,
-        scope: Scope.MANAGER,
-      }),
-    ).then((account) => {
+
+    stores.forEach(async (store) => {
+      const account = await this.accountService.addAccount(
+        new AddAccountCommand({
+          userId: user.id,
+          storeId: store.id,
+          scope: Scope.MANAGER,
+        }),
+      );
       this.accountService.setPermissions(account.id, [
         permissions[0].id,
         permissions[1].id,
-        permissions[2].id,
-        permissions[3].id,
       ]);
     });
 
-    await this.accountService.addAccount(
-      new AddAccountCommand({
-        userId: user.id,
-        storeId: stores[1].id,
-        scope: Scope.MANAGER,
-      }),
-    ).then((account) => {
-      this.accountService.setPermissions(account.id, [
-        permissions[0].id,
-        permissions[1].id,
-        permissions[2].id,
-        permissions[3].id,
-      ]);
-    });
   }
 
   private async setResourcesToPlan() {
@@ -209,5 +195,20 @@ export class InitService {
     await this.seedAccountsForLeo();
     await this.setResourcesToPlan();
     await this.seedSample();
+
+
+    /** adding new tenant with store for testing pourpouses */
+    // add another store for another tenant
+
+    const tenant2 = await this.tenantService.addTenant({
+      name: "Tito",
+      address: "Managua",
+      logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
+    });
+    ctxSrv.setTenantId(tenant2.id);
+
+    await Promise.all(
+      getMockedStoreList().map((store) => this.soreService.addStore(store)),
+    );
   }
 }

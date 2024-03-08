@@ -82,7 +82,7 @@ export const getMockedUserList = () => {
 };
 
 export const getMockedStoreList = (): AddStoreCommand[] => {
-  return Array(3)
+  return Array(1)
     .fill(null)
     .map(() => ({
       name: "Store " + casual.title,

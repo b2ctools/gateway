@@ -35,8 +35,7 @@ const validScope = (scope: Scope) => {
 };
 
 export const allowedForScope = (scopes: Scope[]) => {
-  const currentRole = ctxSrv.getUserRole();
-  if (currentRole === UserRole.ADMIN) return;
+  if(isAdmin()) return;
   const currentScope = ctxSrv.getScope();
   validScope(currentScope);
   if (!scopes.includes(currentScope)) {
@@ -47,8 +46,7 @@ export const allowedForScope = (scopes: Scope[]) => {
 };
 
 export const deniedForScope = (scopes: Scope[]) => {
-  const currentRole = ctxSrv.getUserRole();
-  if (currentRole === UserRole.ADMIN) return;
+  if(isAdmin()) return;
   const currentScope = ctxSrv.getScope();
   validScope(currentScope);
   if (scopes.includes(currentScope)) {
@@ -62,18 +60,31 @@ interface TenantDomaintEntity extends IDomain {
   tenantId: ID;
 }
 
+export const isAdmin = () => {
+  const currentRole = ctxSrv.getUserRole();
+  return currentRole === UserRole.ADMIN;
+};
+
 export const domainEntityFromTenantVerification = (
   domainEntity: TenantDomaintEntity
 ) => {
+  if (isAdmin()) return;
+
   if (!domainEntity.tenantId) {
-    console.error('Tenant domain entity error. Not tenantId specified.', domainEntity);
+    console.error(
+      "Tenant domain entity error. Not tenantId specified.",
+      domainEntity
+    );
     throw new InternalServerErrorException(
       `TenantId not set in the tenant domain entity. Please report this issue.`
     );
   }
   const currentTenant = ctxSrv.getTenantId();
   if (domainEntity.tenantId !== currentTenant) {
-    console.error('Tenant domain entity error does not belongs to tenant.', domainEntity);
+    console.error(
+      "Tenant domain entity error does not belongs to tenant.",
+      domainEntity
+    );
     throw new ForbiddenException(
       `Trying to access an entity that does not belong to the current tenant.`
     );

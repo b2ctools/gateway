@@ -1,11 +1,10 @@
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
-import { ctxSrv } from "../../shared/context.service";
-import { UserRole } from "../../user/domain/user.interface";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { StoreRef } from "../../store/domain/store.interface";
 import { codeFromId } from "../../shared/utils/gen-id";
 import { PermissionRef } from "../../permission/domain/permission.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export enum Scope {
   OWNER = "owner",
@@ -38,7 +37,6 @@ export const accountToDto = (
   storeRef: StoreRef = null,
   permissionsRef: PermissionRef[] = null,
 ): AccountDto => {
-  const role = ctxSrv.getUserRole();
   delete a.tenantId;
   delete a.storeId;
   delete a.type;
@@ -46,7 +44,7 @@ export const accountToDto = (
   return {
     ...a,
     code: codeFromId(a.id),
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
     store: storeRef,
     permissions: permissionsRef,
   };

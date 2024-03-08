@@ -72,37 +72,6 @@ export class HeaderCheckMiddleware implements NestMiddleware {
     ctxSrv.setSession(session);
   }
 
-  // private async verifyTenant(tenantId: ID) {
-  //   if (!tenantId)
-  //     throw new ForbiddenException("TenantId not specified.. please try again");
-
-  //   try {
-  //     const tenant = await this.tenantService.findByIdOrFail(tenantId);
-  //     if (!tenant) {
-  //       throw new ForbiddenException(
-  //         `Tenant with Id ${tenantId} not found.. please try again`,
-  //       );
-  //     }
-  //   } catch (error) {
-  //     throw new ForbiddenException(
-  //       `Error looking for Tenant with Id ${tenantId}.. please login again`,
-  //     );
-  //   }
-  // }
-
-  // /** this is a function to set the Tenant to 0 (not defined - multitenant)
-  //  * when the role is ADMIN
-  //  */
-  // private setTenantIdBasedOnUserRole(
-  //   tenantIdFetchFromToken: ID,
-  //   userRole: UserRole,
-  // ): ID {
-  //   const tenantId =
-  //     userRole === UserRole.ADMIN ? null : tenantIdFetchFromToken;
-  //   ctxSrv.setTenantId(tenantId);
-  //   return tenantId;
-  // }
-
   async use(req: Request, res: Response, next: NextFunction) {
     const token = fetchTokenFromRequest(req);
     if (!token) {

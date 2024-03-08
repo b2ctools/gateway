@@ -1,7 +1,6 @@
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
-import { ctxSrv } from "../../shared/context.service";
-import { UserRole } from "../../user/domain/user.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export interface Brand extends IDomain {
   name: string;
@@ -13,11 +12,11 @@ export interface BrandDto extends Brand {
 }
 
 export const brandToDto = (u: Brand, tenantRef: TenantRef = null): BrandDto => {
-  const role = ctxSrv.getUserRole();
+  
   // delete u.tenantId;
   return {
     ...u,
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 

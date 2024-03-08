@@ -1,8 +1,7 @@
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { ctxSrv } from "src/app/shared/context.service";
-import { UserRole } from "src/app/user/domain/user.interface";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
 
 export type CategoryStatus = "active" | "inactive";
 
@@ -25,10 +24,9 @@ export const categoryToDto = (
   pc: Category | CategoryTree,
   tenantRef: TenantRef = null,
 ): CategoryDTO => {
-  const role = ctxSrv.getUserRole();
   return {
     ...pc,
-    ...(role === UserRole.ADMIN && tenantRef ? { tenant: tenantRef } : {}),
+    ...(isAdmin() && tenantRef ? { tenant: tenantRef } : {}),
   };
 };
 

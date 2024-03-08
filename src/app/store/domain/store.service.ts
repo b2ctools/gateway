@@ -70,11 +70,12 @@ export class StoreService {
   }
 
   async findByIdOrFail(storeId: ID) {
-    const existingPC = await this.storeRepo.findById(storeId);
-    if (!existingPC) {
+    const existintStore = await this.storeRepo.findById(storeId);
+    if (!existintStore) {
       throw new BadRequestException(`Store with id ${storeId} not found`);
     }
-    return existingPC;
+    domainEntityFromTenantVerification(existintStore);
+    return existintStore;
   }
 
   async findAllStores(request: SearchRequest): Promise<FindAllOutput<Store>> {
@@ -83,13 +84,14 @@ export class StoreService {
   }
 
   async removeStore(storeId: ID) {
-    await this.findByIdOrFail(storeId);
+    const existintStore = await this.findByIdOrFail(storeId);
     const accounts = await this.accountService.getAccountsFromStore(storeId);
     if (accounts.length > 0) {
       throw new BadRequestException(
         `Store with id ${storeId} has accounts associated with it`,
       );
     }
+    domainEntityFromTenantVerification(existintStore);
     await this.storeRepo.delete(storeId);
     await this.updateBackupStores();
   }
