@@ -78,27 +78,25 @@ export class TenantService {
   }
 
   async updateTenant(id: ID, request: UpdateTenantRequest): Promise<Tenant> {
-    const { name, description, address, logo, primaryOwnerId } = request;
+
+    const { name, description, address, logo, primaryOwnerId, state } = request;
     const existingTenant = await this.findByIdOrFail(id);
     if (name) {
       await this.canUpdateName(name, existingTenant.id);
     }
-    existingTenant.name = name ? name : existingTenant.name;
-    existingTenant.description = description
-      ? description
-      : existingTenant.description;
-    existingTenant.address = address ? address : existingTenant.address;
-    existingTenant.logo = logo ? logo : existingTenant.logo;
-    existingTenant.primaryOwnerId = primaryOwnerId ? primaryOwnerId : existingTenant.primaryOwnerId;
 
-    console.log(
-      `Updating Tenant - ${JSON.stringify({
-        id,
-        name,
-        description,
-      })}`,
-    );
-    const response = await this.tenantRepo.persist(existingTenant);
+    const tenantToUpdate: Tenant = {
+      ...existingTenant,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+      ...(address ? { address } : {}),
+      ...(logo ? { logo } : {}),
+      ...(primaryOwnerId ? { primaryOwnerId } : {}),
+      ...(state ? { state } : {}),
+    }
+
+    console.log(`Updating Tenant - ${JSON.stringify(request)}`);
+    const response = await this.tenantRepo.persist(tenantToUpdate);
     this.updateBackupTenants();
     return response;
   }

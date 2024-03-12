@@ -54,19 +54,18 @@ export class PlanService {
     const { name, description } = request;
     const existingPlan = await this.findByIdOrFail(id);
 
-    existingPlan.name = name ? name : existingPlan.name;
-    existingPlan.description = description
-      ? description
-      : existingPlan.description;
+    if (name){
+      await this.canUpdateName(name, existingPlan.id);
+    }
 
-    console.log(
-      `Updating Plan - ${JSON.stringify({
-        id,
-        name,
-        description,
-      })}`,
-    );
-    return await this.planRepo.persist(existingPlan);
+    const planToUpdate = {
+      ...existingPlan,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+    };
+
+    console.log(`Updating Plan - ${JSON.stringify(request)}`);
+    return await this.planRepo.persist(planToUpdate);
   }
 
   async setResources(request: SetResourcesRequest) {
@@ -78,5 +77,12 @@ export class PlanService {
 
   async findPlanByName(name: string) {
     return await this.planRepo.getPlanByName(name);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const plan = await this.planRepo.getPlanByName(name);
+    if (plan && plan.id !== existingId) {
+      throw new BadRequestException(`Plan name ${name} is already taken`);
+    }
   }
 }

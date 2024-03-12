@@ -80,16 +80,22 @@ export class PermissionService {
     existingPermission.description = description
       ? description
       : existingPermission.description;
+    const permissionToUpdate = {
+      ...existingPermission,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+    };
 
-    console.log(
-      `Updating Permission - ${JSON.stringify({
-        id,
-        name,
-        description,
-      })}`,
-    );
-    const response = await this.permissionRepo.persist(existingPermission);
+    console.log(`Updating Permission - ${JSON.stringify(request)}`);
+    const response = await this.permissionRepo.persist(permissionToUpdate);
     await this.updateBackupPermissions();
     return response;
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const permission = await this.permissionRepo.getPermissionByName(name);
+    if (permission && permission.id !== existingId) {
+      throw new BadRequestException(`Permission name ${name} is already taken`);
+    }
   }
 }

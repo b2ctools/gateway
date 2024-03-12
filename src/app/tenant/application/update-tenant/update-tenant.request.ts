@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
-import { Tenant } from "../../domain/tenant.interface";
+import { Tenant, TenantState } from "../../domain/tenant.interface";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 export class UpdateTenantRequest implements Omit<Tenant, "id" | "planId">{
   
@@ -27,4 +27,9 @@ export class UpdateTenantRequest implements Omit<Tenant, "id" | "planId">{
   @IsString()
   @IsOptional()
   primaryOwnerId: ID;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  state: TenantState;
 }

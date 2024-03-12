@@ -13,6 +13,6 @@ export class RemoveCategoryController {
   @Delete("/:id")
   async removeCategory(@Param("id") id: ID) {
     await this.useCase.execute(id);
-    return { message: "Product Category succesfully removed" };
+    return { message: "Category succesfully removed" };
   }
 }

@@ -9,7 +9,6 @@ import {
 import { Type } from "class-transformer";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { Category } from "../../domain/category.interface";
-import { Optional } from "@nestjs/common";
 
 export class AddCategoryRequest
   implements Omit<Category, "id" | "status">
@@ -28,7 +27,7 @@ export class AddCategoryRequest
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   tenantId: ID;
 }
 
@@ -37,7 +36,7 @@ class JsonCategory {
   @IsString()
   name: string;
 
-  @Optional()
+  @IsOptional()
   @ValidateNested({ each: true })
   @Type(() => JsonCategory)
   subcategories?: JsonCategory[];
@@ -54,6 +53,6 @@ export class AddCategoryJSONRequest {
 
   @IsNotEmpty()
   @IsString()
-  @Optional()
+  @IsOptional()
   tenantId: ID;
 }
