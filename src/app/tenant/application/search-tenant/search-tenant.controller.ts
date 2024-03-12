@@ -1,10 +1,6 @@
 import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { SearchTenantUseCase } from "./search-tenant.usecase";
-import {
-  TenantDto,
-  sortable,
-  tenantToDto,
-} from "../../domain/tenant.interface";
+import { TenantDto } from "../../domain/tenant.interface";
 import { tenantPath } from "../../../shared/routes";
 import { SearchOutput, SearchRequest } from "../../../shared/base.request";
 
@@ -12,19 +8,13 @@ import { SearchOutput, SearchRequest } from "../../../shared/base.request";
 export class SearchTenantController {
   constructor(
     @Inject(SearchTenantUseCase)
-    private readonly useCase: SearchTenantUseCase,
+    private readonly useCase: SearchTenantUseCase
   ) {}
 
   @Get()
   async findAllTenants(
-    @Query() request: SearchRequest,
+    @Query() request: SearchRequest
   ): Promise<SearchOutput<TenantDto>> {
-    const { data: tenants } = await this.useCase.execute(request);
-    const items = tenants.map((s) => tenantToDto(s));
-    return {
-      count: items.length,
-      data: items,
-      sortable,
-    };
+    return await this.useCase.execute(request);
   }
 }

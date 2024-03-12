@@ -5,6 +5,7 @@ import { ID } from "src/app/shared/abstract-repository/repository.interface";
 export class AddTenantRequest
   implements Omit<Tenant, "id" | "planId">
 {
+
   
   @IsNotEmpty()
   @IsString()
@@ -24,5 +25,5 @@ export class AddTenantRequest
 
   @IsString()
   @IsOptional()
-  primaryOwnerId?: ID;
+  primaryOwnerId: ID;
 }

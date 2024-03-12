@@ -9,14 +9,15 @@ export class AddTenantCommand
   description?: string;
   address: string;
   logo: string;
-  primaryOwnerId?: ID = undefined;
+  primaryOwnerId: ID = undefined;
 
   constructor(request: AddTenantRequest) {
-    const { name, description, address, logo } = request;
+    const { name, description, address, logo, primaryOwnerId } = request;
     this.name = name;
     this.description = description;
     this.address = address;
     this.logo = logo;
+    this.primaryOwnerId = primaryOwnerId;
   }
 
 }

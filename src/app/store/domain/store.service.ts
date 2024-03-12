@@ -79,7 +79,6 @@ export class StoreService {
   }
 
   async findAllStores(request: SearchRequest): Promise<FindAllOutput<Store>> {
-    this.storeRepo.logItems();
     return await this.storeRepo.findAll(request);
   }
 

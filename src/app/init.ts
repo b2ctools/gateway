@@ -150,16 +150,19 @@ export class InitService {
   
 
   async onApplicationBootstrap() {
+    await Promise.all(
+      getMockedUserList().map((user) => this.userService.registerUser(user)),
+    );
+
+    const userLeo = await this.userService.findUserByEmail("leo@email.com");
     const tenant = await this.tenantService.addTenant({
       name: "Leo",
       address: "Managua",
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
+      primaryOwnerId: userLeo.id,
     });
     ctxSrv.setTenantId(tenant.id);
 
-    await Promise.all(
-      getMockedUserList().map((user) => this.userService.registerUser(user)),
-    );
     await Promise.all(
       getMockedStoreList().map((store) => this.soreService.addStore(store)),
     );
@@ -207,6 +210,7 @@ export class InitService {
       name: "Tito",
       address: "Managua",
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
+      primaryOwnerId: null,
     });
     ctxSrv.setTenantId(tenant2.id);
 

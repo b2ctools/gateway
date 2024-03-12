@@ -15,9 +15,11 @@ import { SetPlanController } from "./application/set-plan/set-plan.controller";
 import { SetPlanUseCase } from "./application/set-plan/set-plan.usecase";
 import { PlanModule } from "../plan/plan.module";
 import { AccountModule } from "../account/account.module";
+import { StoreModule } from "../store/store.module";
+import { UserModule } from "../user/user.module";
 
 @Module({
-  imports: [PlanModule, forwardRef(() => AccountModule)],
+  imports: [PlanModule, forwardRef(() => AccountModule), forwardRef(() => StoreModule), forwardRef(() => UserModule)],
   controllers: [
     AddTenantController,
     SearchTenantController,
