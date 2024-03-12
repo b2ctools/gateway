@@ -25,4 +25,5 @@ export class SampleMongoEntity
   countryId: ID;
   hidden: boolean;
   locations: ILocations;
+  tenantId: ID;
 }

@@ -2,8 +2,10 @@ import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { Sample } from "../../domain/sample.interface";
 import { ILocations, IPrice, IUnit, IWeight } from "../common.request";
 import { AddSampleRequest } from "./add-sample.request";
+import { isAdmin } from "src/app/auth/domain/middleware/access-control";
+import { ctxSrv } from "src/app/shared/context.service";
 
-export class AddSampleCommand implements Omit<Sample, "id" | "tenantId"> {
+export class AddSampleCommand implements Omit<Sample, "id"> {
   name: string;
   description?: string;
   images: string[];
@@ -17,6 +19,7 @@ export class AddSampleCommand implements Omit<Sample, "id" | "tenantId"> {
   countryId: ID;
   hidden: boolean;
   locations: ILocations;
+  tenantId: ID;
 
   constructor(request: AddSampleRequest) {
     const {
@@ -32,6 +35,7 @@ export class AddSampleCommand implements Omit<Sample, "id" | "tenantId"> {
       brandId,
       countryId,
       locations,
+      tenantId,
     } = request;
     this.name = name;
     this.description = description;
@@ -49,5 +53,6 @@ export class AddSampleCommand implements Omit<Sample, "id" | "tenantId"> {
     this.countryId = countryId;
     this.hidden = false;
     this.locations = locations;
+    this.tenantId = isAdmin() ? tenantId : ctxSrv.getTenantId();
   }
 }

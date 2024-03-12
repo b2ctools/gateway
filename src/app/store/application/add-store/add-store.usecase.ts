@@ -12,18 +12,18 @@ export class AddStoreUseCase {
     private readonly StoreService: StoreService,
 
     @Inject(TenantService)
-    private readonly TenantService: TenantService
+    private readonly tenantService: TenantService
   ) {}
 
   private async validateTenantId(tenantId: ID) {
-    await this.TenantService.findByIdOrFail(tenantId);
+    await this.tenantService.findByIdOrFail(tenantId);
   }
 
   async execute(command: AddStoreCommand): Promise<StoreDto> {
     await this.validateTenantId(command.tenantId);
     
     const store = await this.StoreService.addStore(command);
-    const tenantRef = this.TenantService.getTenantRef(store.tenantId);
+    const tenantRef = this.tenantService.getTenantRef(store.tenantId);
     return storeToDto(store, tenantRef);
   }
 }
