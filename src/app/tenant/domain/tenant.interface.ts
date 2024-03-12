@@ -5,6 +5,7 @@ import { User } from "src/app/user/domain/user.interface";
 
 export type TenantAddress = string;
 export type TenantState = 'active' | 'inactive';
+export const isValidTenantState = (s: string) => ['active', 'inactive'].includes(s);
 export interface Tenant extends IDomain {
   name: string;
   description?: string;
@@ -12,7 +13,7 @@ export interface Tenant extends IDomain {
   address: TenantAddress;
   logo: string;
   primaryOwnerId?: ID;
-  // state: TenantState;
+  state: TenantState;
 }
 
 export interface TenantDto extends Omit<Tenant, "primaryOwnerId">{

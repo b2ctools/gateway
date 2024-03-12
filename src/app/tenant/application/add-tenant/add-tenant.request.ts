@@ -3,7 +3,7 @@ import { Tenant, TenantAddress } from "../../domain/tenant.interface";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
 export class AddTenantRequest
-  implements Omit<Tenant, "id" | "planId">
+  implements Omit<Tenant, "id" | "planId" | "state">
 {
 
   

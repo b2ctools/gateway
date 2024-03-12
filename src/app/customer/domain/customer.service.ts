@@ -75,12 +75,7 @@ export class CustomerService {
       ? description
       : existingCustomer.description;
 
-    console.log(
-      `Updating Customer - ${JSON.stringify({
-        id,
-        description,
-      })}`,
-    );
+    console.log( `Updating Customer - ${JSON.stringify(request)}`);
     return await this.customerRepo.persist(existingCustomer);
   }
 }

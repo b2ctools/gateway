@@ -1,8 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { TenantService } from "../../domain/tenant.service";
 import { UpdateTenantRequest } from "./update-tenant.request";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { AccountService } from "src/app/account/domain/account.service";
+import { isValidTenantState } from "../../domain/tenant.interface";
 
 @Injectable()
 export class UpdateTenantUseCse {
@@ -22,8 +23,17 @@ export class UpdateTenantUseCse {
     }
   }
 
+  private validateTenantState(state: string) {
+    
+    if (state && !isValidTenantState(state)) {
+      throw new BadRequestException("Ivalid tenant state");
+    }
+  
+  }
+
   async execute(id: ID, request: UpdateTenantRequest) {
     await this.validateOwnerAccount(request);
+    this.validateTenantState(request.state);
     return await this.tenantService.updateTenant(id, request);
   }
 }

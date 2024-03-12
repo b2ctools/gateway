@@ -57,22 +57,26 @@ export class ResourceService {
     const { name, description, module, permissions } = request;
     const existingResource = await this.findByIdOrFail(id);
 
-    existingResource.name = name ? name : existingResource.name;
-    existingResource.description = description
-      ? description
-      : existingResource.description;
-    existingResource.module = module ? module : existingResource.module;
-    existingResource.permissions = permissions
-      ? permissions
-      : existingResource.permissions;
+    if (name) {
+      await this.canUpdateName(name, existingResource.id);
+    }
+    
+    const resourceToUpdate = {
+      ...existingResource,
+      ...(name ? { name } : {}),
+      ...(description ? { description } : {}),
+      ...(module ? { module } : {}),
+      ...(permissions ? { permissions } : {}),
+    }
 
-    console.log(
-      `Updating Resource - ${JSON.stringify({
-        id,
-        name,
-        description,
-      })}`,
-    );
-    return await this.resourceRepo.persist(existingResource);
+    console.log(`Updating Resource - ${JSON.stringify(request)}`);
+    return await this.resourceRepo.persist(resourceToUpdate);
+  }
+
+  private async canUpdateName(name: string, existingId: ID) {
+    const resource = await this.resourceRepo.getResourceByName(name);
+    if (resource && resource.id !== existingId) {
+      throw new BadRequestException(`Resource name ${name} is already taken`);
+    }
   }
 }

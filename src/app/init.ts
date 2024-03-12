@@ -160,6 +160,7 @@ export class InitService {
       address: "Managua",
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
       primaryOwnerId: userLeo.id,
+      state: "active",
     });
     ctxSrv.setTenantId(tenant.id);
 
@@ -211,6 +212,7 @@ export class InitService {
       address: "Managua",
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
       primaryOwnerId: null,
+      state: "active",
     });
     ctxSrv.setTenantId(tenant2.id);
 

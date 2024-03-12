@@ -17,6 +17,7 @@ export class TenantMockedRepository extends MockedRepository<
     entity.address = d.address;
     entity.logo = d.logo;
     entity.primaryOwnerId = d.primaryOwnerId;
+    entity.state = d.state;
     return entity;
   }
 
@@ -29,6 +30,7 @@ export class TenantMockedRepository extends MockedRepository<
       address: e.address,
       logo: e.logo,
       primaryOwnerId: e.primaryOwnerId,
+      state: e.state,
     };
   }
 

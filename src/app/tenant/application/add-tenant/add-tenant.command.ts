@@ -1,4 +1,4 @@
-import { Tenant } from "../../domain/tenant.interface";
+import { Tenant, TenantState } from "../../domain/tenant.interface";
 import { AddTenantRequest } from "./add-tenant.request";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
@@ -10,6 +10,7 @@ export class AddTenantCommand
   address: string;
   logo: string;
   primaryOwnerId: ID = undefined;
+  state: TenantState;
 
   constructor(request: AddTenantRequest) {
     const { name, description, address, logo, primaryOwnerId } = request;
@@ -18,6 +19,7 @@ export class AddTenantCommand
     this.address = address;
     this.logo = logo;
     this.primaryOwnerId = primaryOwnerId;
+    this.state = "active";
   }
 
 }
