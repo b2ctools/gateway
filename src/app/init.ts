@@ -142,6 +142,7 @@ export class InitService {
       countryId: country.id,
       hidden: false,
       locations: ["Managua"],
+      tenantId: ctxSrv.getTenantId(),
     };
     await this.sampleService.addSample(sample);
   }

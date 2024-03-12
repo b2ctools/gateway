@@ -17,6 +17,8 @@ import {
   WeightRequest,
   allowedUnits,
 } from "../common.request";
+import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { Optional } from "@nestjs/common";
 
 export class AddSampleRequest
   implements Omit<Sample, "id" | "tenantId" | "hidden">
@@ -71,4 +73,9 @@ export class AddSampleRequest
   @IsArray()
   @IsString({ each: true })
   locations: ILocations;
+
+  @IsNotEmpty()
+  @IsString()
+  @Optional()
+  tenantId: ID;
 }

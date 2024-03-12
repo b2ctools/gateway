@@ -24,6 +24,7 @@ export class SampleMockedRepository extends MockedRepository<
     entity.countryId = d.countryId;
     entity.hidden = d.hidden;
     entity.locations = d.locations;
+    entity.tenantId = d.tenantId;
     return entity;
   }
 
@@ -43,6 +44,7 @@ export class SampleMockedRepository extends MockedRepository<
       countryId: e.countryId,
       hidden: e.hidden,
       locations: e.locations,
+      tenantId: e.tenantId,
     };
   }
 

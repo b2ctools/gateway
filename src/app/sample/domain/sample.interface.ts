@@ -24,6 +24,7 @@ export interface Sample extends IDomain {
   countryId: ID;
   hidden: boolean;
   locations: ILocations;
+  tenantId: ID;
 }
 
 export interface SampleDto extends Sample {
