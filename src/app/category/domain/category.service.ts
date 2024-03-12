@@ -55,7 +55,7 @@ export class CategoryService {
 
     await this.verifyParentCategory(command.parent);
 
-    console.log(`Ading Product Category`, {
+    console.log(`Adding Category`, {
       name: pc.name,
       description: pc.description,
       parent: pc.parent,
@@ -84,7 +84,7 @@ export class CategoryService {
     const existingPC = await this.pcRepo.findById(id);
     if (!existingPC) {
       throw new BadRequestException(
-        `Product Category with id ${id} do not exist.`,
+        `Category with id ${id} do not exist.`,
       );
     }
 
@@ -93,7 +93,7 @@ export class CategoryService {
     });
     if (subcategories.length > 0) {
       throw new BadRequestException(
-        `Product Category ${existingPC.name} can not be removed. It has subcategories.`,
+        `Category ${existingPC.name} can not be removed. It has subcategories.`,
       );
     }
 
@@ -191,7 +191,7 @@ export class CategoryService {
       categoriesToSave = JSON.parse(json);
     } catch (error) {
       throw new BadRequestException(
-        "Error inserting Product Category from json file. " + error,
+        "Error inserting Category from json file. " + error,
       );
     }
 
@@ -204,7 +204,7 @@ export class CategoryService {
     const existingPC = await this.pcRepo.findById(pcId);
     if (!existingPC) {
       throw new BadRequestException(
-        `Product Category with id ${pcId} not found`,
+        `Category with id ${pcId} not found`,
       );
     }
     domainEntityFromTenantVerification(existingPC);
@@ -238,7 +238,7 @@ export class CategoryService {
     existingPC.parent = parent ? parent : existingPC.parent;
 
     console.log(
-      `Updating Product Category - ${JSON.stringify({
+      `Updating Category - ${JSON.stringify({
         id,
         name,
         description,
@@ -251,7 +251,7 @@ export class CategoryService {
   private async canUpdateParent(parent: ID, existingId: ID) {
     if (parent === existingId) {
       throw new BadRequestException(
-        `Product Category can not be its own parent`,
+        `Category can not be its own parent`,
       );
     }
 
@@ -264,7 +264,7 @@ export class CategoryService {
     domainEntityFromTenantVerification(pc);
     if (pc && pc.id !== existingId) {
       throw new BadRequestException(
-        `Product Category name ${name} is already taken`,
+        `Category name ${name} is already taken`,
       );
     }
   }
