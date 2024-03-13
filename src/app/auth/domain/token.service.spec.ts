@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import { genId } from "../../shared/utils/gen-id";
 import { UserRole, UserStatus } from "../../user/domain/user.interface";
 import { encodePassword } from "./encoder.service";

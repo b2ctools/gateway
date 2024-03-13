@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import { describe } from "node:test";
 import { TestingSessionService } from "./session.service";
 

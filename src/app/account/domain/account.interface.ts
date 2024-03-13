@@ -4,7 +4,7 @@ import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { StoreRef } from "../../store/domain/store.interface";
 import { codeFromId } from "../../shared/utils/gen-id";
 import { PermissionRef } from "../../permission/domain/permission.interface";
-import { isAdmin } from "src/app/auth/domain/middleware/access-control";
+import { isAdmin } from "../../auth/domain/middleware/access-control";
 
 export enum Scope {
   OWNER = "owner",
@@ -35,7 +35,7 @@ export const accountToDto = (
   a: Account,
   tenantRef: TenantRef = null,
   storeRef: StoreRef = null,
-  permissionsRef: PermissionRef[] = null,
+  permissionsRef: PermissionRef[] = null
 ): AccountDto => {
   delete a.tenantId;
   delete a.storeId;
@@ -50,4 +50,11 @@ export const accountToDto = (
   };
 };
 
-export const sortable = ["storeId"];
+export const sortable = [
+  "storeId",
+  "userId",
+  "scope",
+  "isActive",
+  "tenantId",
+  "type",
+];

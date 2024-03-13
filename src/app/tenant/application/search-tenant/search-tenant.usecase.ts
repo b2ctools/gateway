@@ -44,11 +44,12 @@ export class SearchTenantUseCase {
   async execute(request: SearchRequest): Promise<SearchOutput<TenantDto>> {
     const { data: tenants } = await this.tenantService.findAllTenants(request);
     const items = await Promise.all(
-      tenants.map( async (s) => {
-        const { count: storeCount} = await this.storeService.findAllStores({ filters: [{ field: "tenantId", value: s.id as string }] });
-        const { success, user } = await this.getPrimeryOwner(s.primaryOwnerId);
+      tenants.map( async (tenant) => {
+        const { count: storeCount} = await this.storeService.findAllStores({ filters: [{ field: "tenantId", value: tenant.id as string }] });
+        const { success, user } = await this.getPrimeryOwner(tenant.primaryOwnerId);
         const primaryOwner = success ? user : null;
-        return tenantToDto(s, storeCount, primaryOwner);
+        const userCount = (await this.userService.getUsersOfTenant(tenant.id)).length;
+        return tenantToDto(tenant, storeCount, primaryOwner, userCount);
       })
     );
 

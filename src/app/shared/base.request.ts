@@ -34,7 +34,7 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
   request: any,
   sortable: string[],
 ): T => {
-  let { sortOrder = "" } = request;
+  let sortOrder = (request && request.sortOrder) ? request.sortOrder : "";
   sortOrder = sortOrder.trim().toLowerCase();
   if (
     sortOrder &&

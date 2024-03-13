@@ -19,7 +19,14 @@ export interface Tenant extends IDomain {
 export interface TenantDto extends Omit<Tenant, "primaryOwnerId">{
   code: string;
   storeCount?: number;
-  primaryOwner?: User;
+  primaryOwner?: {
+    id: ID;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
+  userCount?: number;
 }
 export interface TenantRef {
   id: ID;
@@ -27,17 +34,27 @@ export interface TenantRef {
   code: string;
 }
 
+const primaryOwnerTenantRef = (user: User) => ({
+  id: user.id,
+  firstName: user.firstName,
+  lastName: user.lastName,
+  email: user.email,
+  phone: user.phone,
+});
+
 export const tenantToDto = (
   u: Tenant,
   storeCount: number = undefined,
   primaryOwner: User = undefined,
+  userCount: number = undefined,
 ): TenantDto => {
   delete u.primaryOwnerId;
   return {
     ...u,
     code: codeFromId(u.id),
     storeCount,
-    primaryOwner,
+    ...(primaryOwner ? { primaryOwner: primaryOwnerTenantRef(primaryOwner) } : {}),
+    userCount,
   };
 };
 
