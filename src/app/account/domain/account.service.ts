@@ -12,8 +12,6 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
-import { ctxSrv } from "../../shared/context.service";
-import { UserRole } from "../../user/domain/user.interface";
 import { StoreService } from "../../store/domain/store.service";
 
 @Injectable()
@@ -93,29 +91,29 @@ export class AccountService {
   async findAllAccounts(
     request: SearchAccountRequest,
   ): Promise<FindAllOutput<Account>> {
-    ctxSrv.getUserRole() === UserRole.USER;
+    // ctxSrv.getUserRole() === UserRole.USER;
 
-    const { userId: _userId, storeId, tenantId } = request;
-    const result = await this.accountRepo.findAll(request);
-    const { count } = result;
-    let { data: accounts } = result;
+    // const { userId: _userId, storeId, tenantId } = request;
+    return await this.accountRepo.findAll(request);
+    // const { count } = result;
+    // let { data: accounts } = result;
 
-    // accounts will always be filtered by tenantId
-    accounts = accounts.filter((a) => a.tenantId === tenantId);
+    // // accounts will always be filtered by tenantId
+    // accounts = tenantId? accounts.filter((a) => a.tenantId === tenantId) : accounts;
 
-    // this is a restriction ... role user can only see his accounts
-    const userId =
-      ctxSrv.getUserRole() === UserRole.USER ? ctxSrv.getUserId() : _userId;
+    // // this is a restriction ... role user can only see his accounts
+    // const userId =
+    //   ctxSrv.getUserRole() === UserRole.USER ? ctxSrv.getUserId() : _userId;
 
-    accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
-    accounts = storeId
-      ? accounts.filter((a) => a.storeId === storeId)
-      : accounts;
+    // accounts = userId ? accounts.filter((a) => a.userId === userId) : accounts;
+    // accounts = storeId
+    //   ? accounts.filter((a) => a.storeId === storeId)
+    //   : accounts;
 
-    return {
-      count,
-      data: accounts,
-    };
+    // return {
+    //   count,
+    //   data: accounts,
+    // };
   }
 
   async getAccountsFromStore(storeId: ID) {

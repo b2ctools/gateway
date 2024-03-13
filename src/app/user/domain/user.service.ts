@@ -199,4 +199,22 @@ export class UserService {
     const userId = ctxSrv.getUserId();
     return await this.accountService.getAccountsFromUserOnly(userId);
   }
+
+  async getUsersOfTenant(tenantId: ID): Promise<User[]> {
+    const { data: accounts } = await this.accountService.findAllAccounts({
+      filters: [{ field: "tenantId", value: tenantId as string }],
+    });
+
+    const ids = accounts.map((a) => a.userId);
+    const userIds = [...new Set(ids)];
+
+    const users = await Promise.all(
+      userIds.map(async (id) => {
+        return await this.userRepo.findById(id);
+      }),
+    );
+
+    return users.filter((u) => u);
+  }
+
 }

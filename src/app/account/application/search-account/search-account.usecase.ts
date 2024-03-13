@@ -16,7 +16,7 @@ import {
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { PermissionService } from "src/app/permission/domain/permission.service";
 import { ctxSrv } from "src/app/shared/context.service";
-import { isAdmin } from "src/app/auth/domain/middleware/access-control";
+import { isAdmin, isOwner, isUser } from "src/app/auth/domain/middleware/access-control";
 
 @Injectable()
 export class SearchAccountUseCase {
@@ -37,23 +37,40 @@ export class SearchAccountUseCase {
     private readonly permissionService: PermissionService,
   ) {}
 
-  private async validateUser(userId: ID) {
-    if (userId) {
-      await this.userService.findByIdOrFail(userId);
-      return;
+  /**
+   * if user is on request.. validate it
+   * @param request 
+   * @returns 
+   */
+  private async validateUser(request: SearchAccountRequest) {
+    request = {
+      ...request,
+      ...((isUser() && !isOwner()) ?  { userId: ctxSrv.getUserId() } : {}),
+    };
+    
+    if (request.userId) {
+      await this.userService.findByIdOrFail(request.userId);
     }
+    return request;
   }
 
   private async validateStore(storeId: ID) {
     if (storeId) {
       await this.storeService.findByIdOrFail(storeId);
-      return;
     }
   }
 
+  /**
+   * this is to set the tenantId on the request
+   * if it is an admin... tenant should be specified on the request
+   * it is nto an admin, tenantId should be set from the context
+   * @param request 
+   * @returns 
+   */
   private async setTenantId(
     request: SearchAccountRequest,
   ): Promise<SearchAccountRequest> {
+  
     // if user is admin, tenantId is required
     if (isAdmin() && !request.tenantId) {
       throw new BadRequestException(
@@ -61,36 +78,25 @@ export class SearchAccountUseCase {
       );
     }
 
-    // if user is admin, tenantId should be on request
-    if (isAdmin()) {
-      // if tenantId is on request, validate it
+    request.tenantId = isAdmin() ? request.tenantId : ctxSrv.getTenantId();
+    try {
       await this.tenantService.findByIdOrFail(request.tenantId);
-      return request;
+      
+    } catch (error) {
+      console.error("Error on Search Account. TenantId ${request.tenantId} could not be found", error);
+      throw new BadRequestException(`TenantId ${request.tenantId} could not be found. Please try to do login-account or add it on request if you are an admin. `);
     }
-
-    /**
-     * TODO: validar el caso de que el propio usuario pues busca todas sus cuentas...
-     * y lo preocupante de esto es que no use el mismo mecanismo que usa el owner para ver las cuentas de un usuario...
-     */
-
-    // // if auth-user is not and admin and tenantId is not on request
-    // // then userId on request should be the same as auth-user
-    // if (request.userId !== ctxSrv.getUserRole()){
-    //   throw new BadRequestException('UserId on request should be the same as auth-user');
-    // }
-
-    // if user is not admin, tenantId should come from context (token)
-    const tenantId = ctxSrv.getTenantId();
-    return { ...request, tenantId };
+    
+    return request;
   }
 
   async execute(
     request: SearchAccountRequest,
   ): Promise<SearchOutput<AccountDto>> {
     request = await this.setTenantId(request);
-    const { userId, storeId } = request;
-    await this.validateUser(userId);
-    await this.validateStore(storeId);
+    request = await this.validateUser(request);
+    await this.validateStore(request.storeId);
+
     const { count, data: accounts } = await this.accountService.findAllAccounts(
       sanitazeSearchQueryParams<SearchAccountRequest>(request, sortable),
     );

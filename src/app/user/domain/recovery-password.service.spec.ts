@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import { JwtService } from "@nestjs/jwt";
 import { TokenService } from "../../auth/domain/token.service";
 import { EmailService } from "../../notification/domain/email.service";

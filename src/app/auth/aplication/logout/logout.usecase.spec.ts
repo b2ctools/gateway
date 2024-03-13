@@ -1,5 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require("dotenv").config();
+import * as dotenv from "dotenv";
+dotenv.config();
 import { LogoutUseCase } from "./logout.usecase";
 import { sessionService } from "../../domain/session.service";
 

@@ -65,6 +65,16 @@ export const isAdmin = (): boolean => {
   return currentRole === UserRole.ADMIN;
 };
 
+export const isUser = (): boolean => {
+  const currentRole = ctxSrv.getUserRole();
+  return currentRole === UserRole.USER;
+}
+
+export const isOwner = (): boolean => {
+  const currentScope = ctxSrv.getScope();
+  return currentScope === Scope.OWNER;
+};
+
 export const domainEntityFromTenantVerification = (
   domainEntity: TenantDomaintEntity
 ) => {
