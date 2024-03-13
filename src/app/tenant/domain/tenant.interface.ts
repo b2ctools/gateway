@@ -1,7 +1,7 @@
 import { codeFromId } from "../../shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { User } from "src/app/user/domain/user.interface";
+import { User } from "../../user/domain/user.interface";
 
 export type TenantAddress = string;
 export type TenantState = 'active' | 'inactive';
@@ -52,9 +52,9 @@ export const tenantToDto = (
   return {
     ...u,
     code: codeFromId(u.id),
-    storeCount,
+    ...(storeCount ? { storeCount } : {}),
     ...(primaryOwner ? { primaryOwner: primaryOwnerTenantRef(primaryOwner) } : {}),
-    userCount,
+    ...(userCount ? { userCount } : {}),
   };
 };
 

@@ -2,8 +2,8 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { TenantService } from "../../domain/tenant.service";
 import { UpdateTenantRequest } from "./update-tenant.request";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
-import { AccountService } from "src/app/account/domain/account.service";
-import { isValidTenantState } from "../../domain/tenant.interface";
+import { TenantDto, isValidTenantState, tenantToDto } from "../../domain/tenant.interface";
+import { UserService } from "../../../user/domain/user.service";
 
 @Injectable()
 export class UpdateTenantUseCse {
@@ -11,15 +11,23 @@ export class UpdateTenantUseCse {
     @Inject(TenantService)
     private readonly tenantService: TenantService,
 
-    @Inject(AccountService)
-    private readonly accountService: AccountService,
+    @Inject(UserService)
+    private readonly userService: UserService,
   ) {}
 
-  private async validateOwnerAccount(request: UpdateTenantRequest) {
+  private async validateOwnerUser(request: UpdateTenantRequest) {
     if (request.primaryOwnerId) {
-      await this.accountService.findByIdOrFail(
+      await this.userService.findByIdOrFail(
         request.primaryOwnerId,
       );
+    }
+  }
+
+  private async getPrimaryOwner(userId: ID){
+    try {
+      return await this.userService.findByIdOrFail(userId);
+    } catch (error) {
+      return undefined;
     }
   }
 
@@ -31,9 +39,11 @@ export class UpdateTenantUseCse {
   
   }
 
-  async execute(id: ID, request: UpdateTenantRequest) {
-    await this.validateOwnerAccount(request);
+  async execute(id: ID, request: UpdateTenantRequest): Promise<TenantDto> {
+    await this.validateOwnerUser(request);
     this.validateTenantState(request.state);
-    return await this.tenantService.updateTenant(id, request);
+    const tenant = await this.tenantService.updateTenant(id, request);
+    const owner = await this.getPrimaryOwner(tenant.primaryOwnerId);
+    return tenantToDto(tenant, undefined, owner);
   }
 }
