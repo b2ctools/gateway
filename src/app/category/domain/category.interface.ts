@@ -30,4 +30,4 @@ export const categoryToDto = (
   };
 };
 
-export const sortable = ["name", "status", "description"];
+export const sortable = ["name", "status", "description", "tenantId"];
