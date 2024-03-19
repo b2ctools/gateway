@@ -18,6 +18,7 @@ export class UpdateTenantRequest implements Omit<Tenant, "id" | "planId">{
   @IsObject()
   @ValidateNested()
   @Type(() => AddressRequest)
+  @IsOptional()
   address: AddressRequest;
 
   @IsNotEmpty()
