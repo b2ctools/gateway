@@ -157,7 +157,7 @@ export class InitService {
     const userLeo = await this.userService.findUserByEmail("leo@email.com");
     const tenant = await this.tenantService.addTenant({
       name: "Leo",
-      address: "Managua",
+      address: { address: "Managua" },
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
       primaryOwnerId: userLeo.id,
       state: "active",
@@ -209,7 +209,7 @@ export class InitService {
 
     const tenant2 = await this.tenantService.addTenant({
       name: "Tito",
-      address: "Managua",
+      address: { address: "Managua" },
       logo: "https://www.sample.com/wp-content/uploads/2022/03/logo.png",
       primaryOwnerId: null,
       state: "active",

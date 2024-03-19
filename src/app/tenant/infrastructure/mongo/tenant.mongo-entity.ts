@@ -1,6 +1,6 @@
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { MongoEntity } from "../../../shared/abstract-repository/entities/mongo-entity";
-import { Tenant, TenantState } from "../../domain/tenant.interface";
+import { Tenant, TenantAddress, TenantState } from "../../domain/tenant.interface";
 
 export class TenantMongoEntity
   extends MongoEntity
@@ -9,7 +9,7 @@ export class TenantMongoEntity
   name: string;
   description?: string;
   planId: ID;
-  address: string;
+  address: TenantAddress;
   logo: string;
   primaryOwnerId: ID;
   state: TenantState;

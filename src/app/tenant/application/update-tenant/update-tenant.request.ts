@@ -1,6 +1,8 @@
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Tenant, TenantState } from "../../domain/tenant.interface";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
+import { AddressRequest } from "src/app/shared/address/address.request";
+import { Type } from "class-transformer";
 export class UpdateTenantRequest implements Omit<Tenant, "id" | "planId">{
   
   @IsNotEmpty()
@@ -13,10 +15,10 @@ export class UpdateTenantRequest implements Omit<Tenant, "id" | "planId">{
   @IsOptional()
   description: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  address: string;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => AddressRequest)
+  address: AddressRequest;
 
   @IsNotEmpty()
   @IsString()
