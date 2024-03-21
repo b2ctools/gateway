@@ -8,7 +8,7 @@ import {
   IOrder,
   SearchRequest,
   applyFiltersFromRequest,
-} from "../base.request";
+} from "../filters-and-request/base.request";
 import { User } from "../../user/domain/user.interface";
 
 interface HashMap<T> {

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { PermissionService } from "../../domain/permission.service";
-import { SearchRequest } from "../../../shared/base.request";
+import { SearchRequest, sanitazeSearchQueryParams } from "../../../shared/filters-and-request/base.request";
+import { sortable } from "../../domain/permission.interface";
 
 @Injectable()
 export class SearchPermissionUseCase {
@@ -10,6 +11,8 @@ export class SearchPermissionUseCase {
   ) {}
 
   async execute(request: SearchRequest) {
-    return await this.permissionService.findAllPermissions(request);
+    return await this.permissionService.findAllPermissions(
+      sanitazeSearchQueryParams<SearchRequest>(request, sortable)
+    );
   }
 }

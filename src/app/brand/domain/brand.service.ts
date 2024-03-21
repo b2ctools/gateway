@@ -7,7 +7,7 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { BrandRepository } from "../infrastructure/brand-repositor.type";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateBrandRequest } from "../application/update-brand/update-brand.request";
 
 @Injectable()

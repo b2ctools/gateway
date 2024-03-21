@@ -1,5 +1,5 @@
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 import { CategoryDTO } from "../../domain/category.interface";
 
 export interface SearchSubCategoryRequest extends SearchRequest {

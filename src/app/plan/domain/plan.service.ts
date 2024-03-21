@@ -3,7 +3,7 @@ import { PlanRepository } from "../infrastructure/plan-repository.type";
 import { AddPlanCommand } from "../application/add-plan/add-plan.command";
 import { Plan } from "./plan.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdatePlanRequest } from "../application/update-plan/update-plan.request";
 import { SetResourcesRequest } from "../application/set-resources/set-resources.request";
 

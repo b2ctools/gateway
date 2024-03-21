@@ -1,4 +1,4 @@
-import { SearchRequest } from "../base.request";
+import { SearchRequest } from "../filters-and-request/base.request";
 import { IDomain } from "./entities/domain";
 import { MongoEntity } from "./entities/mongo-entity";
 import { AppRepository, FindAllOutput, ID } from "./repository.interface";

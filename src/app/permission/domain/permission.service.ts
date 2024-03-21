@@ -3,7 +3,7 @@ import { PermissionRepository } from "../infrastructure/permission-repository.ty
 import { AddPermissionCommand } from "../application/add-permission/add-permission.command";
 import { Permission, PermissionRef } from "./permission.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdatePermissionRequest } from "../application/update-permission/update-permission.request";
 
 @Injectable()

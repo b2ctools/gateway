@@ -6,7 +6,7 @@ import {
   permissionToDto,
 } from "../../domain/permission.interface";
 import { permissionPath } from "../../../shared/routes";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 
 @Controller(permissionPath)
 export class SearchPermissionController {

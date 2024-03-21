@@ -3,7 +3,7 @@ import { CustomerService } from "../../domain/customer.service";
 import {
   SearchRequest,
   sanitazeSearchQueryParams,
-} from "../../../shared/base.request";
+} from "../../../shared/filters-and-request/base.request";
 import { sortable } from "../../domain/customer.interface";
 
 @Injectable()

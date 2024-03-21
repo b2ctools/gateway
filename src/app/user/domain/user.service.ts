@@ -13,9 +13,10 @@ import {
   FindAllOutput,
   ID,
 } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { AccountService } from "../../account/domain/account.service";
 import { Account } from "src/app/account/domain/account.interface";
+import { EqualFilter } from "../../shared/filters-and-request/request-filters";
 
 @Injectable()
 export class UserService {
@@ -202,7 +203,7 @@ export class UserService {
 
   async getUsersOfTenant(tenantId: ID): Promise<User[]> {
     const { data: accounts } = await this.accountService.findAllAccounts({
-      filters: [{ field: "tenantId", value: tenantId as string }],
+      filters: [new EqualFilter("tenantId", tenantId as string)]
     });
 
     const ids = accounts.map((a) => a.userId);

@@ -2,8 +2,9 @@ import { codeFromId } from "../../shared/utils/gen-id";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { ID } from "../../shared/abstract-repository/repository.interface";
 import { User } from "../../user/domain/user.interface";
+import { IAddress } from "src/app/shared/address/address.interface";
 
-export type TenantAddress = string;
+export type TenantAddress = IAddress;
 export type TenantState = 'active' | 'inactive';
 export const isValidTenantState = (s: string) => ['active', 'inactive'].includes(s);
 export interface Tenant extends IDomain {

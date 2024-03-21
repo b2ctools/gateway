@@ -5,7 +5,7 @@ import { storePath } from "../../../shared/routes";
 // import { RoleChecking } from "../../../auth/domain/middleware/role.guard";
 // import { UserRole } from "../../../user/domain/user.interface";
 // import { Roles } from "../../../auth/domain/middleware/roles.decorator";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 import { Scope } from "src/app/account/domain/account.interface";
 import { allowedForScope } from "src/app/auth/domain/middleware/access-control";
 @Controller(storePath)

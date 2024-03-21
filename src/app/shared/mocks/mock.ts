@@ -4,6 +4,7 @@ import { UserRole } from "../../user/domain/user.interface";
 import { AddResourceCommand } from "src/app/resource/application/add-resource/add-resource.command";
 import { AddStoreCommand } from "src/app/store/application/add-store/add-store.command";
 import { ctxSrv } from "../context.service";
+import { BillingCycle, Plan } from "src/app/plan/domain/plan.interface";
 
 export const getMockedUserList = () => {
   const commondData = {
@@ -123,8 +124,42 @@ export const getMockedCategoryList = (size: number = 2) => {
     }));
 };
 
-export const getMockedPlansList = () => {
-  return [{ name: "Starter" }, { name: "Pro" }];
+export const getMockedPlansList = (): Plan[]  => {
+  return [
+    {
+      id: null,
+      name: "Starter",
+      isCustom: false,
+      resources: [],
+      billing: [],
+    },
+    {
+      id: null,
+      name: "Pro",
+      isCustom: false,
+      resources: [],
+      billing: [
+        {
+          price: 100,
+          cycle: BillingCycle.MONTHLY,
+        },
+        {
+          price: 100 * 0.3 * 12,
+          cycle: BillingCycle.YEARLY,
+        }
+      ],
+    },
+    {
+      id: null,
+      name: "Custom Leo",
+      isCustom: true,
+      resources: [],
+      billing: [{
+        price: 100,
+        cycle: BillingCycle.LIFETIME,
+      }],
+    },
+  ];
 };
 
 export const getMockedResourcesList = (): AddResourceCommand[] => {

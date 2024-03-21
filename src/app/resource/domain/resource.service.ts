@@ -3,7 +3,7 @@ import { ResourceRepository } from "../infrastructure/resource-repository.type";
 import { AddResourceCommand } from "../application/add-resource/add-resource.command";
 import { Resource } from "./resource.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateResourceRequest } from "../application/update-resource/update-resource.request";
 
 @Injectable()

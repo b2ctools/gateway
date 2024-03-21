@@ -1,6 +1,6 @@
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
-import { Tenant, TenantState } from "../../domain/tenant.interface";
+import { Tenant, TenantAddress, TenantState } from "../../domain/tenant.interface";
 
 export class TenantMockedEntity
   extends MockedEntity
@@ -9,7 +9,7 @@ export class TenantMockedEntity
   name: string;
   description?: string;
   planId: ID;
-  address: string;
+  address: TenantAddress;
   logo: string;
   primaryOwnerId: ID;
   state: TenantState;

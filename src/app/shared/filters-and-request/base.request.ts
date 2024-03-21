@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BadRequestException } from "@nestjs/common";
-import { isAdmin } from "../auth/domain/middleware/access-control";
-import { ID } from "./abstract-repository/repository.interface";
-import { ctxSrv } from "./context.service";
+import { isAdmin } from "../../auth/domain/middleware/access-control";
+import { ID } from "../abstract-repository/repository.interface";
+import { ctxSrv } from "../context.service";
+import { IFilter, SubStringFilter } from "./request-filters";
 
 export type IOrder = "asc" | "desc";
 
@@ -16,7 +18,7 @@ export interface SearchRequest {
   toDate?: string;
   dateFieldName?: TFieldName;
   tenantId?: ID;
-  filters?: FilterToApply[];
+  filters?: IFilter[];
 }
 
 export interface SearchOutput<T> {
@@ -47,8 +49,8 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
 
   const filters =
     sortable && sortable.length > 0
-      ? getFiltersFromRequest(sortable, request)
-      : {};
+      ? buildSubStringFiltersFromSortableFieldsOnRequest(sortable, request)
+      : [];
   console.log("=============================");
   console.log("filters", filters);
   console.log("=============================");
@@ -72,47 +74,34 @@ export const sanitazeSearchQueryParams = <T extends SearchRequest>(
   };
 };
 
-interface anyRequest {
-  [key: string]: string;
-}
 
-export interface FilterToApply {
-  field: string;
-  value: string;
-}
 
-export const getFiltersFromRequest = (
+
+// export type FilterType = "subString" | "dateEqual" | "equal" | "boolean";
+
+
+const buildSubStringFiltersFromSortableFieldsOnRequest = (
   sortable: string[],
-  request: anyRequest,
-): FilterToApply[] => {
-  return sortable.filter((field) => field in request)
-    .map((field) => ({
-        field,
-        value: request[field],
-    }));
+  request: SearchRequest,
+): IFilter[] => {
+  // filter previously defined and present in the request
+  const requestFilter: IFilter[] = request.filters || [];
+
+  const filtersFromSortable =  sortable.filter((field) => field in request)
+    .map((field) => new SubStringFilter(field, request[field]));
+
+  return [...requestFilter, ...filtersFromSortable];
 };
-
-
-const applyFilter = (  
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  list: any[],
-  filter: FilterToApply
-) => {
-  if (!filter || !filter.value || !filter.field) return list;
-  return list.filter((item) =>
-    item[filter.field].toLowerCase().includes(filter.value.toLowerCase()),
-  );
-}
 
 export const applyFiltersFromRequest = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   list: any[],
-  filter: FilterToApply[],
+  filter: IFilter[],
 ) => {
   if (!filter || filter.length === 0) return list;
   let result = list;
-  filter.forEach((item) => {
-    result = applyFilter(result, item);
+  filter.forEach((filter) => {
+    if (filter) result = filter.apply(list);
   });
   return result;
 };

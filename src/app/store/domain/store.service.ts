@@ -7,7 +7,7 @@ import {
 import { AddStoreCommand } from "../application/add-store/add-store.command";
 import { Store, StoreRef } from "./store.interface";
 import { StoreRepository } from "../infrastructure/store-repositor.type";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import {
   FindAllOutput,
   ID,

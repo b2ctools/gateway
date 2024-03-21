@@ -6,7 +6,7 @@ import {
   customerToDto,
 } from "../../domain/customer.interface";
 import { customerPath } from "../../../shared/routes";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 
 @Controller(customerPath)
 export class SearchCustomerController {

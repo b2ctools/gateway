@@ -4,7 +4,7 @@ import {
   SearchCategoryOutput,
   SearchCategoryRequest,
 } from "./search-category.request";
-import { sanitazeSearchQueryParams, setTenantOnRequest } from "../../../shared/base.request";
+import { sanitazeSearchQueryParams, setTenantOnRequest } from "../../../shared/filters-and-request/base.request";
 import {
   categoryToDto,
   sortable,

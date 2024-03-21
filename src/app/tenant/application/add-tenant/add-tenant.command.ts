@@ -1,4 +1,4 @@
-import { Tenant, TenantState } from "../../domain/tenant.interface";
+import { Tenant, TenantAddress, TenantState } from "../../domain/tenant.interface";
 import { AddTenantRequest } from "./add-tenant.request";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 
@@ -7,7 +7,7 @@ export class AddTenantCommand
 {
   name: string;
   description?: string;
-  address: string;
+  address: TenantAddress;
   logo: string;
   primaryOwnerId: ID = undefined;
   state: TenantState;

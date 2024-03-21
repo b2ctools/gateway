@@ -6,7 +6,7 @@ import {
   countryToDto,
 } from "../../domain/country.interface";
 import { countryPath } from "../../../shared/routes";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 import { SearchCountryUseCase } from "./search-country.usecase";
 @Controller(countryPath)
 export class SearchCountryController {
