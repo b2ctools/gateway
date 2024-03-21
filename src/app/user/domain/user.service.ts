@@ -16,7 +16,7 @@ import {
 import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { AccountService } from "../../account/domain/account.service";
 import { Account } from "src/app/account/domain/account.interface";
-import { EqualFilter } from "src/app/shared/filters-and-request/request-filters";
+import { EqualFilter } from "../../shared/filters-and-request/request-filters";
 
 @Injectable()
 export class UserService {

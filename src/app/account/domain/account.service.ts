@@ -13,7 +13,7 @@ import {
 } from "../../shared/abstract-repository/repository.interface";
 import { SearchAccountRequest } from "../application/search-account/search-account.request";
 import { StoreService } from "../../store/domain/store.service";
-import { EqualFilter } from "src/app/shared/filters-and-request/request-filters";
+import { EqualFilter } from "../../shared/filters-and-request/request-filters";
 
 @Injectable()
 export class AccountService {
