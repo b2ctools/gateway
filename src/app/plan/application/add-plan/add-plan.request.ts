@@ -7,7 +7,7 @@ import {
   ValidateIf,
   ValidateNested,
 } from "class-validator";
-import { Billing, BillingCycle, Plan } from "../../domain/plan.interface";
+import { Billing, BillingCycle, Plan, PlanType } from "../../domain/plan.interface";
 import { Type } from "class-transformer";
 
 class BillingRequest implements Billing {
@@ -18,6 +18,10 @@ class BillingRequest implements Billing {
   @IsEnum(BillingCycle)
   cycle: BillingCycle;
 
+  @IsNotEmpty()
+  @IsString()
+  @IsOptional()
+  description?: string;
 }
 
 export class AddPlanRequest implements Omit<Plan, "id" | "resources"> {
@@ -36,5 +40,7 @@ export class AddPlanRequest implements Omit<Plan, "id" | "resources"> {
   @Type(() => BillingRequest)
   billing: Billing[];
 
-  isCustom: boolean;
+  @IsNotEmpty()
+  @IsEnum(PlanType)
+  type: PlanType;
 }

@@ -15,7 +15,7 @@ export class PlanMockedRepository extends MockedRepository<
     entity.description = d.description;
     entity.resources = d.resources;
     entity.billing = d.billing;
-    entity.isCustom = d.isCustom;
+    entity.type = d.type;
 
     return entity;
   }
@@ -27,7 +27,7 @@ export class PlanMockedRepository extends MockedRepository<
       description: e.description,
       resources: e.resources,
       billing: e.billing,
-      isCustom: e.isCustom,
+      type: e.type,
     };
   }
 

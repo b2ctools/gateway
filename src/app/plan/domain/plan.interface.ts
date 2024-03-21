@@ -11,6 +11,13 @@ export enum BillingCycle {
 export interface Billing {
   price: number;
   cycle: BillingCycle;
+  description?: string;
+}
+
+export enum PlanType {
+  Free = "free",
+  Pro = "pro",
+  Custom = "custom",
 }
 
 export interface Plan extends IDomain {
@@ -18,7 +25,7 @@ export interface Plan extends IDomain {
   description?: string;
   resources: ID[];
   billing: Billing[];
-  isCustom: boolean;
+  type: PlanType;
 }
 
 export interface PlanDto extends Plan {}
@@ -31,4 +38,4 @@ export const planToDto = (u: Plan, resources: string[] = null): PlanDto => {
   };
 };
 
-export const sortable = ["name", "description"];
+export const sortable = ["name", "description", "type"];
