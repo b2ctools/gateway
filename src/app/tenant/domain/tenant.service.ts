@@ -3,7 +3,7 @@ import { TenantRepository } from "../infrastructure/tenant-repository.type";
 import { AddTenantCommand } from "../application/add-tenant/add-tenant.command";
 import { Tenant, TenantRef } from "./tenant.interface";
 import { ID } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateTenantRequest } from "../application/update-tenant/update-tenant.request";
 import { codeFromId } from "../../shared/utils/gen-id";
 

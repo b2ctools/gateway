@@ -6,7 +6,7 @@ import {
   resourceToDto,
 } from "../../domain/resource.interface";
 import { resourcePath } from "../../../shared/routes";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 
 @Controller(resourcePath)
 export class SearchResourceController {

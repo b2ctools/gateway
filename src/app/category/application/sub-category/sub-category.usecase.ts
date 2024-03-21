@@ -4,7 +4,7 @@ import {
   SearchSubCategoriesOutput,
   SearchSubCategoryRequest,
 } from "./sub-category.request";
-import { sanitazeSearchQueryParams } from "../../../shared/base.request";
+import { sanitazeSearchQueryParams } from "../../../shared/filters-and-request/base.request";
 import {
   categoryToDto,
   sortable,

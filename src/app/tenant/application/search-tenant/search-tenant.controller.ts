@@ -2,7 +2,7 @@ import { Controller, Get, Inject, Query } from "@nestjs/common";
 import { SearchTenantUseCase } from "./search-tenant.usecase";
 import { TenantDto } from "../../domain/tenant.interface";
 import { tenantPath } from "../../../shared/routes";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 import { allowedForRole } from "src/app/auth/domain/middleware/access-control";
 import { UserRole } from "src/app/user/domain/user.interface";
 

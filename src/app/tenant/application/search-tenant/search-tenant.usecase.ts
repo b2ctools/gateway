@@ -1,6 +1,6 @@
 import { Inject, Injectable, forwardRef } from "@nestjs/common";
 import { TenantService } from "../../domain/tenant.service";
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest, sanitazeSearchQueryParams } from "../../../shared/filters-and-request/base.request";
 import { StoreService } from "src/app/store/domain/store.service";
 import {
   TenantDto,
@@ -10,6 +10,7 @@ import {
 import { UserService } from "src/app/user/domain/user.service";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { User } from "src/app/user/domain/user.interface";
+import { EqualFilter } from "src/app/shared/filters-and-request/request-filters";
 
 @Injectable()
 export class SearchTenantUseCase {
@@ -42,10 +43,12 @@ export class SearchTenantUseCase {
   }
 
   async execute(request: SearchRequest): Promise<SearchOutput<TenantDto>> {
-    const { data: tenants } = await this.tenantService.findAllTenants(request);
+    const { data: tenants } = await this.tenantService.findAllTenants(
+      sanitazeSearchQueryParams<SearchRequest>(request, sortable)
+    );
     const items = await Promise.all(
       tenants.map( async (tenant) => {
-        const { count: storeCount} = await this.storeService.findAllStores({ filters: [{ field: "tenantId", value: tenant.id as string }] });
+        const { count: storeCount} = await this.storeService.findAllStores({ filters: [new EqualFilter("tenantId", tenant.id as string)] });
         const { success, user } = await this.getPrimeryOwner(tenant.primaryOwnerId);
         const primaryOwner = success ? user : null;
         const userCount = (await this.userService.getUsersOfTenant(tenant.id)).length;

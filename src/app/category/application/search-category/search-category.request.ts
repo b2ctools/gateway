@@ -1,4 +1,4 @@
-import { SearchOutput, SearchRequest } from "../../../shared/base.request";
+import { SearchOutput, SearchRequest } from "../../../shared/filters-and-request/base.request";
 import { CategoryDTO } from "../../domain/category.interface";
 
 export interface SearchCategoryRequest extends SearchRequest {

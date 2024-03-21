@@ -7,7 +7,7 @@ import {
   ID,
 } from "../../shared/abstract-repository/repository.interface";
 import { CountryRepository } from "../infrastructure/country-repositor.type";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 
 @Injectable()
 export class CountryService {

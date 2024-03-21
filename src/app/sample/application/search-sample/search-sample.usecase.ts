@@ -4,7 +4,7 @@ import {
   SearchOutput,
   SearchRequest,
   sanitazeSearchQueryParams,
-} from "../../../shared/base.request";
+} from "../../../shared/filters-and-request/base.request";
 import {
   SampleDto,
   sampleToDto,

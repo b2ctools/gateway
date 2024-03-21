@@ -12,7 +12,7 @@ import {
 import {
   SearchOutput,
   sanitazeSearchQueryParams,
-} from "../../../shared/base.request";
+} from "../../../shared/filters-and-request/base.request";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { PermissionService } from "src/app/permission/domain/permission.service";
 import { ctxSrv } from "src/app/shared/context.service";

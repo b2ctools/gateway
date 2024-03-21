@@ -4,7 +4,7 @@ import {
   SearchRequest,
   sanitazeSearchQueryParams,
   setTenantOnRequest,
-} from "../../../shared/base.request";
+} from "../../../shared/filters-and-request/base.request";
 import { StoreDto, sortable, storeToDto } from "../../domain/store.interface";
 import { FindAllOutput } from "src/app/shared/abstract-repository/repository.interface";
 import { TenantService } from "src/app/tenant/domain/tenant.service";

@@ -6,7 +6,7 @@ import {
   FindAllOutput,
   ID,
 } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateCustomerRequest } from "../application/update-customer/update-customer.request";
 import { UserService } from "../../user/domain/user.service";
 import { UserRole } from "../../user/domain/user.interface";

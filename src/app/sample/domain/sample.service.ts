@@ -6,7 +6,7 @@ import {
   FindAllOutput,
   ID,
 } from "../../shared/abstract-repository/repository.interface";
-import { SearchRequest } from "../../shared/base.request";
+import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateSampleRequest } from "../application/update-sample/update-sample.request";
 
 @Injectable()

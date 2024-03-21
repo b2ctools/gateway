@@ -1,4 +1,4 @@
-import { SearchRequest } from "../base.request";
+import { SearchRequest } from "../filters-and-request/base.request";
 
 export type ID = string | number;
 
