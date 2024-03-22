@@ -16,6 +16,7 @@ export class PlanMockedRepository extends MockedRepository<
     entity.resources = d.resources;
     entity.billing = d.billing;
     entity.type = d.type;
+    entity.defaultBillingCycle = d.defaultBillingCycle;
 
     return entity;
   }
@@ -28,6 +29,7 @@ export class PlanMockedRepository extends MockedRepository<
       resources: e.resources,
       billing: e.billing,
       type: e.type,
+      defaultBillingCycle: e.defaultBillingCycle,
     };
   }
 

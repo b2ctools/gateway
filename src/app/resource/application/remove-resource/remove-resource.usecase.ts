@@ -10,6 +10,7 @@ export class RemoveResourceUseCase {
   ) {}
 
   async execute(resourceId: ID) {
+    await this.resourceService.findByIdOrFail(resourceId);
     await this.resourceService.removeResource(resourceId);
   }
 }

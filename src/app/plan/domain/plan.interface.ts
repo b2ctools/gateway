@@ -3,9 +3,9 @@ import { IDomain } from "../../shared/abstract-repository/entities/domain";
 
 
 export enum BillingCycle {
-  MONTHLY = "MONTHLY",
-  YEARLY = "YEARLY",
-  LIFETIME = "LIFETIME",
+  MONTHLY = "month",
+  YEARLY = "year",
+  LIFETIME = "lifetime",
 }
 
 export interface Billing {
@@ -26,6 +26,7 @@ export interface Plan extends IDomain {
   resources: ID[];
   billing: Billing[];
   type: PlanType;
+  defaultBillingCycle?: BillingCycle;
 }
 
 export interface PlanDto extends Plan {}

@@ -10,6 +10,7 @@ export class RemoveCustomerUseCase {
   ) {}
 
   async execute(customerId: ID) {
+    await this.customerService.findByIdOrFail(customerId);
     await this.customerService.removeCustomer(customerId);
   }
 }

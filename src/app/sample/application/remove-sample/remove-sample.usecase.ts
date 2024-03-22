@@ -10,6 +10,7 @@ export class RemoveSampleUseCase {
   ) {}
 
   async execute(sampleId: ID) {
+    await this.sampleService.findByIdOrFail(sampleId);
     await this.sampleService.removeSample(sampleId);
   }
 }

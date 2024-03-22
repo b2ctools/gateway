@@ -10,6 +10,7 @@ export class RemovePlanUseCase {
   ) {}
 
   async execute(planId: ID) {
+    await this.planService.findByIdOrFail(planId);
     await this.planService.removePlan(planId);
   }
 }

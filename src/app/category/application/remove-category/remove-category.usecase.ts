@@ -10,6 +10,7 @@ export class RemoveCategoryUseCase {
   ) {}
 
   async execute(id: ID) {
+    await this.pcService.findByIdOrFail(id);
     await this.pcService.removeCategory(id);
   }
 }

@@ -24,6 +24,7 @@ import { SampleService } from "./sample/domain/sample.service";
 import { AddSampleCommand } from "./sample/application/add-sample/add-sample.command";
 import { PermissionService } from "./permission/domain/permission.service";
 import { AddAccountCommand } from "./account/application/add-account/add-account.command";
+import { AddPlanCommand } from "./plan/application/add-plan/add-plan.command";
 
 @Injectable()
 export class InitService {
@@ -183,7 +184,7 @@ export class InitService {
     );
 
     await Promise.all(
-      getMockedPlansList().map((plan) => this.planService.addPlan(plan)),
+      getMockedPlansList().map((plan) => this.planService.addPlan(new AddPlanCommand(plan))),
     );
 
     await Promise.all(
