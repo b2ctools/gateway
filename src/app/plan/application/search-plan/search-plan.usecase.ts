@@ -4,8 +4,6 @@ import { SearchOutput, SearchRequest, sanitazeSearchQueryParams } from "../../..
 import { Plan, PlanDto, planToDto } from "../../domain/plan.interface";
 import { sortable } from "../../domain/plan.interface";
 import { ResourceService } from "src/app/resource/domain/resource.service";
-import { SearchPlanRequest } from "./search-plan.request";
-import { BooleanFilter } from "src/app/shared/filters-and-request/request-filters";
 
 @Injectable()
 export class SearchPlanUseCase {
@@ -25,16 +23,7 @@ export class SearchPlanUseCase {
       .map((r) => r.name);
   }
 
-  private addIsCustomFilter(request: SearchPlanRequest){
-    if (request.isCustom) {
-      request.filters = request.filters || [];
-      request.filters.push(new BooleanFilter("isCustom", !!request.isCustom));
-    }
-    return request;
-  }
-
   async execute(request: SearchRequest): Promise<SearchOutput<PlanDto>> {
-    request = this.addIsCustomFilter(request);
     const { data: plans } = await this.planService.findAllPlans(
       sanitazeSearchQueryParams<SearchRequest>(request, sortable)
     );

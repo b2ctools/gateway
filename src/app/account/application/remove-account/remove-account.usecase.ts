@@ -10,6 +10,7 @@ export class RemoveAccountUseCase {
   ) {}
 
   async execute(accountId: ID) {
+    await this.accountService.findByIdOrFail(accountId);
     await this.accountService.removeAccount(accountId);
   }
 }

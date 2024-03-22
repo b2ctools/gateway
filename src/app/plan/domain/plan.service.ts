@@ -51,7 +51,7 @@ export class PlanService {
   }
 
   async updatePlan(id: ID, request: UpdatePlanRequest): Promise<Plan> {
-    const { name, description } = request;
+    const { name, description, billing, type, defaultBillingCycle } = request;
     const existingPlan = await this.findByIdOrFail(id);
 
     if (name){
@@ -62,6 +62,9 @@ export class PlanService {
       ...existingPlan,
       ...(name ? { name } : {}),
       ...(description ? { description } : {}),
+      ...(billing ? { billing } : {}),
+      ...(type ? { type } : {}),
+      ...(defaultBillingCycle ? { defaultBillingCycle } : {}),
     };
 
     console.log(`Updating Plan - ${JSON.stringify(request)}`);

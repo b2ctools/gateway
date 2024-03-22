@@ -10,6 +10,7 @@ export class RemovePermissionUseCase {
   ) {}
 
   async execute(permissionId: ID) {
+    await this.permissionService.findByIdOrFail(permissionId);
     await this.permissionService.removePermission(permissionId);
   }
 }

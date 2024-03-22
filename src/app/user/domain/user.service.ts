@@ -177,7 +177,6 @@ export class UserService {
   }
 
   async removeUser_id(userId: ID) {
-    await this.findByIdOrFail(userId);
     await this.userRepo.delete(userId);
   }
 

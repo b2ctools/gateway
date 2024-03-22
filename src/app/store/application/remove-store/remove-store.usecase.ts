@@ -10,6 +10,7 @@ export class RemoveStoreUseCase {
   ) {}
 
   async execute(storeId: ID) {
+    await this.storeService.findByIdOrFail(storeId);
     await this.storeService.removeStore(storeId);
   }
 }

@@ -10,6 +10,7 @@ export class RemoveTenantUseCase {
   ) {}
 
   async execute(tenantId: ID) {
+    await this.tenantService.findByIdOrFail(tenantId);
     await this.tenantService.removeTenant(tenantId);
   }
 }

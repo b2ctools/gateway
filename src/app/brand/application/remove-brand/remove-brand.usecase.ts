@@ -10,6 +10,7 @@ export class RemoveBrandUseCase {
   ) {}
 
   async execute(brandId: ID) {
+    await this.brandService.findByIdOrFail(brandId);
     await this.brandService.removeBrand(brandId);
   }
 }
