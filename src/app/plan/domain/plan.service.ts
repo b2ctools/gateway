@@ -1,18 +1,42 @@
 import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { PlanRepository } from "../infrastructure/plan-repository.type";
 import { AddPlanCommand } from "../application/add-plan/add-plan.command";
-import { Plan } from "./plan.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { Plan, PlanRef } from "./plan.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdatePlanRequest } from "../application/update-plan/update-plan.request";
 import { SetResourcesRequest } from "../application/set-resources/set-resources.request";
+import { codeFromId } from "src/app/shared/utils/gen-id";
 
 @Injectable()
 export class PlanService {
+  private backupPlans: Plan[] = [];
   constructor(
     @Inject("PlanRepository")
     private readonly planRepo: PlanRepository,
   ) {}
+
+  private async updateBackupPlans() {
+    const response = await this.planRepo.findAll({});
+    this.backupPlans = response.data;
+  }
+
+  getPlanRef(planId: ID): PlanRef {
+    if (!planId) {
+      return null;
+    }
+    const plan = this.backupPlans.find((t) => t.id === planId);
+
+    if (!plan) {
+      return null;
+    }
+
+    return {
+      id: plan.id,
+      name: plan.name,
+      code: codeFromId(plan.id),
+    };
+  }
 
   private async verifyPlanName(name: string): Promise<void> {
     const existing = await this.planRepo.getPlanByName(name);
@@ -39,14 +63,17 @@ export class PlanService {
       ...command,
     };
 
-    return await this.planRepo.create(plan);
+    const response = await this.planRepo.create(plan);
+    this.updateBackupPlans();
+    return response
   }
 
   async removePlan(id: ID) {
     await this.planRepo.delete(id);
+    this.updateBackupPlans();
   }
 
-  async findAllPlans(request: SearchRequest) {
+  async findAllPlans(request: SearchRequest): Promise<FindAllOutput<Plan>> {
     return await this.planRepo.findAll(request);
   }
 
@@ -68,7 +95,9 @@ export class PlanService {
     };
 
     console.log(`Updating Plan - ${JSON.stringify(request)}`);
-    return await this.planRepo.persist(planToUpdate);
+    const response = await this.planRepo.persist(planToUpdate);
+    this.updateBackupPlans();
+    return response;
   }
 
   async setResources(request: SetResourcesRequest) {

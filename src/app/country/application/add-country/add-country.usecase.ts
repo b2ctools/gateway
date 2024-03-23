@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { CountryService } from "../../domain/country.service";
 import { AddCountryCommand } from "./add-country.command";
+import { CountryDto, countryToDto } from "../../domain/country.interface";
 
 @Injectable()
 export class AddCountryUseCase {
@@ -9,7 +10,8 @@ export class AddCountryUseCase {
     private readonly countryService: CountryService,
   ) {}
 
-  async addCountry(command: AddCountryCommand) {
-    return await this.countryService.addCountry(command);
+  async addCountry(command: AddCountryCommand): Promise<CountryDto> {
+    const country = await this.countryService.addCountry(command);
+    return countryToDto(country);
   }
 }

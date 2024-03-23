@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { PermissionRepository } from "../infrastructure/permission-repository.type";
 import { AddPermissionCommand } from "../application/add-permission/add-permission.command";
 import { Permission, PermissionRef } from "./permission.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdatePermissionRequest } from "../application/update-permission/update-permission.request";
 
@@ -47,7 +47,7 @@ export class PermissionService {
     return existingPermission;
   }
 
-  async addPermission(command: AddPermissionCommand) {
+  async addPermission(command: AddPermissionCommand): Promise<Permission> {
     await this.verifyPermissionName(command.name);
 
     const permission: Permission = {
@@ -65,7 +65,7 @@ export class PermissionService {
     await this.updateBackupPermissions();
   }
 
-  async findAllPermissions(request: SearchRequest) {
+  async findAllPermissions(request: SearchRequest): Promise<FindAllOutput<Permission>> {
     return await this.permissionRepo.findAll(request);
   }
 

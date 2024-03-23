@@ -45,7 +45,7 @@ export class CustomerService {
     return existingCustomer;
   }
 
-  async addCustomer(command: AddCustomerCommand) {
+  async addCustomer(command: AddCustomerCommand): Promise<Customer>{
     await this.verifyExistingCustomer(command.userId);
 
     const customer: Customer = {

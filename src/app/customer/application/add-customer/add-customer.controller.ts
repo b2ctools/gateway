@@ -3,7 +3,7 @@ import { customerPath } from "../../../shared/routes";
 import { AddCustomerUseCase } from "./add-customer.usecase";
 import { AddCustomerRequest } from "./add-customer.request";
 import { AddCustomerCommand } from "./add-customer.command";
-import { customerToDto } from "../../domain/customer.interface";
+import { CustomerDto } from "../../domain/customer.interface";
 
 @Controller(customerPath)
 export class AddCustomerController {
@@ -13,8 +13,8 @@ export class AddCustomerController {
   ) {}
 
   @Post()
-  async addCustomer(@Body() request: AddCustomerRequest) {
-    const pc = await this.useCase.addCustomer(new AddCustomerCommand(request));
-    return customerToDto(pc);
+  async addCustomer(@Body() request: AddCustomerRequest): Promise<CustomerDto> {
+    return await this.useCase.addCustomer(new AddCustomerCommand(request));
+    
   }
 }

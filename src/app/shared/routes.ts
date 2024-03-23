@@ -13,7 +13,7 @@ export const tenantPath = "tenants";
 export const planPath = "plans";
 export const resourcePath = "resources";
 export const permissionPath = "permissions";
-export const subscriptionPath = "subs";
+export const subscriptionPath = "subscriptions";
 
 
 export const excludeRoutes = [

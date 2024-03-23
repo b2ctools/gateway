@@ -3,6 +3,7 @@ import { ResourceService } from "../../domain/resource.service";
 import { AddResourceCommand } from "./add-resource.command";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { PermissionService } from "src/app/permission/domain/permission.service";
+import { ResourceDto, resourceToDto } from "../../domain/resource.interface";
 
 @Injectable()
 export class AddResourceUseCase {
@@ -24,9 +25,11 @@ export class AddResourceUseCase {
     }
   }
 
-  async execute(command: AddResourceCommand) {
+  async execute(command: AddResourceCommand): Promise<ResourceDto> {
     await this.validatePermissions(command.permissions);
 
-    return await this.pcService.addResource(command);
+    const resource = await this.pcService.addResource(command);
+    return resourceToDto(resource);
+
   }
 }

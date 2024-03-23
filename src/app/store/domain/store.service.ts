@@ -53,7 +53,7 @@ export class StoreService {
     }
   }
 
-  async addStore(command: AddStoreCommand) {
+  async addStore(command: AddStoreCommand): Promise<Store> {
     await this.verifyStoreName(command.name);
     const store: Store = {
       id: null,

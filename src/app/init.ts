@@ -25,6 +25,11 @@ import { AddSampleCommand } from "./sample/application/add-sample/add-sample.com
 import { PermissionService } from "./permission/domain/permission.service";
 import { AddAccountCommand } from "./account/application/add-account/add-account.command";
 import { AddPlanCommand } from "./plan/application/add-plan/add-plan.command";
+import { EqualFilter } from "./shared/filters-and-request/request-filters";
+import { AddSubscriptionCommand } from "./subscription/application/add-subscription/add-subscription.command";
+import { AddSubscriptionRequest } from "./subscription/application/add-subscription/add-subscription.request";
+import { BillingCycle } from "./plan/domain/plan.interface";
+import { AddSubscriptionUseCase } from "./subscription/application/add-subscription/add-subscription.usecase";
 
 @Injectable()
 export class InitService {
@@ -61,7 +66,30 @@ export class InitService {
 
     @Inject(PermissionService)
     private readonly permissionService: PermissionService,
+
+    @Inject(AddSubscriptionUseCase)
+    private readonly addSubscriptionUseCase: AddSubscriptionUseCase,
   ) {}
+
+  private async addSubscription() {
+    const { data } = await this.tenantService.findAllTenants({
+      filters: [new EqualFilter("name", "Leo")],
+    });
+    const tenant = data[0];
+    const { data: plans } = await this.planService.findAllPlans({
+      filters: [new EqualFilter("name", "Pro")],
+    });
+    const plan = plans[0];
+    const request: AddSubscriptionRequest = {
+      planId: plan.id,
+      tenantId: tenant.id,
+      billing: {
+        cycle: BillingCycle.MONTHLY,
+        price: 100,
+      },
+    };
+    await this.addSubscriptionUseCase.execute(new AddSubscriptionCommand(request));
+  }
 
   private async seedAccountsForLeo() {
     const user = await this.userService.findUserByEmail("leo@email.com");
@@ -225,5 +253,7 @@ export class InitService {
         this.productCategoryService.addCategory(pc),
       ),
     );
+
+    await this.addSubscription();
   }
 }

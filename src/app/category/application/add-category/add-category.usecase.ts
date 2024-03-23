@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { CategoryService } from "../../domain/category.service";
 import { AddCategoryCommand } from "./add-category.command";
 
-import { categoryToDto } from "../../domain/category.interface";
+import { CategoryDTO, categoryToDto } from "../../domain/category.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { ID } from "src/app/shared/abstract-repository/repository.interface";
 import { isAdmin } from "src/app/auth/domain/middleware/access-control";
@@ -22,7 +22,7 @@ export class AddCategoryUseCase {
     await this.tenantService.findByIdOrFail(tenantId);
   }
 
-  async addCategory(command: AddCategoryCommand) {
+  async addCategory(command: AddCategoryCommand): Promise<CategoryDTO> {
     await this.validateTenantId(command.tenantId);
     const pc = await this.pcService.addCategory(command);
     const tenantRef = this.tenantService.getTenantRef(pc.tenantId);

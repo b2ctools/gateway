@@ -2,7 +2,7 @@ import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { TenantRepository } from "../infrastructure/tenant-repository.type";
 import { AddTenantCommand } from "../application/add-tenant/add-tenant.command";
 import { Tenant, TenantRef } from "./tenant.interface";
-import { ID } from "../../shared/abstract-repository/repository.interface";
+import { FindAllOutput, ID } from "../../shared/abstract-repository/repository.interface";
 import { SearchRequest } from "../../shared/filters-and-request/base.request";
 import { UpdateTenantRequest } from "../application/update-tenant/update-tenant.request";
 import { codeFromId } from "../../shared/utils/gen-id";
@@ -25,6 +25,11 @@ export class TenantService {
       return null;
     }
     const tenant = this.backupTenants.find((t) => t.id === tenantId);
+
+    if (!tenant) {
+      return null;
+    }
+
     return {
       id: tenant.id,
       name: tenant.name,
@@ -70,11 +75,9 @@ export class TenantService {
     await this.tenantRepo.delete(id);
     this.updateBackupTenants();
   }
-
-  async findAllTenants(request: SearchRequest) {
-    const response = await this.tenantRepo.findAll(request);
-    this.backupTenants = response.data;
-    return response;
+  
+  async findAllTenants(request: SearchRequest): Promise<FindAllOutput<Tenant>> {
+    return await this.tenantRepo.findAll(request);
   }
 
   async updateTenant(id: ID, request: UpdateTenantRequest): Promise<Tenant> {

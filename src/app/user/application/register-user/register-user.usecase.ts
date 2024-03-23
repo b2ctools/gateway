@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { UserService } from "../../domain/user.service";
 import { RegisterUserCommand } from "./register-user.command";
-import { User } from "../../domain/user.interface";
+import { UserDto, userToDto } from "../../domain/user.interface";
 import { CountryService } from "../../../country/domain/country.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
 
@@ -21,11 +21,12 @@ export class RegisterUserUseCase {
     }
   }
 
-  async execute(comand: RegisterUserCommand): Promise<User> {
+  async execute(comand: RegisterUserCommand): Promise<UserDto> {
     const { countryId } = comand;
     // validate countryId
     await this.validateCountry(countryId);
 
-    return await this.userService.registerUser(comand);
+    const user = await this.userService.registerUser(comand);
+    return userToDto(user);
   }
 }

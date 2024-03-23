@@ -3,7 +3,7 @@ import { planPath } from "../../../shared/routes";
 import { AddPlanUseCase } from "./add-plan.usecase";
 import { AddPlanRequest } from "./add-plan.request";
 import { AddPlanCommand } from "./add-plan.command";
-import { planToDto } from "../../domain/plan.interface";
+import { PlanDto } from "../../domain/plan.interface";
 
 @Controller(planPath)
 export class AddPlanController {
@@ -13,8 +13,8 @@ export class AddPlanController {
   ) {}
 
   @Post()
-  async addPlan(@Body() request: AddPlanRequest) {
-    const pc = await this.useCase.addPlan(new AddPlanCommand(request));
-    return planToDto(pc);
+  async addPlan(@Body() request: AddPlanRequest): Promise<PlanDto> {
+    return await this.useCase.addPlan(new AddPlanCommand(request));
+    
   }
 }
