@@ -2,7 +2,7 @@ import { Body, Controller, Inject, Post } from "@nestjs/common";
 
 import { AddCountryUseCase } from "./add-country.usecase";
 import { AddCountryCommand } from "./add-country.command";
-import { countryToDto } from "../../domain/country.interface";
+import { CountryDto } from "../../domain/country.interface";
 import { countryPath } from "../../../shared/routes";
 import { AddCountryRequest } from "./add-country.request";
 
@@ -14,10 +14,9 @@ export class AddCountryController {
   ) {}
 
   @Post()
-  async addCountry(@Body() request: AddCountryRequest) {
-    const country = await this.useCase.addCountry(
+  async addCountry(@Body() request: AddCountryRequest): Promise<CountryDto> {
+    return await this.useCase.addCountry(
       new AddCountryCommand(request),
     );
-    return countryToDto(country);
   }
 }

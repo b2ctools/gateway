@@ -45,7 +45,7 @@ export class CategoryService {
     }
   }
 
-  async addCategory(command: AddCategoryCommand) {
+  async addCategory(command: AddCategoryCommand): Promise<Category>{
     await this.verifyCategoryName(command.name);
     const pc: Category = {
       id: null,

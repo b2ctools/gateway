@@ -132,6 +132,7 @@ export const getMockedPlansList = (): Plan[]  => {
       type: PlanType.Free,
       resources: [],
       billing: [],
+      description: "Free plan for everyone with minimal features available",
     },
     {
       id: null,
@@ -145,9 +146,11 @@ export const getMockedPlansList = (): Plan[]  => {
         },
         {
           price: 100 * 0.3 * 12,
+          description: "30% discount",
           cycle: BillingCycle.YEARLY,
         }
       ],
+      description: "Plantier Pro with all features available",
     },
     {
       id: null,

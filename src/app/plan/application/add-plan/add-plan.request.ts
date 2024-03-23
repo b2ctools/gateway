@@ -2,7 +2,9 @@ import {
   IsArray,
   IsEnum,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
+  IsPositive,
   IsString,
   ValidateIf,
   ValidateNested,
@@ -12,6 +14,8 @@ import { Type } from "class-transformer";
 
 export class BillingRequest implements Billing {
   @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
   price: number;
 
   @IsNotEmpty()

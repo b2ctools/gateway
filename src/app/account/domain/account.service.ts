@@ -69,7 +69,7 @@ export class AccountService {
     return existingAccount;
   }
 
-  async addAccount(command: AddAccountCommand) {
+  async addAccount(command: AddAccountCommand): Promise<Account> {
     const { userId, storeId, tenantId } = command;
 
     storeId

@@ -32,7 +32,7 @@ export class SampleService {
     return existingSample;
   }
 
-  async addSample(command: AddSampleCommand) {
+  async addSample(command: AddSampleCommand): Promise<Sample> {
     await this.verifySampleName(command.name);
 
     const sample: Sample = {

@@ -31,6 +31,12 @@ export interface Plan extends IDomain {
 
 export interface PlanDto extends Plan {}
 
+export interface PlanRef {
+  id: ID;
+  name: string;
+  code: string;
+}
+
 export const planToDto = (u: Plan, resources: string[] = null): PlanDto => {
   delete u.resources;
   return {
