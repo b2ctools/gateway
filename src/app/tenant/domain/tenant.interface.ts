@@ -10,7 +10,6 @@ export const isValidTenantState = (s: string) => ['active', 'inactive'].includes
 export interface Tenant extends IDomain {
   name: string;
   description?: string;
-  planId: ID;
   address: TenantAddress;
   logo: string;
   primaryOwnerId?: ID;

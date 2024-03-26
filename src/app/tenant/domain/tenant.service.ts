@@ -62,7 +62,6 @@ export class TenantService {
 
     const tenant: Tenant = {
       id: null,
-      planId: null,
       ...command,
     };
 
@@ -111,9 +110,4 @@ export class TenantService {
     }
   }
 
-  async setPlan(id: ID, planId: ID) {
-    const tenant = await this.findByIdOrFail(id);
-    tenant.planId = planId;
-    return await this.tenantRepo.persist(tenant);
-  }
 }

@@ -8,7 +8,6 @@ export class TenantMongoEntity
 {
   name: string;
   description?: string;
-  planId: ID;
   address: TenantAddress;
   logo: string;
   primaryOwnerId: ID;
