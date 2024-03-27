@@ -3,12 +3,14 @@ import {
   IsEmail,
   IsEnum,
   IsNotEmpty,
-  IsNumber,
+  IsObject,
   IsOptional,
   IsString,
+  ValidateNested,
 } from "class-validator";
-import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { User, UserRole } from "../../domain/user.interface";
+import { AddressRequest } from "src/app/shared/address/address.request";
+import { Type } from "class-transformer";
 export class RegisterUserRequest
   implements
     Omit<
@@ -43,10 +45,6 @@ export class RegisterUserRequest
   @IsString()
   password: string;
 
-  @IsNotEmpty()
-  @IsNumber()
-  tenantId: ID;
-
   @IsEnum(UserRole)
   role: UserRole;
 
@@ -64,28 +62,8 @@ export class RegisterUserRequest
   @IsOptional()
   birthDay: Date;
 
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  address: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  city: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  state: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  zip: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  countryId: ID;
+  @IsObject()
+  @ValidateNested()
+  @Type(() => AddressRequest)
+  address: AddressRequest;
 }

@@ -1,6 +1,6 @@
-import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { MongoEntity } from "../../../shared/abstract-repository/entities/mongo-entity";
 import { User, UserRole, UserStatus } from "../../domain/user.interface";
+import { IAddress } from "src/app/shared/address/address.interface";
 
 export class UserMongoEntity extends MongoEntity implements Omit<User, "id"> {
   firstName: string;
@@ -17,9 +17,5 @@ export class UserMongoEntity extends MongoEntity implements Omit<User, "id"> {
   isPhoneConfirmed: boolean;
   avatar: string;
   birthDay: Date;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  countryId: ID;
+  address: IAddress;
 }

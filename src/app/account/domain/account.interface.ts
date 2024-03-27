@@ -12,7 +12,10 @@ export enum Scope {
   EMPLOYEE = "employee",
 }
 
-export type AccountType = "tenant" | "store";
+export enum AccountType {
+  TENANT = "tenant",
+  STORE = "store",
+}
 
 export interface Account extends IDomain {
   userId: ID;

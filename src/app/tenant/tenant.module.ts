@@ -34,6 +34,6 @@ import { UserModule } from "../user/user.module";
     getTenantRepo(),
     FineOneTenantUseCase,
   ],
-  exports: [TenantService],
+  exports: [TenantService, AddTenantUseCase],
 })
 export class TenantModule {}

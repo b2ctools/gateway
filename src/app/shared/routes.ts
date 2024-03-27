@@ -15,6 +15,7 @@ export const resourcePath = "resources";
 export const permissionPath = "permissions";
 export const subscriptionPath = "subscriptions";
 
+export const onboardTenant = "onboard-tenant";
 
 export const excludeRoutes = [
   { path: "/", method: RequestMethod.GET },

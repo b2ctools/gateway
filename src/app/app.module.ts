@@ -19,6 +19,7 @@ import { PlanModule } from "./plan/plan.module";
 import { ResourceModule } from "./resource/resource.module";
 import { PermissionModule } from "./permission/permission.module";
 import { SubscriptionModule } from "./subscription/subscription.module";
+import { OnboardTenantModule } from "./onboard-tenant/onboard.module";
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { SubscriptionModule } from "./subscription/subscription.module";
     ResourceModule,
     PermissionModule,
     SubscriptionModule,
+    OnboardTenantModule,
   ],
   controllers: [AppController],
   providers: [AppService, InitService],

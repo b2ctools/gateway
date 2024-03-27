@@ -5,7 +5,7 @@ import {
   forwardRef,
 } from "@nestjs/common";
 import { RegisterUserCommand } from "../application/register-user/register-user.command";
-import { User, UserStatus } from "./user.interface";
+import { User } from "./user.interface";
 import { UserRepository } from "../infrastructure/user-repository.type";
 import { encodePassword } from "../../auth/domain/encoder.service";
 import { ctxSrv } from "../../shared/context.service";
@@ -36,21 +36,16 @@ export class UserService {
   }
 
   async registerUser(comand: RegisterUserCommand): Promise<User> {
-    const { password, ...comandInfo } = comand;
-    console.log("Registering User ", comandInfo);
+    
+    console.log("Registering User ", comand);
 
     //verifying email
     await this.verifyEmail(comand.email);
 
     const user: User = {
-      ...comandInfo,
+      ...comand,
       id: null,
-      recoveryPasswordCode: null,
-      failedLogin: 0,
-      isEmailConfirmed: false,
-      isPhoneConfirmed: false,
-      status: UserStatus.ENABLED,
-      password: encodePassword(password),
+
     };
 
     return await this.userRepo.create(user);
@@ -133,9 +128,6 @@ export class UserService {
       avatar,
       birthDay,
       address,
-      city,
-      zip,
-      countryId,
       isEmailConfirmed,
       isPhoneConfirmed,
     } = userInfo;
@@ -155,9 +147,6 @@ export class UserService {
       ...(avatar ? { avatar } : {}),
       ...(birthDay ? { birthDay } : {}),
       ...(address ? { address } : {}),
-      ...(city ? { city } : {}),
-      ...(zip ? { zip } : {}),
-      ...(countryId ? { countryId } : {}),
       ...(isEmailConfirmed ? { isEmailConfirmed } : {}),
       ...(isPhoneConfirmed ? { isPhoneConfirmed } : {}),
     };

@@ -23,6 +23,8 @@ import { AccountModule } from "../account/account.module";
 import { StoreModule } from "../store/store.module";
 import { GetAccountUseCase } from "./application/get-accounts/get-accounts.usecase";
 import { GetAccountsController } from "./application/get-accounts/get-accounts.controller";
+import { AddressModule } from "../address/address.module";
+
 @Module({
   imports: [
     NotificationModule,
@@ -31,6 +33,7 @@ import { GetAccountsController } from "./application/get-accounts/get-accounts.c
     TenantModule,
     forwardRef(() => AccountModule),
     forwardRef(() => StoreModule),
+    forwardRef(() => AddressModule )
   ],
   controllers: [
     RegisterUserController,
@@ -54,6 +57,6 @@ import { GetAccountsController } from "./application/get-accounts/get-accounts.c
     RemoveSampleUseCase,
     GetAccountUseCase,
   ],
-  exports: [UserService, RecoveryPasswordService],
+  exports: [UserService, RecoveryPasswordService, RegisterUserUseCase],
 })
 export class UserModule {}

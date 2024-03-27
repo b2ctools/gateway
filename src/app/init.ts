@@ -30,6 +30,9 @@ import { AddSubscriptionCommand } from "./subscription/application/add-subscript
 import { AddSubscriptionRequest } from "./subscription/application/add-subscription/add-subscription.request";
 import { BillingCycle } from "./plan/domain/plan.interface";
 import { AddSubscriptionUseCase } from "./subscription/application/add-subscription/add-subscription.usecase";
+import { RegisterUserCommand } from "./user/application/register-user/register-user.command";
+import { OnboardTenantUseCase } from "./onboard-tenant/application/onboard-tenant/onboard-tenant.usecase";
+import { OnboardTenantRequest } from "./onboard-tenant/application/onboard-tenant/onboard-tenant.request";
 
 @Injectable()
 export class InitService {
@@ -69,6 +72,9 @@ export class InitService {
 
     @Inject(AddSubscriptionUseCase)
     private readonly addSubscriptionUseCase: AddSubscriptionUseCase,
+
+    @Inject(OnboardTenantUseCase)
+    private readonly onboardTenantUseCase: OnboardTenantUseCase
   ) {}
 
   private async addSubscription() {
@@ -88,7 +94,9 @@ export class InitService {
         price: 100,
       },
     };
-    await this.addSubscriptionUseCase.execute(new AddSubscriptionCommand(request));
+    await this.addSubscriptionUseCase.execute(
+      new AddSubscriptionCommand(request)
+    );
   }
 
   private async seedAccountsForLeo() {
@@ -97,7 +105,7 @@ export class InitService {
       new AddAccountCommand({
         userId: user.id,
         scope: Scope.OWNER,
-      }),
+      })
     );
   }
 
@@ -106,7 +114,6 @@ export class InitService {
     const { data: stores } = await this.soreService.findAllStores({ take: 2 });
     const { data: permissions } =
       await this.permissionService.findAllPermissions({});
-    
 
     stores.forEach(async (store) => {
       const account = await this.accountService.addAccount(
@@ -114,14 +121,13 @@ export class InitService {
           userId: user.id,
           storeId: store.id,
           scope: Scope.MANAGER,
-        }),
+        })
       );
       this.accountService.setPermissions(account.id, [
         permissions[0].id,
         permissions[1].id,
       ]);
     });
-
   }
 
   private async setResourcesToPlan() {
@@ -176,11 +182,128 @@ export class InitService {
     await this.sampleService.addSample(sample);
   }
 
-  
+  private async onboard1() {
+    const getPlanId = async () => {
+      const plan = await this.planService.findPlanByName("Pro");
+      return plan.id;
+    };
+
+    const reuest: OnboardTenantRequest = {
+      owner: {
+        firstName: "Yoennis",
+        lastName: "Rodriguez",
+        email: "rodriguezdevops@gmail.com",
+        phone: "(502) 594-0260",
+      },
+      company: {
+        name: "Neutral",
+        address: "6017 Colebrooke Ln",
+        address2: "",
+        city: "Louisville",
+        state: "KY",
+        country: "Estados Unidos",
+        zip: "40219",
+        lat: "",
+        long: "",
+      },
+      plan: {
+        id: await getPlanId(),
+        subscription: BillingCycle.MONTHLY,
+      },
+    };
+
+    try {
+      await this.onboardTenantUseCase.onboard(reuest);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async onboard2() {
+    const getPlanId = async () => {
+      const plan = await this.planService.findPlanByName("Pro");
+      return plan.id;
+    };
+
+    const reuest: OnboardTenantRequest = {
+      owner: {
+        firstName: "Yoennis",
+        lastName: "Rodriguez",
+        email: "rodriguezdevops@gmail.com",
+        phone: "(502) 594-0260",
+      },
+      company: {
+        name: "Neutral2",
+        address: "6017 Colebrooke Ln",
+        address2: "",
+        city: "Louisville",
+        state: "KY",
+        country: "Estados Unidos",
+        zip: "40219",
+        lat: "",
+        long: "",
+      },
+      plan: {
+        id: await getPlanId(),
+        subscription: BillingCycle.MONTHLY,
+      },
+    };
+
+    try {
+      await this.onboardTenantUseCase.onboard(reuest);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async onboard3() {
+    const getPlanId = async () => {
+      const plan = await this.planService.findPlanByName("Pro");
+      return plan.id;
+    };
+
+    const reuest: OnboardTenantRequest = {
+      owner: {
+        firstName: "Yoennis",
+        lastName: "Rodriguez",
+        email: "rodriguezdevops2@gmail.com",
+        phone: "(502) 594-0260",
+      },
+      company: {
+        name: "Neutral2",
+        address: "6017 Colebrooke Ln",
+        address2: "",
+        city: "Louisville",
+        state: "KY",
+        country: "Estados Unidos",
+        zip: "40219",
+        lat: "",
+        long: "",
+      },
+      plan: {
+        id: await getPlanId(),
+        subscription: BillingCycle.MONTHLY,
+      },
+    };
+
+    try {
+      await this.onboardTenantUseCase.onboard(reuest);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  private async onboardings() {
+    await this.onboard1();
+    await this.onboard2();
+    await this.onboard3();
+  }
 
   async onApplicationBootstrap() {
     await Promise.all(
-      getMockedUserList().map((user) => this.userService.registerUser(user)),
+      getMockedUserList().map((user) =>
+        this.userService.registerUser(new RegisterUserCommand(user))
+      )
     );
 
     const userLeo = await this.userService.findUserByEmail("leo@email.com");
@@ -194,44 +317,45 @@ export class InitService {
     ctxSrv.setTenantId(tenant.id);
 
     await Promise.all(
-      getMockedStoreList().map((store) => this.soreService.addStore(store)),
+      getMockedStoreList().map((store) => this.soreService.addStore(store))
     );
     await Promise.all(
-      getMockedBrandList().map((brand) => this.brandService.addBrand(brand)),
+      getMockedBrandList().map((brand) => this.brandService.addBrand(brand))
     );
     await Promise.all(
       getMockedCountryList().map((country) =>
-        this.countryService.addCountry(country),
-      ),
+        this.countryService.addCountry(country)
+      )
     );
 
     await Promise.all(
       getMockedCategoryList().map((pc) =>
-        this.productCategoryService.addCategory(pc),
-      ),
+        this.productCategoryService.addCategory(pc)
+      )
     );
 
     await Promise.all(
-      getMockedPlansList().map((plan) => this.planService.addPlan(new AddPlanCommand(plan))),
+      getMockedPlansList().map((plan) =>
+        this.planService.addPlan(new AddPlanCommand(plan))
+      )
     );
 
     await Promise.all(
       getMockedResourcesList().map((resource) =>
-        this.resourceService.addResource(resource),
-      ),
+        this.resourceService.addResource(resource)
+      )
     );
 
     await Promise.all(
       getMockedPermissionList().map((p) =>
-        this.permissionService.addPermission(p),
-      ),
+        this.permissionService.addPermission(p)
+      )
     );
 
     await this.seedAccountsForElmer();
     await this.seedAccountsForLeo();
     await this.setResourcesToPlan();
     await this.seedSample();
-
 
     /** adding new tenant with store for testing pourpouses */
     // add another store for another tenant
@@ -246,14 +370,16 @@ export class InitService {
     ctxSrv.setTenantId(tenant2.id);
 
     await Promise.all(
-      getMockedStoreList().map((store) => this.soreService.addStore(store)),
+      getMockedStoreList().map((store) => this.soreService.addStore(store))
     );
     await Promise.all(
       getMockedCategoryList(1).map((pc) =>
-        this.productCategoryService.addCategory(pc),
-      ),
+        this.productCategoryService.addCategory(pc)
+      )
     );
 
     await this.addSubscription();
+
+    // await this.onboardings();
   }
 }

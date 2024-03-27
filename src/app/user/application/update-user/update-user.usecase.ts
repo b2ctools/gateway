@@ -26,10 +26,6 @@ export class UpdateUserUseCase {
       role,
       birthDay,
       address,
-      city,
-      state,
-      zip,
-      countryId,
     } = request;
     return {
       firstName,
@@ -41,10 +37,6 @@ export class UpdateUserUseCase {
       role,
       birthDay,
       address,
-      city,
-      state,
-      zip,
-      countryId,
     };
   }
 

@@ -4,10 +4,9 @@ import { AddAccountCommand } from "./add-account.command";
 import { StoreService } from "../../../store/domain/store.service";
 import { UserService } from "../../../user/domain/user.service";
 import { ID } from "../../../shared/abstract-repository/repository.interface";
-import { AccountDto, accountToDto } from "../../domain/account.interface";
+import { AccountDto, AccountType, accountToDto } from "../../domain/account.interface";
 import { TenantService } from "../../../tenant/domain/tenant.service";
 import { PermissionService } from "src/app/permission/domain/permission.service";
-import { ctxSrv } from "src/app/shared/context.service";
 import { UserRole } from "src/app/user/domain/user.interface";
 
 @Injectable()
@@ -26,7 +25,7 @@ export class AddAccountUseCase {
     private readonly tenantService: TenantService,
 
     @Inject(PermissionService)
-    private readonly permissionService: PermissionService,
+    private readonly permissionService: PermissionService
   ) {}
 
   private async verifyUser(userId: ID) {
@@ -42,20 +41,25 @@ export class AddAccountUseCase {
     await this.tenantService.findByIdOrFail(tenantId);
   }
 
+  private async verifyStore(command: AddAccountCommand) {
+    const { storeId, type } = command;
+    if (storeId && type === AccountType.STORE) {
+      await this.storeService.findByIdOrFail(storeId);
+    }
+  }
+
   async execute(command: AddAccountCommand): Promise<AccountDto> {
-    const { storeId, userId, tenantId } = command;
+    const { userId, tenantId } = command;
     // validations
-    await this.storeService.findByIdOrFail(storeId);
+    await this.verifyStore(command);
     await this.verifyUser(userId);
     await this.verifyTenant(tenantId);
-
-    console.log("role", ctxSrv.getUserRole());
 
     const account = await this.pcService.addAccount(command);
     const tenantRef = this.tenantService.getTenantRef(account.tenantId);
     const storeRef = this.storeService.getStoreRef(account.storeId);
     const permissionsRef = account.permissions.map((p) =>
-      this.permissionService.getPermissionRef(p),
+      this.permissionService.getPermissionRef(p)
     );
     return accountToDto(account, tenantRef, storeRef, permissionsRef);
   }

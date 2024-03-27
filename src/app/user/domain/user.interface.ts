@@ -1,7 +1,7 @@
-import { ID } from "../../shared/abstract-repository/repository.interface";
 import { IDomain } from "../../shared/abstract-repository/entities/domain";
 import { TenantRef } from "../../tenant/domain/tenant.interface";
 import { isAdmin } from "../../auth/domain/middleware/access-control";
+import { IAddress } from "../../shared/address/address.interface";
 
 export enum UserStatus {
   ENABLED = "ENABLED",
@@ -27,11 +27,7 @@ export interface User extends IDomain {
   isPhoneConfirmed: boolean;
   avatar: string;
   birthDay: Date;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  countryId: ID;
+  address: IAddress;
 }
 
 export interface UserDto
