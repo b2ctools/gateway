@@ -26,10 +26,6 @@ export class UserMockedRepository extends MockedRepository<
     entity.avatar = d.avatar;
     entity.birthDay = d.birthDay;
     entity.address = d.address;
-    entity.city = d.city;
-    entity.state = d.state;
-    entity.zip = d.zip;
-    entity.countryId = d.countryId;
 
     return entity;
   }
@@ -51,10 +47,6 @@ export class UserMockedRepository extends MockedRepository<
       avatar: e.avatar,
       birthDay: e.birthDay,
       address: e.address,
-      city: e.city,
-      state: e.state,
-      zip: e.zip,
-      countryId: e.countryId,
     };
   }
 

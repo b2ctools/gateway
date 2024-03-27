@@ -18,7 +18,7 @@ export class AddAccountCommand implements Omit<Account, "id"> {
     this.userId = userId;
     this.storeId = storeId;
     this.scope = scope;
-    this.type = storeId ? "store" : "tenant";
+    this.type = storeId ? AccountType.STORE : AccountType.TENANT;
     this.permissions = [];
     this.tenantId =
       isAdmin() ? tenantId : ctxSrv.getTenantId();

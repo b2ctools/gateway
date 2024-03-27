@@ -2,11 +2,14 @@ import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
+  ValidateNested,
 } from "class-validator";
-import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { UserRole, UserStatus } from "../../domain/user.interface";
+import { AddressRequest } from "src/app/shared/address/address.request";
+import { Type } from "class-transformer";
 
 export class UpdateUserRequest {
   @IsNotEmpty()
@@ -46,28 +49,11 @@ export class UpdateUserRequest {
   @IsOptional()
   birthDay: Date;
 
-  @IsNotEmpty()
-  @IsString()
+  @IsObject()
+  @ValidateNested()
+  @Type(() => AddressRequest)
   @IsOptional()
-  address: string;
+  address: AddressRequest;
 
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  city: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  state: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  zip: string;
-
-  @IsNotEmpty()
-  @IsString()
-  @IsOptional()
-  countryId: ID;
 }

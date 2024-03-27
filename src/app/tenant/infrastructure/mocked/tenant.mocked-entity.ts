@@ -8,7 +8,6 @@ export class TenantMockedEntity
 {
   name: string;
   description?: string;
-  planId: ID;
   address: TenantAddress;
   logo: string;
   primaryOwnerId: ID;

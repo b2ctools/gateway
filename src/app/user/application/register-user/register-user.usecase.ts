@@ -1,9 +1,9 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { BadRequestException, Inject, Injectable } from "@nestjs/common";
 import { UserService } from "../../domain/user.service";
 import { RegisterUserCommand } from "./register-user.command";
 import { UserDto, userToDto } from "../../domain/user.interface";
-import { CountryService } from "../../../country/domain/country.service";
-import { ID } from "../../../shared/abstract-repository/repository.interface";
+import { AddressValidator } from "src/app/address/domain/address-validator.service";
+import { IAddress } from "src/app/shared/address/address.interface";
 
 @Injectable()
 export class RegisterUserUseCase {
@@ -11,20 +11,22 @@ export class RegisterUserUseCase {
     @Inject(UserService)
     private readonly userService: UserService,
 
-    @Inject(CountryService)
-    private readonly countryService: CountryService,
+    @Inject(AddressValidator)
+    private readonly addressValidator: AddressValidator
   ) {}
 
-  private async validateCountry(countryId: ID): Promise<void> {
-    if (countryId) {
-      await this.countryService.findByIdOrFail(countryId);
+  private async validateAddress(address: IAddress): Promise<boolean> {
+    const validationResult = await this.addressValidator.validate(address);
+    if (!validationResult.success) {
+      throw new BadRequestException(validationResult.errors.join(", "));
     }
+    return true;
   }
 
   async execute(comand: RegisterUserCommand): Promise<UserDto> {
-    const { countryId } = comand;
+    const { address } = comand;
     // validate countryId
-    await this.validateCountry(countryId);
+    await this.validateAddress(address);
 
     const user = await this.userService.registerUser(comand);
     return userToDto(user);

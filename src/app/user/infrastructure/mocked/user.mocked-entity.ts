@@ -1,6 +1,6 @@
-import { ID } from "../../../shared/abstract-repository/repository.interface";
 import { MockedEntity } from "../../../shared/abstract-repository/entities/mocked-entity";
 import { User, UserRole, UserStatus } from "../../domain/user.interface";
+import { IAddress } from "../../../shared/address/address.interface";
 
 export class UserMockedEntity extends MockedEntity implements Omit<User, "id"> {
   firstName: string;
@@ -18,9 +18,5 @@ export class UserMockedEntity extends MockedEntity implements Omit<User, "id"> {
   isPhoneConfirmed: boolean;
   avatar: string;
   birthDay: Date;
-  address: string;
-  city: string;
-  state: string;
-  zip: string;
-  countryId: ID;
+  address: IAddress;
 }

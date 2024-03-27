@@ -5,6 +5,8 @@ import { AddResourceCommand } from "src/app/resource/application/add-resource/ad
 import { AddStoreCommand } from "src/app/store/application/add-store/add-store.command";
 import { ctxSrv } from "../context.service";
 import { BillingCycle, Plan, PlanType } from "src/app/plan/domain/plan.interface";
+import { RegisterUserRequest } from "src/app/user/application/register-user/register-user.request";
+import { IAddress } from "../address/address.interface";
 
 export const getMockedUserList = () => {
   const commondData = {
@@ -12,14 +14,12 @@ export const getMockedUserList = () => {
     phone: "",
     avatar: "",
     birthDay: new Date(),
-    address: casual.address1,
-    city: casual.city,
-    state: casual.state_abbr,
-    zip: casual.zip(8),
-    countryId: null,
+    address: {
+      address: casual.address1,     
+    } as IAddress,
   };
 
-  const users = [
+  const users: RegisterUserRequest[] = [
     //  elmer
     {
       firstName: "Elmer", //casual.name,
